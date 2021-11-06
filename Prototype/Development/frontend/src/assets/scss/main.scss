@@ -1,0 +1,274 @@
+@import "variables";
+// @import "mixins";
+@import "~bootstrap/scss/bootstrap";
+@import "defaults";
+
+// Header
+/* Header */
+
+#header {
+  padding: 35px;
+  height: 109px;
+  background-color: white;
+  @media (min-width: 1400px) {
+    max-width: 1400px;
+    margin: auto;
+  }
+  @include transition(0.3s all ease-out);
+  .logo {
+    max-width: 80px;
+    margin-right: 40px;
+    @include transition(0.3s all ease-out);
+    .nav-link {
+      padding: 0;
+    }
+    img {
+      width: 100%;
+      height: auto;
+      display: block;
+    }
+  }
+  .navbar-nav {
+    a {
+      font-size: 14px;
+      color: #151b26;
+      text-decoration: none;
+      &:hover {
+        color: #000;
+      }
+    }
+    .btn-primary {
+      color: #fff;
+      font-weight: 500;
+    }
+    .navbar-nav {
+      a {
+        font-size: 14px;
+        color: #151b26;
+        text-decoration: none;
+        &:hover {
+          color: #000;
+        }
+      }
+      .btn {
+        padding: 0.5rem 1.2rem;
+        font-size: 14px;
+        @include transition(0.3s all ease-out);
+        &.active {
+          color: #fff;
+        }
+        &:hover {
+          color: #fff !important;
+        }
+      }
+      a + a {
+        margin-left: 25px;
+      }
+    }
+    .navbar-toggler {
+      position: relative;
+      z-index: 99;
+    }
+    .navbar-collapse {
+      background: white;
+      position: fixed;
+      padding: 20px;
+      left: -250px;
+      width: 250px;
+      height: 100%;
+      top: 0;
+      bottom: 0;
+      border-right: 1px solid #f0f0f0;
+      @include transition(0.3s all ease);
+      display: block;
+      opacity: 0;
+      visibility: hidden;
+      .navbar-collapse.show {
+        left: 0;
+        opacity: 1;
+        visibility: visible;
+        z-index: 99;
+        .d-flex {
+          .navbar-nav {
+            order: 2;
+            width: 100%;
+            &.drop-right {
+              order: 1;
+              width: 100%;
+              .d-flex {
+                flex-direction: row-reverse;
+                align-items: center !important;
+                width: 100%;
+                justify-content: flex-end;
+                border-bottom: 1px solid #f0f0f0;
+                margin-bottom: 15px;
+                padding-bottom: 15px;
+              }
+              .nav-option {
+                order: 1;
+                width: 36px;
+                height: 36px;
+                border-radius: 4px;
+                margin: 0;
+                a {
+                  pointer-events: none;
+                }
+              }
+              .nav-link {
+                order: 2;
+                margin: 0 !important;
+                width: 100%;
+              }
+              .user-name {
+                display: block;
+                font-size: 13px;
+                font-weight: 500;
+              }
+            }
+          }
+        }
+      }
+    }
+    .navbar-collapse.show {
+      left: 0;
+      opacity: 1;
+      visibility: visible;
+      z-index: 99;
+    }
+  }
+  @media screen and (max-width: 767px) {
+    background: #fff;
+    padding: 20px;
+    height: auto;
+  }
+  &.fixed {
+    padding: 15px 35px;
+    height: auto;
+    background: #fafafe;
+    @include transition(0.3s all ease);
+    .logo {
+      max-width: 70px;
+    }
+    .btn-outline-dark {
+      padding: 10px 18px !important;
+      min-width: inherit;
+      font-size: 12px;
+      background: $primary;
+      border-color: $primary !important;
+      color: #fff !important;
+    }
+    .navbar-nav {
+      a {
+        font-size: 12px;
+      }
+    }
+  }
+}
+/* registration */
+
+.regitration {
+  font-size: 14px;
+  font-weight: 300;
+  color: #767778;
+  padding-bottom: 30px;
+  .title {
+    font-size: 26px;
+    line-height: 1.4;
+    font-weight: 500;
+    margin-bottom: 0;
+    color: #000;
+    padding: 30px 0 20px;
+  }
+  .custommargin {
+    margin-top: 33px;
+    & > div {
+      margin-bottom: 5px;
+    }
+  }
+  .btn {
+    min-width: 150px;
+  }
+  .btn-icon {
+    min-width: 50px;
+    padding: 11px 9px 12px;
+    font-size: 16px;
+    svg {
+      pointer-events: none;
+    }
+    &:hover {
+      background: #ddd;
+      color: #000;
+    }
+    &.btn-outline-dark {
+      &:hover {
+        background: $dark;
+        color: #fff;
+      }
+    }
+  }
+  .col-left {
+    flex: 44%;
+  }
+  .col-right {
+    flex: 35%;
+  }
+  @media screen and (max-width: 767px) {
+    .title {
+      padding: 10px 0 20px;
+      font-size: 20px;
+    }
+  }
+}
+
+/* Login Slider */
+.signin-slider {
+  height: calc(100% - 60px);
+  margin: 30px 20px;
+  .slick-slide {
+    img {
+      width: 100%;
+      height: auto;
+      display: block;
+    }
+  }
+  .slick-dots {
+    bottom: 30px;
+    li {
+      width: 6px;
+      height: 6px;
+      margin: 0 2px;
+      .button {
+        border-radius: 6px;
+        background: #a8b9cd;
+        border: none;
+        opacity: 1;
+        padding: 0;
+      }
+      &.slick-active {
+        button {
+          &:before {
+            color: $primary;
+          }
+        }
+      }
+    }
+  }
+}
+
+.login-holder {
+  max-width: 550px;
+  margin: 0 auto;
+  height: 100%;
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  .logo {
+    max-width: 120px;
+    margin-bottom: 20px;
+    img {
+      width: 100%;
+      height: auto;
+      display: block;
+    }
+  }
+}

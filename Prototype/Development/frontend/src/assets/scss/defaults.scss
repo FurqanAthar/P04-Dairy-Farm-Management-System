@@ -1,0 +1,1355 @@
+html,
+body {
+  font-family: 'Poppins', sans-serif;
+  background: #fafafe !important;
+  height: 100%;
+}
+// #root,
+// #root > div {
+//   height: 100%;
+// }
+.bg-grey {
+  background: #f8f9ff;
+}
+
+.mn-2 {
+  margin: -0.8rem !important;
+}
+
+.custommargin {
+  margin-top: 35px;
+}
+.border {
+  border-color: #e5e8f5 !important;
+  border-radius: 6px;
+}
+a {
+  color: $primary;
+  &:hover {
+    text-decoration: none;
+    color: lighten($primary, 10%) !important;
+  }
+}
+@keyframes moveSlideshow {
+  100% { 
+    transform: translateY(-20%);  
+  }
+}
+
+/* Badges */
+.badge {
+  padding: 12px 16px;
+  font-size: 13px;
+  font-weight: 400;
+  text-transform: capitalize;
+  &.badge-success {
+    background: lighten($success, 45%);
+    color: $success;
+  }
+  &.badge-danger {
+    background: lighten($danger, 30%);
+    color: $danger;
+  }
+  &.badge-info {
+    background: lighten($info, 30%);
+    color: $info;
+  }
+  &.badge-primary {
+    background: lighten($primary, 32%);
+    color: $primary;
+  }
+}
+
+/* Placeholder */
+
+.form-control::-webkit-input-placeholder {
+  /* Edge */
+  color: #a8b9cd;
+}
+
+.form-control:-ms-input-placeholder {
+  /* Internet Explorer 10-11 */
+  color: #a8b9cd;
+}
+
+.form-control::placeholder {
+  color: #a8b9cd;
+}
+
+/* Overlay */
+
+.overlay {
+  position: absolute;
+  top: 0;
+  bottom: 0;
+  left: 0;
+  right: 0;
+  background: rgba(235, 235, 235, 0.64);
+  z-index: 9;
+  opacity: 0;
+  visibility: hidden;
+  &.active {
+    opacity: 1;
+    visibility: visible;
+  }
+}
+
+/* Line Heading */
+hr {
+  margin-top: 1.5rem;
+  margin-bottom: 1.5rem;
+  border-top: 1px solid rgb(240, 240, 240);
+}
+
+/* Table */
+.table {
+  font-size: 14px;
+  color: #000;
+  thead {
+    th {
+      font-size: 14px;
+      font-weight: normal;
+      color: #43536d;
+      padding: 0.75rem 1.5rem;
+      border-top: 1px solid $light;
+      border-bottom: 1px solid $light;
+      background: #fcfcff;
+    }
+  }
+  tbody {
+    tr {
+      &:first-child {
+        td {
+          border-top: none;
+        }
+      }
+    }
+    td {
+      font-size: 14px;
+      font-weight: 300;
+      color: #000;
+      padding: 0.75rem 1.5rem;
+      border-top: 2px dotted $light;
+    }
+  }
+}
+
+/* Table - Fixed Header */
+.header-fixed {
+  width: 100%;
+  & > thead,
+  & > tbody,
+  & > thead > tr,
+  & > tbody > tr,
+  & > thead > tr > th,
+  & > tbody > tr > td {
+    display: block;
+  }
+  & > tbody > tr,
+  & > thead > tr {
+    &:after {
+      content: " ";
+      display: block;
+      visibility: hidden;
+      clear: both;
+    }
+  }
+  & > tbody {
+    overflow-y: auto;
+    max-height: 150px;
+  }
+  & > tbody > tr > td,
+  & > thead > tr > th {
+    width: 20%;
+    float: left;
+  }
+  &.no-scroll {
+    & > tbody {
+      overflow: inherit;
+    }
+  }
+}
+
+/* Buttons */
+
+.btn {
+  border-radius: 6px;
+  font-size: 14px;
+  padding: 13px 20px;
+  min-width: 80px;
+  margin: 0;
+  text-decoration: none;
+  &:disabled,
+  &.disabled {
+    opacity: 0.2;
+  }
+  &:active,
+  &:focus {
+    box-shadow: none !important;
+  }
+}
+.btn-edit-custom {
+  padding: 8px 20px;
+  white-space: nowrap;
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  .icon {
+    width: 15px;
+    height: 15px;
+    margin-right: 5px;
+    img {
+      width: 100%;
+      height: auto;
+      display: block;
+    }
+    .icon-white {
+      display: none;
+      width: 100%;
+      height: auto;
+    }
+  }
+  &:hover {
+    color: #fff !important;
+    .icon-black {
+      display: none;
+    }
+    .icon-white {
+      top: -5px;
+      position: relative;
+      display: inline-block;
+    }
+  }
+}
+.btn.arrow {
+  border-top: 0;
+  border-left: 0;
+  border-right: 0;
+  border-radius: 0;
+  padding: 5px 20px 5px 15px;
+  position: relative;
+  &:after {
+    content: "";
+    position: absolute;
+    border-right: 1px solid;
+    border-bottom: 1px solid;
+    width: 7px;
+    height: 7px;
+    right: 0;
+    bottom: 10px;
+    // @include transform(rotate(-45deg));
+  }
+  &:hover {
+    background-color: transparent !important;
+    border-color: #000;
+    color: #000;
+  }
+  &:active,
+  &:focus {
+    background-color: transparent !important;
+    border-color: #000;
+    color: #000;
+    box-shadow: none !important;
+  }
+}
+.btn-primary {
+  color: #fff;
+  &:hover {
+    color: #fff !important;
+    background-color: #6236e0;
+    border-color: #6236e0;
+  }
+  &:active,
+  &:focus {
+    background-color: #6236e0;
+    border-color: #6236e0;
+    box-shadow: none !important;
+  }
+}
+.btn-secondary {
+  color: #151b26;
+  background: $secondary;
+  border: 1px solid $secondary;
+  &:hover {
+    background-color: $secondary;
+    border-color: $secondary;
+  }
+  &:active,
+  &:focus {
+    background-color: $secondary !important;
+    border-color: $secondary !important;
+    box-shadow: none !important;
+  }
+}
+.btn-light {
+  color: #000 !important;
+  background-color: #f8f9ff !important;
+  border: 1px solid $light !important;
+  &:hover {
+    color: #000 !important;
+    background-color: $light !important;
+    border-color: $light !important;
+  }
+  &:active,
+  &:focus {
+    color: #000 !important;
+    background-color: $light !important;
+    border-color: $light !important;
+    box-shadow: none !important;
+  }
+}
+
+.btn-dark {
+  color: #fff !important;
+  background-color: $dark !important;
+  border: 1px solid $dark !important;
+  &:hover {
+    color: #fff !important;
+    background-color: $dark !important;
+    border-color: $dark !important;
+    opacity: 0.9;
+  }
+  &:active,
+  &:focus {
+    color: #fff !important;
+    background-color: $dark !important;
+    border-color: $dark !important;
+    box-shadow: none !important;
+  }
+}
+.btn-outline-light {
+  color: #000 !important;
+  background-color: #fff !important;
+  border: 1px solid $light !important;
+  &:hover {
+    color: #000 !important;
+    background-color: $light !important;
+    border-color: $light !important;
+  }
+  &:active,
+  &:focus {
+    color: #000 !important;
+    background-color: $light !important;
+    border-color: $light !important;
+    box-shadow: none !important;
+  }
+}
+.btn-outline-dark {
+  color: #000 !important;
+  border: 1px solid $dark !important;
+  &:hover {
+    color: #fff !important;
+    background-color: $dark !important;
+    border-color: $dark !important;
+  }
+  &:active,
+  &:focus {
+    color: #fff !important;
+    background-color: $dark !important;
+    border-color: $dark !important;
+    box-shadow: none !important;
+  }
+  &.active {
+    color: #fff !important;
+  }
+}
+
+/* Form */
+
+.form-group {
+  .form-label {
+    font-size: 14px;
+    font-weight: 400;
+    color: #142433;
+    margin-bottom: 12px;
+  }
+  .form-control {
+    background: #fff;
+    height: 50px;
+    border-radius: 8px;
+    border: 1px solid #e5e8f5;
+    font-size: 14px;
+    transition: none;
+    &:focus {
+      border-color: #7848ff;
+      background: #fff;
+      box-shadow: none;
+    }
+    &:disabled {
+      color: #babfc7;
+    }
+    &.form-control[readonly] {
+      color: #babfc7;
+    }
+  }
+  &.datepicker {
+    .input-group-text {
+      .icon {
+        width: 15px;
+        height: 16px;
+        background: url(../images/icons/calender.svg) no-repeat;
+        background-size: 15px;
+        margin-right: 3px;
+      }
+    }
+  }
+}
+
+/* Form - Input Group */
+
+.input-group {
+  position: relative;
+  border: 1px solid transparent;
+  border-radius: 6px;
+  .input-group-prepend {
+    .input-group-text {
+      z-index: 2;
+      position: relative;
+      border-right: 0;
+      border-radius: 6px 0 0 6px;
+      background: #fff;
+      border-color: $light;
+    }
+  }
+  .input-group-append {
+    .input-group-text {
+      z-index: 2;
+      position: relative;
+      border-left: 0;
+      border-radius: 0 6px 6px 0;
+      background: #fff;
+      border-color: $light;
+    }
+  }
+  .react-datepicker-wrapper {
+    background: transparent !important;
+    height: 50px;
+    border: 1px solid $light !important;
+    font-size: 14px;
+    transition: none;
+    flex: 1;
+    border-radius: 0 6px 6px 0;
+    &:focus {
+      border-color: transparent;
+      background: #fff;
+      box-shadow: none;
+    }
+    .datepicker-form-control {
+      height: 48px;
+      border: none;
+      padding: 10px 20px;
+      width: 100%;
+      border-radius: 6px;
+      &:focus {
+        border-color: #7848ff;
+        background: #fff;
+        box-shadow: none;
+        outline: none !important;
+      }
+      &:disabled {
+        color: #babfc7;
+      }
+      &.form-control[readonly] {
+        color: #babfc7;
+      }
+    }
+  }
+  .form-control {
+    background: #fff;
+    height: 50px;
+    border-radius: 8px;
+    border: 1px solid $light;
+    font-size: 14px;
+    transition: none;
+    &:focus {
+      border-color: transparent;
+      background: #fff;
+      box-shadow: none;
+    }
+  }
+  &.active {
+    border-color: $primary;
+    .input-group-append,
+    .input-group-prepend {
+      .input-group-text {
+        background: #fff;
+        border-color: #fff;
+      }
+    }
+    .react-datepicker-wrapper {
+      border-color: transparent !important;
+    }
+  }
+}
+
+/* React Datepicker */
+.react-datepicker {
+  font-family: 'Poppins', sans-serif !important;
+}
+.react-datepicker-popper {
+  background: #fff;
+  z-index: 99 !important;
+  padding-top: 0 !important;
+  box-shadow: 0px 0px 14px #f1f3fd;
+  border-radius: 8px;
+  .react-datepicker {
+    display: block;
+    border: none;
+  }
+  .react-datepicker__triangle {
+    display: none;
+  }
+  .react-datepicker__month-container {
+    width: 100%;
+  }
+  .react-datepicker__header {
+    background: transparent;
+    border-color: $light;
+    padding: 15px 0 10px;
+  }
+  .react-datepicker__day-names {
+    display: none;
+  }
+  .react-datepicker__day-name,
+  .react-datepicker__day,
+  .react-datepicker__time-name {
+    width: 2.2rem;
+    line-height: 2.2rem;
+    border-radius: 40px;
+    &:hover {
+      border-radius: 40px;
+    }
+  }
+  .react-datepicker__day--selected,
+  .react-datepicker__day--in-selecting-range,
+  .react-datepicker__day--in-range,
+  .react-datepicker__month-text--selected,
+  .react-datepicker__month-text--in-selecting-range,
+  .react-datepicker__month-text--in-range,
+  .react-datepicker__quarter-text--selected,
+  .react-datepicker__quarter-text--in-selecting-range,
+  .react-datepicker__quarter-text--in-range,
+  .react-datepicker__year-text--selected,
+  .react-datepicker__year-text--in-selecting-range,
+  .react-datepicker__year-text--in-range {
+    background: $primary;
+    &:hover {
+      background: darken($primary, 10%);
+    }
+  }
+  .react-datepicker__day--keyboard-selected,
+  .react-datepicker__month-text--keyboard-selected,
+  .react-datepicker__quarter-text--keyboard-selected,
+  .react-datepicker__year-text--keyboard-selected {
+    background: $primary;
+    &:hover {
+      background: darken($primary, 10%);
+    }
+  }
+  .react-datepicker__navigation--previous {
+    padding: 0;
+    top: 10px;
+    left: 10px;
+    span {
+      width: 25px;
+      height: 25px;
+      border: 1px solid $light !important;
+      border-radius: 20px;
+      &:before {
+        content: "";
+        position: absolute;
+        width: 7px;
+        height: 7px;
+        top: 8px;
+        left: 9px;
+        border: none;
+        border-left: 2px solid darken($dark, 10%);
+        border-bottom: 2px solid darken($dark, 10%);
+        // @include transform(rotate(45deg));
+      }
+    }
+  }
+  .react-datepicker__navigation--next {
+    padding: 0;
+    top: 10px;
+    right: 10px;
+    span {
+      width: 25px;
+      height: 25px;
+      border: 1px solid $light;
+      border-radius: 20px;
+      &:before {
+        content: "";
+        position: absolute;
+        width: 7px;
+        height: 7px;
+        top: 7px;
+        left: 7px;
+        border: none;
+        border-left: 2px solid darken($dark, 10%);
+        border-bottom: 2px solid darken($dark, 10%);
+        // @include transform(rotate(-130deg));
+      }
+    }
+  }
+}
+.react-datepicker-popper[data-placement^="bottom"] {
+  margin-top: 10px;
+}
+.react-datepicker-popper[data-placement^="top"] {
+  margin-bottom: 10px;
+}
+
+/* Form - Custom Select Input Groups */
+.persent-left {
+  & > span {
+    & + div {
+      padding-left: 20px;
+      position: relative;
+      &:before {
+        content: "%";
+        position: absolute;
+        font-size: 1rem;
+        font-weight: 400;
+        line-height: 1.5;
+        color: #495057;
+        left: 9px;
+      }
+    }
+  }
+}
+.persent-right {
+  & > span {
+    & + div {
+      padding-right: 20px;
+      position: relative;
+      &:before {
+        content: "%";
+        position: absolute;
+        font-size: 1rem;
+        font-weight: 400;
+        line-height: 1.5;
+        color: #495057;
+        right: 9px;
+      }
+    }
+  }
+}
+.dollar-left {
+  & > span {
+    & + div {
+      padding-left: 20px;
+      position: relative;
+      &:before {
+        content: "$";
+        position: absolute;
+        font-size: 1rem;
+        font-weight: 400;
+        line-height: 1.5;
+        color: #495057;
+        left: 9px;
+      }
+    }
+  }
+}
+.dollar-right {
+  & > span {
+    & + div {
+      padding-right: 20px;
+      position: relative;
+      &:before {
+        content: "$";
+        position: absolute;
+        font-size: 1rem;
+        font-weight: 400;
+        line-height: 1.5;
+        color: #495057;
+        right: 9px;
+      }
+    }
+  }
+}
+
+/* Form - Toggle Button */
+
+.toggle-switch {
+  display: flex;
+  .text {
+    font-size: 14px;
+    line-height: 1.8;
+    font-weight: 400;
+  }
+  .switch {
+    position: relative;
+    display: inline-block;
+    width: 48px;
+    height: 24px;
+    .slider {
+      position: absolute;
+      cursor: pointer;
+      top: 0;
+      left: 0;
+      right: 0;
+      bottom: 0;
+      background-color: #e9f0fd;
+      -webkit-transition: 0.4s;
+      transition: 0.4s;
+      border-radius: 34px;
+      &:hover {
+        background-color: #c8d4df;
+      }
+      &:before {
+        position: absolute;
+        content: "";
+        height: 16px;
+        width: 16px;
+        left: 4px;
+        bottom: 4px;
+        background-color: white;
+        -webkit-transition: 0.4s;
+        transition: 0.4s;
+        border-radius: 50%;
+      }
+      &:after {
+        position: absolute;
+        content: "";
+        height: 12px;
+        right: 8px;
+        top: 6px;
+        border-radius: 12px;
+        width: 12px;
+        border: 2px solid #f5f7f9;
+      }
+    }
+    input {
+      opacity: 0;
+      width: 0;
+      height: 0;
+      &:checked {
+        & + .slider {
+          background-color: $success;
+          &:before {
+            -webkit-transform: translateX(24px);
+            -ms-transform: translateX(24px);
+            transform: translateX(24px);
+          }
+          &:after {
+            display: none;
+          }
+        }
+      }
+      &:focus {
+        box-shadow: 0 0 1px #2196f3;
+      }
+    }
+  }
+}
+
+/* Form - Validation */
+
+.text-danger,
+.srv-validation-message {
+  font-size: 11px;
+  font-weight: 500;
+  position: relative;
+  background: rgba(255, 17, 0, 0.15);
+  padding: 4px 10px 5px;
+  border-radius: 4px;
+  color: #f00 !important;
+  margin-top: 5px;
+}
+
+/* Form - Custom Checkbox */
+.custom-checkbox {
+  input[type="checkbox"] {
+    display: none;
+    & + label {
+      position: relative;
+      padding-left: 30px;
+      font-size: 14px;
+      line-height: 2;
+      cursor: pointer;
+      font-weight: 400;
+      margin-bottom: 0;
+      &:before {
+        content: "";
+        position: absolute;
+        top: 3px;
+        left: 0;
+        width: 20px;
+        height: 20px;
+        border: 1px solid #e5e8f5;
+        border-radius: 4px;
+      }
+      &:after {
+        content: "";
+        position: absolute;
+        left: 5px;
+        width: 10px;
+        height: 10px;
+        top: 9px;
+        opacity: 0;
+        visibility: hidden;
+        background: url(../images/icons/checkbox-check.svg) no-repeat !important;
+        background-size: 10px !important;
+      }
+      &:hover {
+        &:before {
+          border-color: $primary !important;
+        }
+      }
+    }
+    &:checked {
+      & + label {
+        &:before {
+          background: $primary !important;
+          border-color: $primary;
+        }
+        &:after {
+          opacity: 1;
+          visibility: visible;
+        }
+      }
+    }
+  }
+}
+
+/* Card Styles */
+.card {
+  border: 1px solid $light;
+  box-shadow: 0px 4px 54px #f1f3fd;
+  border-radius: 8px;
+  .card-header {
+    background: transparent;
+    border: none;
+    font-weight: 600;
+    padding: 1rem 1.25rem;
+    font-size: 16px;
+  }
+  .card-body {
+    padding: 1.5rem;
+  }
+}
+
+/* Loader Spinner */
+
+.loader-main {
+  position: fixed;
+  top: 0;
+  right: 0;
+  bottom: 0;
+  left: 0;
+  background: #fff;
+  z-index: 9999;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
+
+/* Alert */
+
+.alert {
+  font-size: 13px;
+  border: none;
+  margin-bottom: 0;
+}
+.alert + .alert {
+  margin-top: 15px;
+}
+
+/* Modal */
+
+.modal {
+  .modal-sm {
+    max-width: 470px;
+  }
+  .modal-content {
+    border-radius: 0;
+    .modal-header {
+      padding: 1.2rem 1.5rem 1rem;
+      border: none;
+      z-index: 2;
+      width: 100%;
+      position: absolute;
+      &.with-title {
+        background: $light;
+        padding: 2.5rem 1.5rem;
+        position: relative;
+        .close {
+          position: absolute;
+          top: 1.5rem;
+          right: 1.5rem;
+        }
+      }
+      &.with-title.normal {
+        background: transparent;
+        padding: 1.1rem 2rem;
+        position: relative;
+      }
+      .modal-title {
+        padding: 0;
+        font-size: 18px;
+        font-weight: 600;
+        color: #151b26;
+      }
+      .close {
+        width: 35px;
+        height: 35px;
+        border: 1px solid $light;
+        border-radius: 8px;
+        opacity: 1;
+        background: #fff;
+        padding: 0;
+        display: flex;
+        align-items: center;
+        justify-content: center;
+        margin: -10px -10px 0 auto;
+        span {
+          line-height: 17px;
+          font-size: 18px;
+          color: #3f3f3f;
+          margin: 0;
+        }
+        &:hover {
+          border-color: #999;
+        }
+      }
+    }
+    .modal-body {
+      padding: 1.3rem 2rem 1rem;
+    }
+    .modal-footer {
+      padding: 1rem 1.5rem;
+      border: none;
+      border-top: 1px solid $light;
+      display: flex;
+      justify-content: space-between;
+      .btn {
+        padding: 0.7rem 0.5rem;
+        min-width: 120px;
+      }
+    }
+  }
+}
+
+/* Slick Slider */
+.slick-slide,
+.slick-slide * {
+  outline: none !important;
+}
+.slick-prev,
+.slick-next {
+  display: none !important;
+}
+
+/* Modal - React Confirm Modal */
+.react-confirm-alert-overlay {
+  background: rgba(0, 0, 0, 0.5);
+  .react-confirm-alert-body {
+    padding: 0;
+    border-radius: 0;
+    h1 {
+      background: transparent;
+      padding: 1.1rem 2rem;
+      position: relative;
+      font-size: 18px;
+      color: #000;
+      font-weight: 600;
+    }
+    p {
+      padding: 0 2rem 0.5rem;
+    }
+  }
+  .react-confirm-alert-button-group {
+    display: flex;
+    justify-content: space-between;
+    flex-direction: row-reverse;
+    border-top: 1px solid $light;
+    padding: 1rem 1.5rem;
+    .btn {
+      background: $primary;
+      padding: 0.7rem 0.5rem;
+      min-width: 120px;
+      border-radius: 6px;
+      font-size: 14px;
+      margin: 0;
+      text-decoration: none;
+    }
+  }
+}
+
+/* Margins */
+.no-margin {
+  & > div {
+    margin: 0;
+    z-index: 9;
+  }
+}
+
+/* Progress Bar */
+.progress {
+  flex: auto;
+  height: 6px;
+  background: #eaeaea;
+  .progress-bar {
+    background: #bbb;
+    border-radius: 30px;
+  }
+}
+
+/* React Tag Input */
+.react-tagsinput {
+  border: none !important;
+  padding: 0 !important;
+  .react-tagsinput-input {
+    padding: 0;
+    margin: 0;
+    width: 100px;
+  }
+  .react-tagsinput-tag {
+    padding: 6px 8px;
+    background: #e7ebed;
+    border-radius: 6px;
+    border: none;
+    color: #151b26;
+    font-weight: 300;
+    margin-bottom: 10px;
+    margin-right: 10px;
+    .react-tagsinput-remove {
+      font-weight: 300;
+    }
+  }
+}
+
+/* Stripe Card Information */
+
+.stripe-card-info {
+  position: relative;
+  .makeStyles-top-2 {
+    margin: 0;
+    .StripeElement {
+      padding: 20px 15px;
+      border: 1px solid $light;
+      border-radius: 8px;
+      margin-bottom: 1rem;
+    }
+  }
+  .custom-control {
+    position: absolute;
+    bottom: 105px;
+  }
+  .MuiDialogActions-spacing {
+    padding: 90px 25px 0;
+    margin: 0 -24px;
+    position: relative;
+    &:after {
+      content: "";
+      position: absolute;
+      left: 0;
+      right: 0;
+      background: $light;
+      height: 1px;
+      top: 62px;
+    }
+  }
+  .MuiButton-root {
+    background: $primary;
+    border-radius: 6px;
+    font-size: 14px;
+    padding: 13px 20px;
+    min-width: 80px;
+    margin: 0;
+    text-decoration: none;
+    text-transform: capitalize;
+    font-family: 'Poppins', sans-serif;
+    box-shadow: none;
+    &:hover {
+      background-color: #6236e0;
+      border-color: #6236e0;
+      box-shadow: none !important;
+    }
+    &:active,
+    &:focus {
+      background-color: #6236e0;
+      border-color: #6236e0;
+      box-shadow: none !important;
+    }
+    &:disabled,
+    &.disabled {
+      opacity: 0.2;
+    }
+  }
+}
+
+/* Stripe Account Trial Information */
+
+.stripe-card-trial-info {
+  position: relative;
+  .makeStyles-top-2 {
+    margin: 0;
+    .StripeElement {
+      padding: 20px 15px;
+      border: 1px solid $light;
+      border-radius: 8px;
+      margin-bottom: 1.5rem;
+    }
+  }
+  .MuiDialogActions-spacing {
+    // padding: 25px 25px 15px;
+    // border-top: 1px solid $light;
+    // margin: 0 -24px;
+    padding: 25px 25px 0px;
+    border-top: 1px solid #e5e8f5;
+    margin: 24px -31px -20px;
+  }
+  .MuiButton-root {
+    background: $primary;
+    border-radius: 6px;
+    font-size: 14px;
+    padding: 13px 20px;
+    min-width: 80px;
+    margin: 0;
+    text-decoration: none;
+    text-transform: capitalize;
+    font-family: 'Poppins', sans-serif;
+    box-shadow: none;
+    &:hover {
+      background-color: #6236e0;
+      border-color: #6236e0;
+      box-shadow: none !important;
+    }
+    &:active,
+    &:focus {
+      background-color: #6236e0;
+      border-color: #6236e0;
+      box-shadow: none !important;
+    }
+    &:disabled,
+    &.disabled {
+      opacity: 0.2;
+    }
+  }
+}
+
+.chart-tooltip {
+  .custom-graph-tooltip {
+    font-family: 'Poppins', sans-serif;
+    background: #fff;
+    border-radius: 8px !important;
+    overflow: hidden;
+    box-shadow: 0 2px 10px #ddd;
+    div {
+      color: #142433;
+      font-size: 16px;
+      font-weight: 700;
+      span {
+        color: #43536d;
+        font-size: 12px;
+        font-weight: 300;
+        display: block;
+      }
+      & + div {
+        border-top: 1px solid $light;
+      }
+      .percent-up {
+        background: lighten($success, 40%);
+        padding: 4px 7px 4px 18px;
+        border-radius: 6px;
+        font-size: 12px;
+        color: darken($success, 10%);
+        font-weight: 500;
+        position: relative;
+        &:after {
+          content: "";
+          position: absolute;
+          width: 6px;
+          height: 6px;
+          top: 9px;
+          left: 7px;
+          border-left: 2px solid darken($success, 10%);
+          border-bottom: 2px solid darken($success, 10%);
+          // @include transform(rotate(135deg));
+        }
+      }
+      .percent-down {
+        background: lighten($danger, 30%);
+        padding: 4px 7px 4px 18px;
+        border-radius: 6px;
+        font-size: 12px;
+        color: darken($danger, 10%);
+        font-weight: 500;
+        position: relative;
+        &:after {
+          content: "";
+          position: absolute;
+          width: 6px;
+          height: 6px;
+          top: 9px;
+          left: 7px;
+          border-left: 2px solid darken($danger, 10%);
+          border-bottom: 2px solid darken($danger, 10%);
+          // @include transform(rotate(-45deg));
+        }
+      }
+    }
+  }
+}
+.highcharts-halo {
+  display: none;
+}
+.percent-up {
+  background: lighten($success, 40%);
+  padding: 4px 7px 4px 18px;
+  border-radius: 6px;
+  font-size: 12px;
+  color: darken($success, 10%);
+  font-weight: 500;
+  position: relative;
+  &:after {
+    content: "";
+    position: absolute;
+    width: 6px;
+    height: 6px;
+    top: 9px;
+    left: 7px;
+    border-left: 2px solid darken($success, 10%);
+    border-bottom: 2px solid darken($success, 10%);
+    // @include transform(rotate(135deg));
+  }
+}
+.percent-up-red {
+  background: lighten($red, 40%);
+  padding: 4px 7px 4px 18px;
+  border-radius: 6px;
+  font-size: 12px;
+  color: darken($danger, 10%);
+  font-weight: 500;
+  position: relative;
+  &:after {
+    content: "";
+    position: absolute;
+    width: 6px;
+    height: 6px;
+    top: 9px;
+    left: 7px;
+    border-left: 2px solid darken($danger, 10%) !important;
+    border-bottom: 2px solid darken($danger, 10%) !important;
+    // @include transform(rotate(135deg));
+  }
+}
+
+/* Tabs */
+
+.custom-tabs {
+  .nav-tabs {
+    border-bottom: 1px solid $light;
+    margin: 0 0 25px;
+    .nav-link {
+      font-size: 14px;
+      font-weight: 500;
+      padding: 0 0 15px;
+      color: #142433;
+      border: none;
+      border-bottom: 2px solid transparent;
+      &.active {
+        color: $primary;
+        border-bottom-color: $primary;
+        background: transparent;
+        img {
+          opacity: 1;
+        }
+      }
+    }
+    .nav-item + .nav-item {
+      margin-left: 40px;
+    }
+  }
+  .filter-graph {
+    position: absolute;
+    right: 15px;
+    top: -78px;
+    width: 180px;
+  }
+  .graph-box-holder {
+    overflow: hidden;
+    .graph-box {
+      border: none;
+      flex: 1;
+      border-radius: 0;
+      & + .graph-box {
+        border-top: 1px solid $light;
+      }
+    }
+  }
+  .graph-box {
+    background: #fff;
+    border: 1px solid $light;
+    border-radius: 6px;
+    padding: 20px 15px;
+    .icon-image {
+      width: 70px;
+      height: 70px;
+      border-radius: 70px;
+      margin-right: 15px;
+      &.primary-icon {
+        background: lighten($primary, 30%);
+        color: $primary;
+        display: flex;
+        align-items: center;
+        justify-content: center;
+      }
+      &.success-icon {
+        background: lighten($green, 50%);
+        color: $success;
+        display: flex;
+        align-items: center;
+        justify-content: center;
+      }
+      &.info-icon {
+        background: lighten($blue, 30%);
+        color: $blue;
+        display: flex;
+        align-items: center;
+        justify-content: center;
+      }
+    }
+    .title {
+      font-size: 14px;
+      font-weight: 300;
+      color: #43536d;
+      display: block;
+    }
+    .g-value {
+      font-size: 24px;
+      font-weight: 500;
+    }
+    .custom-tooltip {
+      background: #000;
+      color: #fff;
+      display: flex;
+      padding: 20px;
+      border-radius: 6px;
+      div {
+        font-size: 14px;
+        font-weight: 600;
+        color: #fff;
+        span {
+          font-size: 13px;
+          color: #888888;
+          font-weight: 300;
+          margin-bottom: 3px;
+          display: block;
+        }
+        & + div {
+          margin-left: 20px;
+        }
+      }
+    }
+  }
+  &.member-details-tab {
+    .nav-tabs {
+      margin-left: 1.5rem;
+      margin-top: 1.5rem;
+    }
+  }
+}
