@@ -18,7 +18,21 @@ const registerFarm = asyncHandler(async(req, res) => {
     }
 
     // Register farm
-    const user = await User.create({ name, email, password, role: 'admin', cnic })
+    user = await User.create({ name, email, password, role: 'admin', cnic })
     console.log(user)
 
 })
+
+const validateSubDomain = asyncHandler(async(req, res) => {
+    const { subdomain } = req.body;
+    const farm = await Farm.findOne({ subdomain });
+
+    if (farm) {
+    //   res.status(400);
+      res.json({ success: false, message: "Sub-domain Already In Use" });
+    } else {
+        res.json({ success: true })
+    }
+})
+
+export { registerFarm, validateSubDomain }

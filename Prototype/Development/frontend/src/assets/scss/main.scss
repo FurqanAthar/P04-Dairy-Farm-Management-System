@@ -164,58 +164,56 @@
     }
   }
 }
-/* registration */
 
-.regitration {
+/* Domain Selection */
+.domain-selection {
   font-size: 14px;
-  font-weight: 300;
-  color: #767778;
+  font-weight: 400;
+  color: #43536d;
   padding-bottom: 30px;
   .title {
     font-size: 26px;
     line-height: 1.4;
-    font-weight: 500;
+    font-weight: 700;
     margin-bottom: 0;
     color: #000;
     padding: 30px 0 20px;
   }
-  .custommargin {
-    margin-top: 33px;
-    & > div {
+  .form {
+    label {
+      font-size: 13px;
+      color: #151b26;
+      font-weight: 400;
       margin-bottom: 5px;
     }
   }
+  .form-holder {
+    position: relative;
+    .form-control {
+      padding-right: 36%;
+    }
+    small {
+      position: absolute;
+      right: 20px;
+      top: 10px;
+      font-size: 14px;
+      color: #a8b9cd;
+    }
+  }
   .btn {
-    min-width: 150px;
-  }
-  .btn-icon {
-    min-width: 50px;
-    padding: 11px 9px 12px;
-    font-size: 16px;
-    svg {
-      pointer-events: none;
-    }
-    &:hover {
-      background: #ddd;
-      color: #000;
-    }
-    &.btn-outline-dark {
-      &:hover {
-        background: $dark;
-        color: #fff;
-      }
-    }
-  }
-  .col-left {
-    flex: 44%;
-  }
-  .col-right {
-    flex: 35%;
+    margin-top: 10px;
   }
   @media screen and (max-width: 767px) {
+    font-weight: normal;
     .title {
       padding: 10px 0 20px;
       font-size: 20px;
+    }
+    p {
+      margin: 0 0 20px !important;
+      br {
+        display: none;
+      }
     }
   }
 }
@@ -269,6 +267,7 @@
       width: 100%;
       height: auto;
       display: block;
+      border-radius: 50%;
     }
   }
 }

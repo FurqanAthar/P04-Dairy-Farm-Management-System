@@ -2,6 +2,7 @@ import path from 'path'
 import express from 'express'
 import dotenv from 'dotenv'
 import connectDB from './config/db.js'
+import farmRoutes from './routes/farmRoutes.js'
 
 
 dotenv.config()
@@ -11,7 +12,7 @@ const app = express()
 
 app.use(express.json())
 
-// app.use('/farm', )
+app.use('/farm', farmRoutes)
 
 const PORT = process.env.PORT || 5000
 
