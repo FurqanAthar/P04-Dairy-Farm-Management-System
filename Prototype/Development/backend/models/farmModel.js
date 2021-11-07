@@ -58,6 +58,13 @@ const farmSchema = mongoose.Schema(
     }
 )
 
+farmSchema.methods.checkUserById = async function(id) {
+    let user = this.users.find(u => {
+        return u == id ? u : null
+    })
+    return user ? true : false
+}
+
 const Farm = mongoose.model('Farm', farmSchema)
 
 export default Farm

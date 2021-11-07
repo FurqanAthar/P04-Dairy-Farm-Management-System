@@ -30,7 +30,7 @@ export default function BusinessRegistration(props) {
         farmName: "",
         subdomain: "",
         first_name: "",
-        second_name: "",
+        last_name: "",
         company_name: "",
         email: "",
         password: "",
@@ -73,7 +73,7 @@ export default function BusinessRegistration(props) {
                 toast.error("Passwords doesn't match")
             } else {
                 let data = {
-                    name: formInput.first_name + ' ' + formInput.second_name,
+                    name: formInput.first_name + ' ' + formInput.last_name,
                     email: formInput.email,
                     subdomain: formInput.subdomain,
                     farmName: formInput.farmName,

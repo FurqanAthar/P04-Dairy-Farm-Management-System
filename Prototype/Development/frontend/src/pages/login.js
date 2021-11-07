@@ -11,17 +11,15 @@ import {
     Alert,
     Image,
 } from "react-bootstrap";
-import Select from "react-select";
-import { useHistory } from "react-router";
-import Logo from '../assets/images/logo.jpg'
-import LoginSlider from '../components/layouts/Slider'
-import SimpleReactValidator from "simple-react-validator";
-import { toast } from "react-toastify";
-import { NavLink } from "react-router-dom";
+import { useDispatch, useSelector } from "react-redux";
+import { login } from "../actions/userAction";
 import loginpage from '../assets/images/loginimg.jpg'
+import { toast } from "react-toastify";
+import { useHistory } from "react-router";
 
 
 export default function Login(props) {
+<<<<<<< HEAD:Prototype/Development/frontend/src/pages/login.js
 
     const handleSubmit = (evt) => {
         evt.preventDefault()
@@ -30,6 +28,43 @@ export default function Login(props) {
        
     
     }
+=======
+    const history = useHistory()
+    const dispatch = useDispatch()
+    
+    const [formInput, setFormInput] = useReducer(
+      (state, newState) => ({ ...state, ...newState }),
+      {
+        email: "",
+        password: ""
+      }
+    );
+
+    const handleInput = (evt) => {
+        const name = evt.target.name;
+        const newValue = evt.target.value;
+        setFormInput({ [name]: newValue });
+    }
+
+    const handleSubmit = (e) => {
+        e.preventDefault()
+        dispatch(login(formInput.email, formInput.password))
+    }
+
+    const userLogin = useSelector((state) => state.login);
+    const { loading, error, loginInfo } = userLogin;
+
+    useEffect(() => {
+        if (userLogin) {
+            if (error) {
+                toast.error('Invalid Login Details')
+            } else if (loading == false) {
+              history.push("/dashboard");
+            }
+        }
+    }, [dispatch, userLogin])
+
+>>>>>>> 8dda16d26a12f95818da2318bae08fef5f57fe37:Prototype/Development/frontend/src/pages/login.jsx
     return (
         <>
              <div className="d-flex flex-row"  style={{width:"100%",height:"100vh"}} >
@@ -48,12 +83,18 @@ export default function Login(props) {
                                 <Form >
                                     <Form.Group style={{alignSelf:"start",justifyContent:"center"}}>
                                         <Form.Label > Email address</Form.Label>
+<<<<<<< HEAD:Prototype/Development/frontend/src/pages/login.js
                                         <Form.Control name="email" id="email" type="email" placeholder="Example@email.com"
                                         style={{justifyContent:"start",fontSize:"10px" }} id="email" />
+=======
+                                        <Form.Control type="email"name="email" placeholder="Example@email.com" required onChange={handleInput}
+                                        style={{justifyContent:"start",fontSize:"10px" }} />
+>>>>>>> 8dda16d26a12f95818da2318bae08fef5f57fe37:Prototype/Development/frontend/src/pages/login.jsx
 
                                     </Form.Group >
                                     <Form.Group style={{alignSelf:"start",justifyContent:"center",marginTop:"10px"}}>
                                         <Form.Label > Password</Form.Label>
+<<<<<<< HEAD:Prototype/Development/frontend/src/pages/login.js
                                         <Form.Control id="password" type="password" placeholder="Password"style={{justifyContent:"start",fontSize:"10px" }}/>
 
                                     </Form.Group >
@@ -62,6 +103,13 @@ export default function Login(props) {
                                  onClick={handleSubmit}
                             
                              variant="primary" type="submit">Login</Button>
+=======
+                                        <Form.Control type="password" name="password" placeholder="Password" required onChange={handleInput} style={{justifyContent:"start",fontSize:"10px" }} />
+
+                                    </Form.Group >
+                                   
+                                <Button style={{width:"100%",marginTop:"20px",marginBottom:"20px",fontSize:"12px"}} variant="primary" type="submit" disabled={loading} onClick={handleSubmit}>Login</Button>
+>>>>>>> 8dda16d26a12f95818da2318bae08fef5f57fe37:Prototype/Development/frontend/src/pages/login.jsx
                                     <Form.Text> Forgot your password?{" "}
                                      <a   href="https://tutorialdeep.com/bootstrap/bootstrap-button/" >Get help</a>
                                     </Form.Text>
@@ -77,16 +125,8 @@ export default function Login(props) {
                             </div>
                         </Card.Footer>
                     </Card>
-
                 </div>
-            </div>
-
-
-
-
-
-            
+            </div>  
         </>
-       
     );
 }

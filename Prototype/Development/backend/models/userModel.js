@@ -22,6 +22,10 @@ const userSchema = mongoose.Schema(
         cnic: {
             type: String,
             unique: true
+        },
+        farmId: {
+            type: mongoose.Schema.Types.ObjectId,
+            ref: "Farm"
         }
     },
     {
