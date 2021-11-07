@@ -6,20 +6,26 @@ import Farm from '../models/farmModel.js'
 const registerFarm = asyncHandler(async(req, res) => {
     const { farmName, subdomain, name, email, cnic, password } = req.body
 
-    const farm = await Farm.findOne({ subdomain })
-    const user = await User.findOne({ email })
+    let farm = await Farm.findOne({ subdomain })
+    let user = await User.findOne({ email })
 
     if (farm) {
-        res.status(401)
-        throw new Error('Sub-domain Already In Use')
+        res.status(401).json({ success: false, message: "Sub-domain Already In Use" });
+        // throw new Error('Sub-domain Already In Use')
     } else if (user) {
-        res.status(401)
-        throw new Error('Email Already Registered')
+        res.status(401).json({ success: false, message: "Email Address already registered" });
+        // throw new Error('Email Already Registered')
+    } else {
+        // Register farm
+        user = await User.create({ name, email, password, role: 'admin', cnic })
+        farm = await Farm.create({ farmName, subdomain, users: [user._doc._id] });
+
+        if (farm) {
+            res.status(200).json({ success: true })
+        }
+        // console.log(user)
     }
 
-    // Register farm
-    user = await User.create({ name, email, password, role: 'admin', cnic })
-    console.log(user)
 
 })
 

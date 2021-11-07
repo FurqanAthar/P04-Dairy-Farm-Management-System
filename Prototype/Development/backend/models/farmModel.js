@@ -43,10 +43,6 @@ const farmSchema = mongoose.Schema(
             required: true,
             unique: true
         },
-        createdAt: {
-            type: Date,
-            required: true
-        },
         users: [
             {
                 type: mongoose.Schema.Types.ObjectId,
