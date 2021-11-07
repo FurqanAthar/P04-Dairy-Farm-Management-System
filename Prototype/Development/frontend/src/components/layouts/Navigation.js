@@ -51,9 +51,9 @@ export default function Navigation() {
                         </Nav.Link>
                     </Nav>
                     <Nav className="d-flex align-items-center">
-                        <Nav.Link as={NavLink} eventKey="5" to="/signin"
+                        <Nav.Link as={NavLink} eventKey="5" to="/login"
                             className = "mr-4">
-                            Sign in
+                            Log in
                         </Nav.Link>
                         <Nav.Link
                             as={NavLink}
