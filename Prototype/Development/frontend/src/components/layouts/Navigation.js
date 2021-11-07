@@ -63,6 +63,10 @@ export default function Navigation() {
                         >
                             Register
                         </Nav.Link>
+                        <Nav.Link as={NavLink} eventKey="7" to="/AddAnimal"
+                            className = "mr-4">
+                            Add Animal
+                        </Nav.Link>
                     </Nav>
                 </div>
             </div>

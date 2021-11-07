@@ -3,6 +3,7 @@ import "react-toastify/dist/ReactToastify.css";
 import { BrowserRouter, Switch, Route } from "react-router-dom";
 import BusinessRegistration from "./pages/BusinessRegistration"
 import Login from "./pages/login"
+import AddAnimal from "./pages/AddAnimal"
 import Navigation from "./components/layouts/Navigation";
 import { ToastContainer } from "react-toastify";
 
@@ -28,6 +29,9 @@ function App() {
           </Route>
           <Route exact path="/login">
             <Login />
+          </Route>
+          <Route exact path="/AddAnimal">
+            <AddAnimal />
           </Route>
         </Switch>
       </BrowserRouter>
