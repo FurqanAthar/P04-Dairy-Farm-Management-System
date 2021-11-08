@@ -2,11 +2,14 @@ import { createStore, combineReducers, applyMiddleware } from 'redux'
 import thunk from 'redux-thunk'
 import { composeWithDevTools } from 'redux-devtools-extension'
 import { userLoginReducer, userUpdateProfileReducer } from './reducers/userReducer'
+import farmReducer from "./reducers/farmReducer";
 
 const reducer = combineReducers({
-    login: userLoginReducer,
-    updateUserName: userUpdateProfileReducer
-})
+  login: userLoginReducer,
+  updateUserName: userUpdateProfileReducer,
+
+  farm: farmReducer,
+});
 
 const userInfoFromStorage = localStorage.getItem("loginInfo")
   ? JSON.parse(localStorage.getItem("loginInfo"))

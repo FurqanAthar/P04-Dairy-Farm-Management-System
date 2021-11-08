@@ -88,7 +88,6 @@ function Navigation(props) {
                         eventKey="7"
                         to="/dashboard"
                         >
-<<<<<<< HEAD
                             Contact Us
                         </Nav.Link>
                     </Nav>
@@ -111,7 +110,6 @@ function Navigation(props) {
                         </Nav.Link>
                     </Nav>
                 </div>
-=======
                         <div className="icon">
                             <img
                             src={InboxIcon}
@@ -194,7 +192,6 @@ function Navigation(props) {
               <Nav.Link as={NavLink} eventKey="1" to="/">
                 <img src={Logo} />
               </Nav.Link>
->>>>>>> 8dda16d26a12f95818da2318bae08fef5f57fe37
             </div>
             <Navbar.Toggle
               onClick={handleToggleClick}

@@ -1,4 +1,5 @@
 import mongoose from 'mongoose'
+import Animal from './animalModel.js'
 
 const employeeSchema = mongoose.Schema(
     {
@@ -50,8 +51,13 @@ const farmSchema = mongoose.Schema(
                 ref: 'User'
             }
         ],
-        // employees: [employeeSchema],
-        // animals: [animalSchema],
+        animals: [
+            {
+                type: mongoose.Schema.Types.ObjectId,
+                required: true,
+                ref: 'Animal'
+            }
+    ],
     },
     {
         timestamps: true
@@ -63,6 +69,16 @@ farmSchema.methods.checkUserById = async function(id) {
         return u == id ? u : null
     })
     return user ? true : false
+}
+
+farmSchema.methods.getAnimalsData = async function() {
+    var results = await Promise.all(
+      this.animals.map(async (a) => {
+        let animalData = await Animal.findById(a);
+        return animalData;
+      })
+    );
+    return results
 }
 
 const Farm = mongoose.model('Farm', farmSchema)

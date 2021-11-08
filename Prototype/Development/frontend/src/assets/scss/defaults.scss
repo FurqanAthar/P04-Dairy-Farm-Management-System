@@ -237,7 +237,7 @@ hr {
     height: 7px;
     right: 0;
     bottom: 10px;
-    // @include transform(rotate(-45deg));
+    @include transform(rotate(-45deg));
   }
   &:hover {
     background-color: transparent !important;
@@ -256,13 +256,13 @@ hr {
   color: #fff;
   &:hover {
     color: #fff !important;
-    background-color: #6236e0;
-    border-color: #6236e0;
+    background-color: $primary;
+    border-color: $primary;
   }
   &:active,
   &:focus {
-    background-color: #6236e0;
-    border-color: #6236e0;
+    background-color: $primary;
+    border-color: $primary;
     box-shadow: none !important;
   }
 }
@@ -372,7 +372,7 @@ hr {
     font-size: 14px;
     transition: none;
     &:focus {
-      border-color: #7848ff;
+      border-color: $primary;
       background: #fff;
       box-shadow: none;
     }
@@ -385,6 +385,7 @@ hr {
   }
   &.datepicker {
     .input-group-text {
+      background-color: $primary;
       .icon {
         width: 15px;
         height: 16px;
@@ -426,10 +427,10 @@ hr {
     background: transparent !important;
     height: 50px;
     border: 1px solid $light !important;
-    font-size: 14px;
+    font-size: 12px;
     transition: none;
     flex: 1;
-    border-radius: 0 6px 6px 0;
+    border-radius: 6px;
     &:focus {
       border-color: transparent;
       background: #fff;
@@ -442,7 +443,7 @@ hr {
       width: 100%;
       border-radius: 6px;
       &:focus {
-        border-color: #7848ff;
+        border-color: $primary;
         background: #fff;
         box-shadow: none;
         outline: none !important;
@@ -566,7 +567,7 @@ hr {
         border: none;
         border-left: 2px solid darken($dark, 10%);
         border-bottom: 2px solid darken($dark, 10%);
-        // @include transform(rotate(45deg));
+        @include transform(rotate(45deg));
       }
     }
   }
@@ -589,7 +590,7 @@ hr {
         border: none;
         border-left: 2px solid darken($dark, 10%);
         border-bottom: 2px solid darken($dark, 10%);
-        // @include transform(rotate(-130deg));
+        @include transform(rotate(-130deg));
       }
     }
   }
@@ -1169,7 +1170,7 @@ hr {
           left: 7px;
           border-left: 2px solid darken($success, 10%);
           border-bottom: 2px solid darken($success, 10%);
-          // @include transform(rotate(135deg));
+          @include transform(rotate(135deg));
         }
       }
       .percent-down {
@@ -1189,7 +1190,7 @@ hr {
           left: 7px;
           border-left: 2px solid darken($danger, 10%);
           border-bottom: 2px solid darken($danger, 10%);
-          // @include transform(rotate(-45deg));
+          @include transform(rotate(-45deg));
         }
       }
     }
@@ -1215,7 +1216,7 @@ hr {
     left: 7px;
     border-left: 2px solid darken($success, 10%);
     border-bottom: 2px solid darken($success, 10%);
-    // @include transform(rotate(135deg));
+    @include transform(rotate(135deg));
   }
 }
 .percent-up-red {
@@ -1235,7 +1236,7 @@ hr {
     left: 7px;
     border-left: 2px solid darken($danger, 10%) !important;
     border-bottom: 2px solid darken($danger, 10%) !important;
-    // @include transform(rotate(135deg));
+    @include transform(rotate(135deg));
   }
 }
 

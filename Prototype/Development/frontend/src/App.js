@@ -3,13 +3,15 @@ import "react-toastify/dist/ReactToastify.css";
 import { BrowserRouter, Switch, Route } from "react-router-dom";
 import BusinessRegistration from "./pages/BusinessRegistration"
 import Login from "./pages/login"
-import AddAnimal from "./pages/AddAnimal"
+import AddAnimal from "./pages/Animals/AddAnimal"
+import Animals from "./pages/Animals/Animals"
 import Navigation from "./components/layouts/Navigation";
 import { ToastContainer } from "react-toastify";
 import Dashboard from "./pages/Dashboard";
 import PrivateRoute from "./privateRouting/PrivateRoute";
 import FarmSettings from "./pages/settings/FarmSettings";
 import UserProfile from "./pages/settings/UserProfile";
+import "react-datepicker/dist/react-datepicker.css";
 
 function App() {
   return (
@@ -34,11 +36,12 @@ function App() {
           <Route exact path="/login">
             <Login />
           </Route>
-<<<<<<< HEAD
-          <Route exact path="/AddAnimal">
+          <Route exact path="/animals">
+            <Animals />
+          </Route>
+          <Route exact path="/animals/add">
             <AddAnimal />
           </Route>
-=======
           <PrivateRoute exact path="/dashboard">
             <Dashboard />
           </PrivateRoute>
@@ -48,7 +51,6 @@ function App() {
           <PrivateRoute exact path="/farm/settings/user-profile">
             <UserProfile />
           </PrivateRoute>
->>>>>>> 8dda16d26a12f95818da2318bae08fef5f57fe37
         </Switch>
       </BrowserRouter>
     </>

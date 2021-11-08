@@ -2,6 +2,7 @@ import asyncHandler from 'express-async-handler'
 import generateToken from '../utils/generateToken.js'
 import User from '../models/userModel.js'
 import Farm from '../models/farmModel.js'
+import Animal from '../models/animalModel.js'
 
 const registerFarm = asyncHandler(async(req, res) => {
     const { farmName, subdomain, name, email, cnic, password } = req.body
@@ -83,5 +84,41 @@ const updateUserName = asyncHandler(async(req, res) => {
   }
 })
 
+const addAnimal = asyncHandler(async(req, res) => {
+  const { name, tag, dob, type, status, image } = req.body;
 
-export { registerFarm, validateSubDomain, authenticateUser, updateUserName };
+  let farm = await Farm.findById(req.user.farmId)
+  try {
+    const animal = await Animal.create({ name, tag, dob, type, status, image, createdBy: req.user._id, inFarm: req.user.farmId })
+    if (animal && farm) {
+      farm.animals = [...farm.animals, animal._id]
+      farm.save()
+      res.json({ animalData: { ...animal._doc } })
+    } else {
+      res.status(401);
+      throw new Error('Unknown Error Occured');
+    }
+  } catch(error) {
+     res.status(401);
+     throw new Error(error);
+  }
+})
+
+const getAnimalsData = asyncHandler(async(req, res) => {
+  try {
+    let farm = await Farm.findById(req.user.farmId)
+    if (farm) {
+      let data = await farm.getAnimalsData()
+      res.json({animalsData: [...data]})
+    } else {
+      res.json(401)
+      throw new Error('Farm not present')
+    }
+  } catch(error) {
+    res.status(401)
+    res.json(error)
+  }
+})
+
+
+export { registerFarm, validateSubDomain, authenticateUser, updateUserName, addAnimal, getAnimalsData };
