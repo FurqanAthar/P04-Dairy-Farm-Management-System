@@ -34,11 +34,9 @@ function App() {
           <Route exact path="/login">
             <Login />
           </Route>
-<<<<<<< HEAD
           <Route exact path="/AddAnimal">
             <AddAnimal />
           </Route>
-=======
           <PrivateRoute exact path="/dashboard">
             <Dashboard />
           </PrivateRoute>
@@ -48,7 +46,6 @@ function App() {
           <PrivateRoute exact path="/farm/settings/user-profile">
             <UserProfile />
           </PrivateRoute>
->>>>>>> 8dda16d26a12f95818da2318bae08fef5f57fe37
         </Switch>
       </BrowserRouter>
     </>
