@@ -14,6 +14,9 @@ const reducer = combineReducers({
 const userInfoFromStorage = localStorage.getItem("loginInfo")
   ? JSON.parse(localStorage.getItem("loginInfo"))
   : null;
+const animalsFromStorage = localStorage.getItem("animals")
+  ? JSON.parse(localStorage.getItem("animals"))
+  : [];
 
 const initialState = {
     // cart: {
@@ -21,6 +24,7 @@ const initialState = {
     //     shippingAddress: shippingAddressFromStorage,
     // },
     login: { loginInfo: {...userInfoFromStorage} },
+    farm: { animals: { animals: {...animalsFromStorage} } }
 }
 
 const middleware = [thunk]

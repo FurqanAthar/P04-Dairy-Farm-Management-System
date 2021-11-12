@@ -16,5 +16,6 @@ router.route('/login').post(authenticateUser)
 router.route("/update/user/name").put(protect, updateUserName)
 router.route("/animals/add").post(protect, addAnimal)
 router.route("/animals").get(protect, getAnimalsData)
+// router.route("/production/add").get(protect, getAnimalsData)
 
 export default router
