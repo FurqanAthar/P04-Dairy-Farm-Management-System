@@ -54,8 +54,8 @@ function Navigation(props) {
                   <Nav.Link as={NavLink} eventKey="3" to="/animals">
                     Animals
                   </Nav.Link>
-                  <Nav.Link as={NavLink} eventKey="4" to="/quotes">
-                    Quotes
+                  <Nav.Link as={NavLink} eventKey="4" to="/milk-records/add">
+                    Add Milk Record
                   </Nav.Link>
                   <Nav.Link
                     as={NavLink}
@@ -166,7 +166,9 @@ function Navigation(props) {
                             {userData.name.split(" ")[0] +
                               " " +
                               userData.name.split(" ")[1]}
-                            {userData.role ? <small>{userData.role}</small> : null}
+                            {userData.role ? (
+                              <small>{userData.role}</small>
+                            ) : null}
                           </div>
                         </div>
                       }
@@ -179,7 +181,9 @@ function Navigation(props) {
                         Settings
                       </NavDropdown.Item>
                       <NavDropdown.Divider />
-                      <NavDropdown.Item onClick={handleLogout}>Logout</NavDropdown.Item>
+                      <NavDropdown.Item onClick={handleLogout}>
+                        Logout
+                      </NavDropdown.Item>
                     </NavDropdown>
                   </div>
                 </Nav>

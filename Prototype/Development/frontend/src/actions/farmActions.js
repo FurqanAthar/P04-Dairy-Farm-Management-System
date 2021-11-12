@@ -65,6 +65,7 @@ export const getAnimals = () => async (dispatch, getState) => {
     );
 
     dispatch({ type: FARM_ANIMALS_SUCCESS, payload: data });
+    localStorage.setItem("animals", JSON.stringify(data));
   } catch (error) {
     dispatch({
       type: FARM_ANIMALS_FAIL,

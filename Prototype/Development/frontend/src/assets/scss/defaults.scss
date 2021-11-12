@@ -385,7 +385,7 @@ hr {
   }
   &.datepicker {
     .input-group-text {
-      background-color: $primary;
+      background-color: $primary!important;
       .icon {
         width: 15px;
         height: 16px;

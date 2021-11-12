@@ -12,6 +12,8 @@ import PrivateRoute from "./privateRouting/PrivateRoute";
 import FarmSettings from "./pages/settings/FarmSettings";
 import UserProfile from "./pages/settings/UserProfile";
 import "react-datepicker/dist/react-datepicker.css";
+import Animal from "./pages/Animals/Animal";
+import AddMilkProduction from "./pages/DailyRecord/AddMilkProduction";
 
 function App() {
   return (
@@ -36,12 +38,23 @@ function App() {
           <Route exact path="/login">
             <Login />
           </Route>
-          <Route exact path="/animals">
+
+          {/* Animals */}
+          <PrivateRoute exact path="/animals">
             <Animals />
-          </Route>
-          <Route exact path="/animals/add">
+          </PrivateRoute>
+          <PrivateRoute exact path="/animals/add">
             <AddAnimal />
-          </Route>
+          </PrivateRoute>
+          <PrivateRoute exact path="/animals/:id">
+            <Animal />
+          </PrivateRoute>
+
+          {/* Daily Record */}
+          <PrivateRoute exact path="/milk-records/add">
+            <AddMilkProduction />
+          </PrivateRoute>
+
           <PrivateRoute exact path="/dashboard">
             <Dashboard />
           </PrivateRoute>
