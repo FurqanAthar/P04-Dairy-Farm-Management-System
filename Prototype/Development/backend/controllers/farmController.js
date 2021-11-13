@@ -3,6 +3,7 @@ import generateToken from '../utils/generateToken.js'
 import User from '../models/userModel.js'
 import Farm from '../models/farmModel.js'
 import Animal from '../models/animalModel.js'
+import MilkProduction from '../models/milkProductionModel.js'
 
 const registerFarm = asyncHandler(async(req, res) => {
     const { farmName, subdomain, name, email, cnic, password } = req.body
@@ -111,7 +112,7 @@ const getAnimalsData = asyncHandler(async(req, res) => {
       let data = await farm.getAnimalsData()
       res.json({animalsData: [...data]})
     } else {
-      res.json(401)
+      res.status(401)
       throw new Error('Farm not present')
     }
   } catch(error) {
@@ -120,5 +121,46 @@ const getAnimalsData = asyncHandler(async(req, res) => {
   }
 })
 
+const addMilkRecord = asyncHandler(async(req, res) => {
+  const { date, record } = req.body;
+  let farm = await Farm.findById(req.user.farmId);
+  let alreadyPresent = await MilkProduction.findOne({ 'date': date })
+  if (alreadyPresent) {
+    res
+      .status(400)
+      .json({ error: "Daily Milk Record Already Present With this date" });
+    // throw new Error("Daily Milk Record Already Present With this date");
+  } else {
+    const newRecord = await MilkProduction.create({
+      farmId: req.user.farmId,
+      userId: req.user._id,
+      date: date,
+      record: record,
+    });
+    if (farm && newRecord) {
+      farm.milkRecords = [...farm.milkRecords, newRecord._id];
+      farm.save();
+      res.json({ recordData: { ...newRecord._doc } });
+    } else {
+      res.status(400).json({ error: "Unknown Error Occured" });
+      // throw new Error("");
+    }
+  }
+})
 
-export { registerFarm, validateSubDomain, authenticateUser, updateUserName, addAnimal, getAnimalsData };
+const getMilkRecords = asyncHandler(async(req, res) => {
+  let farm = await Farm.findById(req.user.farmId);
+  if (farm) {
+    var records = await Promise.all(
+      farm.milkRecords.map(async (recordId) => {
+        let record = await MilkProduction.findById(recordId);
+        return record;
+      })
+    );
+    res.status(200).json({ milkRecords: [ ...records ] })
+  } else {
+    res.status(400).json({ error: 'No Farm Exists' })
+  }
+})
+
+export { registerFarm, validateSubDomain, authenticateUser, updateUserName, addAnimal, getAnimalsData, addMilkRecord, getMilkRecords };

@@ -10,12 +10,16 @@ import {
   InputGroup,
   FormControl,
 } from "react-bootstrap";
-import { Link } from "react-router-dom";
+import moment from "moment";
+import { toast } from 'react-toastify'
 import DatePicker from "react-datepicker";
+import { Link, useHistory } from "react-router-dom";
 import SimpleReactValidator from "simple-react-validator";
 import chevLeft from "../../assets/images/icons/cheveron-left.svg";
+import { addMilkRecord } from '../../services/apiServices';
 
 const AddMilkProduction = (props) => {
+    let history = useHistory()
     const [, forceUpdate] = useState()
     const [animals, setAnimals] = useState([])
     const [disabled, setDisabled] = useState(false)
@@ -53,12 +57,21 @@ const AddMilkProduction = (props) => {
         setFormInput({ ['date']: date})
     }
 
-    const handleSubmit = (e) => {
+    const handleSubmit = async (e) => {
         if (!validator.allValid()) {
             validator.showMessages()
             forceUpdate(1)
         } else {
-            console.log('calling save')
+            let d = moment(formInput.date).format("YYYY-MM-DD[T00:00:00.000Z]");
+            let data = { ...formInput }
+            data.date = d
+            let result = await addMilkRecord(data, props.login.loginInfo.token);
+            if (result.status != 200) {
+              toast.error('Record with same date already present')
+            } else {
+                toast.success('Record Added');
+                history.push('/dashboard')
+            }
         }
     }
 
@@ -69,9 +82,9 @@ const AddMilkProduction = (props) => {
         e.target.parentNode.parentNode.parentNode.classList.remove("active");
     };
 
-    useEffect(() => {
-        console.log('animals', props.animals)
-    }, [props.animals])
+    // useEffect(() => {
+    //     console.log('animals', props.animals)
+    // }, [props.animals])
 
     return (
       <>

@@ -34,35 +34,42 @@ const employeeSchema = mongoose.Schema(
 )
 
 const farmSchema = mongoose.Schema(
-    {
-        farmName: {
-            type: String,
-            required: true
-        },
-        subdomain: {
-            type: String,
-            required: true,
-            unique: true
-        },
-        users: [
-            {
-                type: mongoose.Schema.Types.ObjectId,
-                required: true,
-                ref: 'User'
-            }
-        ],
-        animals: [
-            {
-                type: mongoose.Schema.Types.ObjectId,
-                required: true,
-                ref: 'Animal'
-            }
-    ],
+  {
+    farmName: {
+      type: String,
+      required: true,
     },
-    {
-        timestamps: true
-    }
-)
+    subdomain: {
+      type: String,
+      required: true,
+      unique: true,
+    },
+    users: [
+      {
+        type: mongoose.Schema.Types.ObjectId,
+        required: true,
+        ref: "User",
+      },
+    ],
+    animals: [
+      {
+        type: mongoose.Schema.Types.ObjectId,
+        required: true,
+        ref: "Animal",
+      },
+    ],
+    milkRecords: [
+      {
+        type: mongoose.Schema.Types.ObjectId,
+        required: true,
+        ref: "MilkProduction",
+      },
+    ],
+  },
+  {
+    timestamps: true,
+  }
+);
 
 farmSchema.methods.checkUserById = async function(id) {
     let user = this.users.find(u => {

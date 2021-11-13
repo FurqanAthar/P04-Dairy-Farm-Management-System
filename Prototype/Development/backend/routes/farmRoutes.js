@@ -6,7 +6,9 @@ import {
   authenticateUser,
   updateUserName,
   addAnimal,
-  getAnimalsData
+  getAnimalsData,
+  addMilkRecord,
+  getMilkRecords
 } from "../controllers/farmController.js";
 import { protect, admin } from '../middleware/authMiddleware.js'
 
@@ -16,6 +18,7 @@ router.route('/login').post(authenticateUser)
 router.route("/update/user/name").put(protect, updateUserName)
 router.route("/animals/add").post(protect, addAnimal)
 router.route("/animals").get(protect, getAnimalsData)
-// router.route("/production/add").get(protect, getAnimalsData)
+router.route("/productions/add").post(protect, addMilkRecord)
+router.route("/productions").get(protect, getMilkRecords)
 
 export default router
