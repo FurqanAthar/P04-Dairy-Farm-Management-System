@@ -14,12 +14,15 @@
   "license": "ISC",
   "dependencies": {
     "bcryptjs": "^2.4.3",
+    "chart.js": "^3.6.0",
     "dotenv": "^10.0.0",
     "express": "^4.17.1",
     "express-async-handler": "^1.2.0",
     "jsonwebtoken": "^8.5.1",
     "mongoose": "^6.0.12",
-    "multer": "^1.4.3"
+    "multer": "^1.4.3",
+    "react-chartjs-2": "^3.3.0",
+    "styled-components": "^5.3.3"
   },
   "devDependencies": {
     "concurrently": "^6.3.0",
