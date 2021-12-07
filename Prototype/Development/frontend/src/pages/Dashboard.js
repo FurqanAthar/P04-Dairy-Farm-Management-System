@@ -30,6 +30,38 @@ import moment from "moment";
 //     }
 // ]
 function LineChart(milkrecord){
+
+  const options = {
+    options: {
+      scales: {
+        y: {
+          Title: { text: "Litres" },
+          title: {
+            display: true,
+            text: "litres milk",
+          },
+        },
+        x: {
+          Title: { text: "Litres" },
+          title: {
+            display: true,
+            text: "Date (Month/Day/year))",
+          },
+        },
+      },
+
+      responsive: true,
+      plugins: {
+        legend: {
+          position: "top",
+        },
+        title: {
+          display: true,
+          text: "Total Milk Production in litres against date",
+        },
+      },
+    },
+  };
     
     console.log("inside",milkrecord.data)
     let l_dates=[]
@@ -85,7 +117,7 @@ function LineChart(milkrecord){
         ]
 
     }
-    return <Bar data={data }/>
+    return <Bar options={options.options} data={data} />;
 
 }
 
@@ -104,7 +136,13 @@ function Dashboard(props) {
       getAnimalsData();
       
     }, []);
-    const isInitialized = useSelector((state) => state.farm.animals.animals? state.farm.animals.animals.animalsData[0]:"none");
+
+    // useEffect(() => {
+    //   console.log(props.animals)
+    //   if (Object.keys(props.animals).length > 0) {
+    //     const isInitialized = props.animals.animals.animalsData[0]
+    //   }
+    // }, [props.animals])
     return (
         <div style={{width:"720px"}}>
            
