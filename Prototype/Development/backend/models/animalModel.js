@@ -9,7 +9,6 @@ const animalSchema = mongoose.Schema(
     tag: {
       type: String,
       required: true,
-      unique: true,
     },
     dob: {
         type: Date,

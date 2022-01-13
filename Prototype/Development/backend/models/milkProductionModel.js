@@ -39,7 +39,6 @@ const milkProductionSchema = mongoose.Schema(
     date: {
         type: Date,
         required: true,
-        unique: true
     },
     record: {
         type: Map,

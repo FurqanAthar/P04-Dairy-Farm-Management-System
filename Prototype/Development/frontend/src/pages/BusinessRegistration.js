@@ -82,7 +82,7 @@ export default function BusinessRegistration(props) {
                 }
                 let result = await axios.post('/farm/register', {...data})
                 if (result.status != 200 || !result.data.success) {
-                  toast.error("Email Address Already Exists");
+                  toast.error(result.data.message);
                 } else {
                   toast.success("Dairy Account Registered");
                   history.push("/login");

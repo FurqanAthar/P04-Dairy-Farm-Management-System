@@ -2,6 +2,7 @@ import { combineReducers } from "redux";
 import {
   FARM_ANIMAL_ADD_REQUEST,
   FARM_ANIMAL_ADD_SUCCESS,
+  FARM_ANIMAL_ADD_CLEAR,
   FARM_ANIMAL_ADD_FAIL,
   FARM_ANIMALS_REQUEST,
   FARM_ANIMALS_SUCCESS,
@@ -16,6 +17,8 @@ const addAnimalReducer = (state = {}, action) => {
       return { loading: false, animals: action.payload, success: true };
     case FARM_ANIMAL_ADD_FAIL:
       return { loading: false, error: action.payload, success: false };
+    case FARM_ANIMAL_ADD_CLEAR:
+      return {};
     default:
       return state;
   }

@@ -156,7 +156,7 @@ function AddAnimal(props) {
         if (!props.addAnimalState.loading) {
             if (props.addAnimalState.success) {
                 toast.success('Animal Added Successfully!')
-                // history.push('/animals')
+                history.push('/animals')
             } else {
                 toast.error(props.addAnimalState.error)
             }

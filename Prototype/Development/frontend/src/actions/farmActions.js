@@ -2,6 +2,7 @@ import axios from "axios";
 import {
     FARM_ANIMAL_ADD_REQUEST,
     FARM_ANIMAL_ADD_SUCCESS,
+    FARM_ANIMAL_ADD_CLEAR,
     FARM_ANIMAL_ADD_FAIL,
     FARM_ANIMALS_REQUEST,
     FARM_ANIMALS_SUCCESS,
@@ -32,6 +33,8 @@ export const addAnimal = (animalData) => async (dispatch, getState) => {
     dispatch({ type: FARM_ANIMAL_ADD_SUCCESS, payload: data });
 
     await getAnimals()
+
+    dispatch({ type: FARM_ANIMAL_ADD_CLEAR, payload: {} });
 
   } catch (error) {
     dispatch({
@@ -65,7 +68,12 @@ export const getAnimals = () => async (dispatch, getState) => {
     );
 
     dispatch({ type: FARM_ANIMALS_SUCCESS, payload: data });
+    
+    dispatch({ type: FARM_ANIMAL_ADD_CLEAR, payload: {} });
+
     localStorage.setItem("animals", JSON.stringify(data));
+
+
   } catch (error) {
     dispatch({
       type: FARM_ANIMALS_FAIL,

@@ -12,9 +12,9 @@ const registerFarm = asyncHandler(async(req, res) => {
     let user = await User.findOne({ email })
 
     if (farm) {
-        res.status(401).json({ success: false, message: "Sub-domain Already In Use" });
+        res.status(200).json({ success: false, message: "Sub-domain Already In Use" });
     } else if (user) {
-        res.status(401).json({ success: false, message: "Email Address already registered" });
+        res.status(200).json({ success: false, message: "Email Address already registered" });
     } else {
         // Register farm
         user = await User.create({ name, email, password, role: 'admin', cnic })
@@ -94,14 +94,15 @@ const addAnimal = asyncHandler(async(req, res) => {
     if (animal && farm) {
       farm.animals = [...farm.animals, animal._id]
       farm.save()
-      res.json({ animalData: { ...animal._doc } })
+      res.status(200).json({ animalData: { ...animal._doc } })
     } else {
-      res.status(401);
+      res
+        .status(401)
+        .json({ success: false, message: "Unknown Error Occured" });
       throw new Error('Unknown Error Occured');
     }
   } catch(error) {
-     res.status(401);
-     throw new Error(error);
+    res.status(401).json({ success: false, message: "Please confirm that image is added and tag is unique" });
   }
 })
 
@@ -124,7 +125,7 @@ const getAnimalsData = asyncHandler(async(req, res) => {
 const addMilkRecord = asyncHandler(async(req, res) => {
   const { date, record } = req.body;
   let farm = await Farm.findById(req.user.farmId);
-  let alreadyPresent = await MilkProduction.findOne({ 'date': date })
+  let alreadyPresent = await MilkProduction.findOne({ 'date': date, 'farmId': farm._id })
   if (alreadyPresent) {
     res
       .status(400)
