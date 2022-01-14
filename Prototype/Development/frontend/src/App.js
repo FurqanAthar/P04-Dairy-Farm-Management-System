@@ -11,6 +11,7 @@ import Dashboard from "./pages/Dashboard";
 import PrivateRoute from "./privateRouting/PrivateRoute";
 import FarmSettings from "./pages/settings/FarmSettings";
 import UserProfile from "./pages/settings/UserProfile";
+import AddMembers from "./pages/settings/AddMembers";
 import "react-datepicker/dist/react-datepicker.css";
 import Animal from "./pages/Animals/Animal";
 import AddMilkProduction from "./pages/DailyRecord/AddMilkProduction";
@@ -60,6 +61,9 @@ function App() {
           </PrivateRoute>
           <PrivateRoute exact path="/farm/settings">
             <FarmSettings />
+          </PrivateRoute>
+          <PrivateRoute exact path="/farm/settings/addMembers">
+            <AddMembers />
           </PrivateRoute>
           <PrivateRoute exact path="/farm/settings/user-profile">
             <UserProfile />

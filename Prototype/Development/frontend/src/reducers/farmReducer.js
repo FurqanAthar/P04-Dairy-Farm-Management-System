@@ -7,6 +7,9 @@ import {
   FARM_ANIMALS_REQUEST,
   FARM_ANIMALS_SUCCESS,
   FARM_ANIMALS_FAIL,
+  FARM_MEMBERS_REQUEST,
+  FARM_MEMBERS_SUCCESS,
+  FARM_MEMBERS_FAIL,
 } from "../constants/farmConstants";
 
 const addAnimalReducer = (state = {}, action) => {
@@ -37,9 +40,24 @@ const animals = (state = {}, action) => {
   }
 }
 
+const teamMembers = (state = {}, action) => {
+  switch (action.type) {
+    case FARM_MEMBERS_REQUEST:
+      return { loading: true };
+    case FARM_MEMBERS_SUCCESS:
+      return { loading: false, members: action.payload, success: true };
+    case FARM_MEMBERS_FAIL:
+      return { loading: false, error: 'Unknown Error Occured', success: false };
+    default:
+      return state;
+  }
+}
+
+
 const farmReducer = combineReducers({
   addAnimalReducer,
-  animals
+  animals,
+  teamMembers
 });
 
 export default farmReducer;

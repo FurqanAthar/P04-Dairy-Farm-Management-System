@@ -17,6 +17,8 @@ import TrashIcon from "../../assets/images/icons/trash.svg";
 import SearchIcon from "../../assets/images/icons/search.svg";
 import { filterTableStyles } from '../../assets/styledComponents/tableStyles';
 import { filterTableSelectStyles } from "../../assets/styledComponents/selectStyles";
+import { deleteAnimal } from '../../services/apiServices';
+import { toast } from 'react-toastify';
 
 function Animals(props) {
 
@@ -79,11 +81,7 @@ function Animals(props) {
         name: "Type:",
         selector: "type",
         sortable: true,
-        cell: (row) => (
-          <div>
-            {row.type}
-          </div>
-        ),
+        cell: (row) => <div>{row.type}</div>,
       },
       {
         name: "Name:",
@@ -103,9 +101,7 @@ function Animals(props) {
             ) : row && row.name ? (
               <>
                 <div className="team-name-short mr-2">
-                  {row.name
-                    .replace(/[^a-zA-Z-0-9 ]/g, "")
-                    .match(/\b\w/g)}
+                  {row.name.replace(/[^a-zA-Z-0-9 ]/g, "").match(/\b\w/g)}
                 </div>
                 {row.name} {row.name}
               </>
@@ -126,10 +122,10 @@ function Animals(props) {
           <div className="d-flex align-items-center w-100 q-status-section justify-content-end">
             <div
               className={
-                row.status === "New calculation" ||
+                row.status === "Non-Milking" ||
                 row.status === "Sent to approval"
                   ? "badge badge-info mr-2"
-                  : row.status === "Not approved"
+                  : row.status === "Dead"
                   ? "badge badge-danger mr-2"
                   : "badge badge-success mr-2"
               }
@@ -139,7 +135,7 @@ function Animals(props) {
             <Button
               className="btn-icon m-0"
               variant="outline-light"
-              // onClick={() => deleteCal(row.id)}
+              onClick={() => deleteAnimalById(row._id)}
             >
               <img src={TrashIcon} alt="Trash Icon" className="icon-black" />
             </Button>
@@ -147,6 +143,16 @@ function Animals(props) {
         ),
       },
     ];
+
+    const deleteAnimalById = async (id) => {
+      let result = await deleteAnimal({ id }, props.login.loginInfo.token);
+      if (result.data.success) {
+        toast.success(result.data.message);
+        props.getAnimals();
+      } else {
+        toast.error(result.data.message);
+      }
+    }
 
     const FilterComponent = ({ }) => (
       <div className="d-flex align-items-center justify-content-between tableHead">

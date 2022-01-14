@@ -6,7 +6,10 @@ import {
     FARM_ANIMAL_ADD_FAIL,
     FARM_ANIMALS_REQUEST,
     FARM_ANIMALS_SUCCESS,
-    FARM_ANIMALS_FAIL
+    FARM_ANIMALS_FAIL,
+    FARM_MEMBERS_REQUEST,
+    FARM_MEMBERS_SUCCESS,
+    FARM_MEMBERS_FAIL
 } from "../constants/farmConstants";
 
 export const addAnimal = (animalData) => async (dispatch, getState) => {
@@ -77,6 +80,44 @@ export const getAnimals = () => async (dispatch, getState) => {
   } catch (error) {
     dispatch({
       type: FARM_ANIMALS_FAIL,
+      payload:
+        error.response && error.response.data.message
+          ? error.response.data.message
+          : error.message,
+    });
+  }
+}
+
+export const getTeamMembers = () => async (dispatch, getState) => {
+  try {
+    dispatch({ type: FARM_MEMBERS_REQUEST });
+
+    const {
+      login: { loginInfo },
+    } = getState();
+
+    const config = {
+      headers: {
+        "Content-Type": "application/json",
+        Authorization: loginInfo.token,
+      },
+    };
+
+    const { data } = await axios.get(
+      "/farm/teamMembers/",
+      config
+    );
+
+    if (data.success) {
+      dispatch({ type: FARM_MEMBERS_SUCCESS, payload: data.teamMembers });
+    } else {
+      dispatch({ type: FARM_MEMBERS_FAIL, payload: {} });
+    }
+
+    
+  } catch (error) {
+    dispatch({
+      type: FARM_MEMBERS_FAIL,
       payload:
         error.response && error.response.data.message
           ? error.response.data.message

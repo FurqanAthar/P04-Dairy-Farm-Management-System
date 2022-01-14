@@ -26,6 +26,10 @@ const userSchema = mongoose.Schema(
         farmId: {
             type: mongoose.Schema.Types.ObjectId,
             ref: "Farm"
+        },
+        active: {
+            type: Boolean,
+            default: true
         }
     },
     {

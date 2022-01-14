@@ -81,11 +81,16 @@ farmSchema.methods.checkUserById = async function(id) {
 farmSchema.methods.getAnimalsData = async function() {
     var results = await Promise.all(
       this.animals.map(async (a) => {
-        let animalData = await Animal.findById(a);
+        let animalData = await Animal.findOne({ _id: a, active: true });
         return animalData;
       })
     );
-    return results
+
+    var filtered = results.filter(function (el) {
+      return el != null;
+    });
+
+    return filtered;
 }
 
 const Farm = mongoose.model('Farm', farmSchema)

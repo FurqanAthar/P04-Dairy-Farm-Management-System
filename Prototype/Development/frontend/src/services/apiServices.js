@@ -37,3 +37,33 @@ export const getMilkProductionRecords = async (token) => {
         return error
     }
 }
+
+export const addTeamMember = async (data, token) => {
+    config.headers.Authorization = token
+    try {
+        return await axios.post(`/farm/member/add`, data, config);
+    }
+    catch(error) {
+        return error
+    }
+}
+
+export const deleteTeamMember = async (data, token) => {
+    config.headers.Authorization = token
+    try {
+        return await axios.post(`/farm/member/delete`, data, config);
+    }
+    catch(error) {
+        return error
+    }
+}
+
+export const deleteAnimal = async (data, token) => {
+    config.headers.Authorization = token
+    try {
+        return await axios.post(`/farm/animals/delete`, data, config);
+    }
+    catch(error) {
+        return error
+    }
+}

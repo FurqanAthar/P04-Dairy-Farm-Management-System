@@ -164,4 +164,97 @@ const getMilkRecords = asyncHandler(async(req, res) => {
   }
 })
 
-export { registerFarm, validateSubDomain, authenticateUser, updateUserName, addAnimal, getAnimalsData, addMilkRecord, getMilkRecords };
+const addMember = asyncHandler(async(req, res) => {
+  const { name, email, password, cnic, role } = req.body
+  let alreadyPresentUser = await User.findOne({ email: email })
+  if (alreadyPresentUser) {
+    res.json({ success: false, message: 'Email Address already registered!' })
+  } else {
+    try {
+      let user = await User.create({ name, email, password, role, cnic, farmId: req.user.farmId });
+      let farm = await Farm.findById(req.user.farmId);
+      if (farm && user) {
+        farm.users = [...farm.users, user._id];
+        farm.save();
+        res.json({ success: true, message: 'User added successfully!' })
+      } else {
+        throw new Error('Unexpected Error')
+      }
+    } catch(error) {
+      res.json({ success: false, message: 'Unexpected Error' })
+    }
+  }
+})
+
+const deleteMember = asyncHandler(async(req, res) => {
+  const { id } = req.body
+  
+  try {
+    let user = await User.findById(id)
+    
+    if (user) {
+      user.active = false
+      user.save()
+  
+      res.json({ success: true, message: 'Team Member Deleted!' })
+    } else {
+      throw new Error("Deletion Failed!")
+    }
+  } catch(error) {
+    res.json({ success: false, message: 'Deletion Failed!' })
+  }
+})
+
+const deleteAnimal = asyncHandler(async (req, res) => {
+  const { id } = req.body;
+
+  try {
+    let animal = await Animal.findById(id);
+
+    if (animal) {
+      animal.active = false;
+      animal.save();
+
+      res.json({ success: true, message: "Animal Deleted!" });
+    } else {
+      throw new Error("Deletion Failed!");
+    }
+  } catch (error) {
+    res.json({ success: false, message: "Deletion Failed!" });
+  }
+});
+
+const getMembers = asyncHandler(async (req, res) => {
+  let farm = await Farm.findById(req.user.farmId);
+  if (farm) {
+    var records = await Promise.all(
+      farm.users.map(async (userId) => {
+        let record = await User.findOne({ _id: userId, active: true });
+        return record;
+      })
+    );
+    var filtered = records.filter(function (el) {
+      return el != null;
+    });
+    res.status(200).json({ success: true, teamMembers: [...filtered] });
+  } else {
+    res.json({ success: false, message: "Unknown Error exists" });
+  }
+});
+
+
+
+export {
+  registerFarm,
+  validateSubDomain,
+  authenticateUser,
+  updateUserName,
+  addAnimal,
+  getAnimalsData,
+  addMilkRecord,
+  getMilkRecords,
+  addMember,
+  getMembers,
+  deleteMember,
+  deleteAnimal,
+};

@@ -35,6 +35,10 @@ const animalSchema = mongoose.Schema(
         type: mongoose.Schema.Types.ObjectId,
         required: true,
         ref: "Farm",
+    },
+    active: {
+      type: Boolean,
+      default: true
     }
   },
   {
