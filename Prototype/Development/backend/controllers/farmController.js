@@ -58,6 +58,7 @@ const authenticateUser = asyncHandler(async (req, res) => {
       role: user.role,
       cnic: user.cnic,
       farmId: user.farmId,
+      image: user.image,
       token: generateToken(user._id, user.farmId),
     });
   } else {
@@ -81,11 +82,68 @@ const updateUserName = asyncHandler(async (req, res) => {
       role: updatedUser.role,
       cnic: updatedUser.cnic,
       farmId: updatedUser.farmId,
+      image: user.image,
       token: generateToken(updatedUser._id, updatedUser.farmId),
     });
   } else {
     res.status(404);
     throw new Error("User not found");
+  }
+});
+
+const updateUserPassword = asyncHandler(async (req, res) => {
+  const user = await User.findById(req.user._id);
+  const { oldPassword, password } = req.body;
+
+  if (user) {
+    if (await user.matchPassword(oldPassword)) {
+      user.password = password;
+      const updatedUser = await user.save();
+
+      res.json({
+        success: true,
+        _id: updatedUser._id,
+        name: updatedUser.name,
+        email: updatedUser.email,
+        role: updatedUser.role,
+        cnic: updatedUser.cnic,
+        farmId: updatedUser.farmId,
+        image: user.image,
+        token: generateToken(updatedUser._id, updatedUser.farmId),
+      });
+    } else {
+      res.json({ success: false, message: "Old Password is Incorrect!" });
+    }
+  } else {
+    res.json({ success: false, message: "User Not Found!" });
+  }
+});
+
+const updateUserImage = asyncHandler(async (req, res) => {
+  const user = await User.findById(req.user._id);
+  const { imageUrl } = req.body;
+
+  try {
+    if (user) {
+      user.image = imageUrl;
+      const updatedUser = await user.save();
+
+      res.json({
+        success: true,
+        _id: updatedUser._id,
+        name: updatedUser.name,
+        email: updatedUser.email,
+        role: updatedUser.role,
+        cnic: updatedUser.cnic,
+        farmId: updatedUser.farmId,
+        image: user.image,
+        token: generateToken(updatedUser._id, updatedUser.farmId),
+      });
+    } else {
+      res.json({ success: false, message: "User Not Found!" });
+    }
+  } catch (error) {
+    res.json({ success: false, message: "Error Occured, Try Again!" });
   }
 });
 
@@ -262,13 +320,57 @@ const getMembers = asyncHandler(async (req, res) => {
   }
 });
 
+const getAnimalData = asyncHandler(async (req, res) => {
+  try {
+    let animal = await Animal.findOne({
+      _id: req.params.id,
+      inFarm: req.user.farmId,
+    });
+    if (animal) {
+      res.json({ success: true, details: animal });
+    } else {
+      res.json({ success: false, message: "Animal Data Doesn't Exists" });
+    }
+  } catch (error) {
+    res.json({ success: false, message: "Animal Data Doesn't Exists" });
+  }
+});
+const updateAnimalData = asyncHandler(async (req, res) => {
+  const { id, name, tag, dob, type, status, image } = req.body;
+  try {
+    let animal = await Animal.findOne({
+      _id: id,
+      inFarm: req.user.farmId,
+    });
+    if (animal) {
+      animal.name = name;
+      animal.tag = tag;
+      animal.dob = dob;
+      animal.type = type;
+      animal.status = status;
+      animal.image = image;
+      await animal.save();
+
+      res.json({ success: true, details: animal });
+    } else {
+      res.json({ success: false, message: "Animal Doesn't Exists" });
+    }
+  } catch (error) {
+    res.json({ success: false, message: "Animal Doesn't Exists" });
+  }
+});
+
 export {
   registerFarm,
   validateSubDomain,
   authenticateUser,
   updateUserName,
+  updateUserPassword,
+  updateUserImage,
   addAnimal,
   getAnimalsData,
+  getAnimalData,
+  updateAnimalData,
   addMilkRecord,
   getMilkRecords,
   addMember,

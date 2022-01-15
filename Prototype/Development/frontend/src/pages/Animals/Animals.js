@@ -38,7 +38,7 @@ function Animals(props) {
 
   const handleRowClick = (row) => {
     history.push({
-      pathname: `/animals/${row._id}`,
+      pathname: `/animal/${row._id}`,
       state: {
         data: row,
       },
