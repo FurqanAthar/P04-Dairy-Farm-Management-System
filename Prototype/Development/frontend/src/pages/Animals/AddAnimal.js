@@ -9,19 +9,16 @@ import {
   InputGroup,
   FormControl,
 } from "react-bootstrap";
-import moment from "moment";
 import Select from "react-select";
 import { connect } from "react-redux";
 import { toast } from "react-toastify";
 import { Link } from "react-router-dom";
-import { useParams } from "react-router";
 import { useHistory } from "react-router";
 import DatePicker from "react-datepicker";
-import { addAnimal, updateAnimal } from "../../actions/farmActions";
+import { addAnimal } from "../../actions/farmActions";
 import SimpleReactValidator from "simple-react-validator";
 import chevLeft from "../../assets/images/icons/cheveron-left.svg";
 import axios from "axios";
-import { getAnimalData } from "../../services/apiServices";
 
 const customRoleControlStyles = {
   control: (base, state) => ({
@@ -74,7 +71,6 @@ const customRoleControlStyles = {
 };
 
 function AddAnimal(props) {
-  const { id } = useParams();
   const history = useHistory();
   const [image, setImage] = useState("");
   const [disabled, setDisabled] = useState(false);
@@ -91,31 +87,6 @@ function AddAnimal(props) {
       image: "",
     }
   );
-
-  useEffect(async () => {
-    if (id !== undefined && props.login.loginInfo) {
-      console.log(id);
-      async function getDetails() {
-        console.log(props.login.loginInfo.token);
-        return await getAnimalData(id, props.login.loginInfo.token);
-      }
-      let result = await getDetails();
-      if (result.data.success) {
-        let d = result.data.details;
-        setFormInput({
-          name: d.name,
-          tag: d.tag,
-          dob: new Date(d.dob),
-          type: d.type,
-          status: d.status,
-          image: d.image,
-        });
-        setImage(d.image);
-      } else {
-        toast.error(result.data.message);
-      }
-    }
-  }, [id, props.login]);
 
   const types = [
     { label: "Cow", value: "Cow" },
@@ -177,15 +148,7 @@ function AddAnimal(props) {
   };
 
   const handleSubmit = async (e) => {
-    setDisabled(true);
     await props.addAnimal({ ...formInput });
-    setDisabled(false);
-  };
-
-  const handleEdit = async (e) => {
-    setDisabled(true);
-    await props.updateAnimal({ ...formInput, id: id });
-    setDisabled(false);
   };
 
   useEffect(() => {
@@ -199,17 +162,6 @@ function AddAnimal(props) {
     }
   }, [props.addAnimalState]);
 
-  useEffect(() => {
-    if (!props.updateAnimalState.loading) {
-      if (props.updateAnimalState.success) {
-        toast.success("Animal Updated Successfully!");
-        history.push("/animals");
-      } else {
-        toast.error(props.updateAnimalState.error);
-      }
-    }
-  }, [props.updateAnimalState]);
-
   return (
     <>
       <div className="add-animal">
@@ -221,7 +173,7 @@ function AddAnimal(props) {
                   <Link to="/dashboard">
                     <img src={chevLeft} alt="icon" />
                   </Link>
-                  {id != undefined ? "Edit Animal" : "Add Animal"}
+                  Add Animal
                 </h2>
               </Col>
             </Row>
@@ -349,10 +301,10 @@ function AddAnimal(props) {
                     <Col lg={12}>
                       <Button
                         variant="primary"
-                        onClick={id != undefined ? handleEdit : handleSubmit}
+                        onClick={handleSubmit}
                         disabled={disabled}
                       >
-                        {id != undefined ? "Update" : "Save"}
+                        Save
                       </Button>
                     </Col>
                   </Row>
@@ -369,14 +321,12 @@ function AddAnimal(props) {
 const mapDispatchToProps = (dispatch) => {
   return {
     addAnimal: (data) => dispatch(addAnimal(data)),
-    updateAnimal: (data) => dispatch(updateAnimal(data)),
   };
 };
 const mapStateToProps = (state) => {
   return {
     login: state.login,
     addAnimalState: state.farm.addAnimalReducer,
-    updateAnimalState: state.farm.updateAnimalReducer,
   };
 };
 
