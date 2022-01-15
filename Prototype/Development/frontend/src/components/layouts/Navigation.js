@@ -57,6 +57,7 @@ function Navigation(props) {
                   <Nav.Link as={NavLink} eventKey="4" to="/milk-records/add">
                     Add Milk Record
                   </Nav.Link>
+                  
                   <Nav.Link
                     as={NavLink}
                     className="btn-primary"
@@ -68,6 +69,7 @@ function Navigation(props) {
                     </div>{" "}
                     Add Animal
                   </Nav.Link>
+                  
                   <Nav.Link
                     as={NavLink}
                     className="mob-nav"
@@ -75,6 +77,9 @@ function Navigation(props) {
                     to="/farm/settings"
                   >
                     Settings
+                  </Nav.Link>
+                  <Nav.Link as={NavLink} eventKey="7" to="/customer/add">
+                    Customer
                   </Nav.Link>
                   <NavDropdown.Divider />
                   <Nav.Link onClick={handleLogout} className="mob-nav">
