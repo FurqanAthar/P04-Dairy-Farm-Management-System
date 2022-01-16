@@ -12,7 +12,11 @@ import {
   FARM_MEMBERS_FAIL,
   FARM_WORKERS_REQUEST,
   FARM_WORKERS_SUCCESS,
-  FARM_WORKERS_FAIL
+  FARM_WORKERS_FAIL,
+  FARM_ANIMAL_UPDATE_REQUEST,
+  FARM_ANIMAL_UPDATE_SUCCESS,
+  FARM_ANIMAL_UPDATE_FAIL,
+  FARM_ANIMAL_UPDATE_CLEAR,
 } from "../constants/farmConstants";
 
 const addAnimalReducer = (state = {}, action) => {
@@ -30,6 +34,21 @@ const addAnimalReducer = (state = {}, action) => {
   }
 };
 
+const updateAnimalReducer = (state = {}, action) => {
+  switch (action.type) {
+    case FARM_ANIMAL_UPDATE_REQUEST:
+      return { loading: true };
+    case FARM_ANIMAL_UPDATE_SUCCESS:
+      return { loading: false, animals: action.payload, success: true };
+    case FARM_ANIMAL_UPDATE_FAIL:
+      return { loading: false, error: action.payload, success: false };
+    case FARM_ANIMAL_UPDATE_CLEAR:
+      return {};
+    default:
+      return state;
+  }
+};
+
 const animals = (state = {}, action) => {
   switch (action.type) {
     case FARM_ANIMALS_REQUEST:
@@ -41,7 +60,7 @@ const animals = (state = {}, action) => {
     default:
       return state;
   }
-}
+};
 
 const teamMembers = (state = {}, action) => {
   switch (action.type) {
@@ -50,7 +69,7 @@ const teamMembers = (state = {}, action) => {
     case FARM_MEMBERS_SUCCESS:
       return { loading: false, members: action.payload, success: true };
     case FARM_MEMBERS_FAIL:
-      return { loading: false, error: 'Unknown Error Occured', success: false };
+      return { loading: false, error: "Unknown Error Occured", success: false };
     default:
       return state;
   }
@@ -71,6 +90,7 @@ const workers = (state = {}, action) => {
 
 const farmReducer = combineReducers({
   addAnimalReducer,
+  updateAnimalReducer,
   animals,
   teamMembers,
   workers,

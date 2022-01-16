@@ -1,10 +1,10 @@
 import "./assets/scss/main.scss";
 import "react-toastify/dist/ReactToastify.css";
 import { BrowserRouter, Switch, Route } from "react-router-dom";
-import BusinessRegistration from "./pages/BusinessRegistration"
-import Login from "./pages/login"
-import AddAnimal from "./pages/Animals/AddAnimal"
-import Animals from "./pages/Animals/Animals"
+import BusinessRegistration from "./pages/BusinessRegistration";
+import Login from "./pages/login";
+import AddAnimal from "./pages/Animals/AddAnimal";
+import Animals from "./pages/Animals/Animals";
 import Navigation from "./components/layouts/Navigation";
 import { ToastContainer } from "react-toastify";
 import Dashboard from "./pages/Dashboard";
@@ -48,8 +48,8 @@ function App() {
           <PrivateRoute exact path="/animals/add">
             <AddAnimal />
           </PrivateRoute>
-          <PrivateRoute exact path="/animals/:id">
-            <Animal />
+          <PrivateRoute exact path="/animal/:id">
+            <AddAnimal />
           </PrivateRoute>
 
           {/* Daily Record */}

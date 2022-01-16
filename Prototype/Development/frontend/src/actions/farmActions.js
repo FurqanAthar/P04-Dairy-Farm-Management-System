@@ -22,12 +22,12 @@ export const addAnimal = (animalData) => async (dispatch, getState) => {
     const {
       login: { loginInfo },
     } = getState();
-    
+
     const config = {
-        headers: {
+      headers: {
         "Content-Type": "application/json",
         Authorization: loginInfo.token,
-        },
+      },
     };
 
     const { data } = await axios.post(
@@ -38,13 +38,49 @@ export const addAnimal = (animalData) => async (dispatch, getState) => {
 
     dispatch({ type: FARM_ANIMAL_ADD_SUCCESS, payload: data });
 
-    await getAnimals()
+    await getAnimals();
 
     dispatch({ type: FARM_ANIMAL_ADD_CLEAR, payload: {} });
-
   } catch (error) {
     dispatch({
       type: FARM_ANIMAL_ADD_FAIL,
+      payload:
+        error.response && error.response.data.message
+          ? error.response.data.message
+          : error.message,
+    });
+  }
+};
+
+export const updateAnimal = (animalData) => async (dispatch, getState) => {
+  try {
+    dispatch({ type: FARM_ANIMAL_UPDATE_REQUEST });
+
+    const {
+      login: { loginInfo },
+    } = getState();
+
+    const config = {
+      headers: {
+        "Content-Type": "application/json",
+        Authorization: loginInfo.token,
+      },
+    };
+
+    const { data } = await axios.put(
+      "/farm/animals/update",
+      { ...animalData },
+      config
+    );
+
+    dispatch({ type: FARM_ANIMAL_UPDATE_SUCCESS, payload: data });
+
+    await getAnimals();
+
+    dispatch({ type: FARM_ANIMAL_UPDATE_CLEAR, payload: {} });
+  } catch (error) {
+    dispatch({
+      type: FARM_ANIMAL_UPDATE_FAIL,
       payload:
         error.response && error.response.data.message
           ? error.response.data.message
@@ -68,18 +104,13 @@ export const getAnimals = () => async (dispatch, getState) => {
       },
     };
 
-    const { data } = await axios.get(
-      "/farm/animals/",
-      config
-    );
+    const { data } = await axios.get("/farm/animals/", config);
 
     dispatch({ type: FARM_ANIMALS_SUCCESS, payload: data });
-    
+
     dispatch({ type: FARM_ANIMAL_ADD_CLEAR, payload: {} });
 
     localStorage.setItem("animals", JSON.stringify(data));
-
-
   } catch (error) {
     dispatch({
       type: FARM_ANIMALS_FAIL,
@@ -89,7 +120,7 @@ export const getAnimals = () => async (dispatch, getState) => {
           : error.message,
     });
   }
-}
+};
 
 export const getTeamMembers = () => async (dispatch, getState) => {
   try {
@@ -106,18 +137,13 @@ export const getTeamMembers = () => async (dispatch, getState) => {
       },
     };
 
-    const { data } = await axios.get(
-      "/farm/teamMembers/",
-      config
-    );
+    const { data } = await axios.get("/farm/teamMembers/", config);
 
     if (data.success) {
       dispatch({ type: FARM_MEMBERS_SUCCESS, payload: data.teamMembers });
     } else {
       dispatch({ type: FARM_MEMBERS_FAIL, payload: {} });
     }
-
-    
   } catch (error) {
     dispatch({
       type: FARM_MEMBERS_FAIL,
@@ -163,4 +189,4 @@ export const getWorkers = () => async (dispatch, getState) => {
 				: error.message,
 		});
 	}
-  }
+}
