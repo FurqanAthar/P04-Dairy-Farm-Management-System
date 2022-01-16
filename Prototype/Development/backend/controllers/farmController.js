@@ -4,6 +4,7 @@ import User from '../models/userModel.js'
 import Farm from '../models/farmModel.js'
 import Animal from '../models/animalModel.js'
 import MilkProduction from '../models/milkProductionModel.js'
+import Worker from '../models/workerModel.js'
 
 const registerFarm = asyncHandler(async(req, res) => {
     const { farmName, subdomain, name, email, cnic, password } = req.body
@@ -242,19 +243,79 @@ const getMembers = asyncHandler(async (req, res) => {
   }
 });
 
+const addWorker = asyncHandler(async (req, res) => {
+    const { name, number, work, cnic, salary, status } = req.body;
+    let alreadyPresentUser = await Worker.findOne({ cnic: cnic })
+    if (alreadyPresentUser) {
+        res.json({ success: false, message: "Worker already exists!" })
+    } else {
+        try {
+            let worker = await Worker.create({ name, number, work, cnic, salary, farmId: req.user.farmId, status });
+            let farm = await Farm.findById(req.user.farmId);
+            if (farm && worker) {
+                farm.workers = [...farm.workers, worker._id];
+                farm.save();
+                res.json({ success: true, message: "Worker added successfully!" })
+            } else {
+                throw new Error("Unexpected Error")
+            }
+        } catch(error) {
+			console.log(error)
+            res.json({ success: false, message: "Unexpected Error" })
+        }
+    }
+});
 
+const editWorker = asyncHandler(async (req, res) => {
+	const worker = await Worker.findById(req.body._id);
+	if (worker) {
+		console.log(req.body);
+		worker.name = req.body.name || worker.name;
+		worker.number = req.body.number || worker.number;
+		worker.work = req.body.work || worker.work;
+		worker.cnic = req.body.cnic || worker.cnic;
+		worker.salary = req.body.salary || worker.salary;
+		worker.status = req.body.status || worker.status;
+		await worker.save();
+		console.log(worker)
+		res.json({ success: true, message: "Changes applied successfully!" });
+	} else {
+		res.json({ success: false, message: "Changes could not be applied!" });
+	}
+});
+
+const getWorkers = asyncHandler(async (req, res) => {
+	let farm = await Farm.findById(req.user.farmId);
+	if (farm) {
+		var records = await Promise.all(
+			farm.workers.map(async (userId) => {
+			let record = await Worker.findOne({ _id: userId });
+			return record;
+			})
+		);
+		var filtered = records.filter(function (el) {
+			return el != null;
+		});
+		res.status(200).json({ success: true, workers: [...filtered] });
+	} else {
+	  	res.json({ success: false, message: "Unknown Error exists!" });
+	}
+});
 
 export {
-  registerFarm,
-  validateSubDomain,
-  authenticateUser,
-  updateUserName,
-  addAnimal,
-  getAnimalsData,
-  addMilkRecord,
-  getMilkRecords,
-  addMember,
-  getMembers,
-  deleteMember,
-  deleteAnimal,
+    registerFarm,
+    validateSubDomain,
+    authenticateUser,
+    updateUserName,
+    addAnimal,
+    getAnimalsData,
+    addMilkRecord,
+    getMilkRecords,
+    addMember,
+    getMembers,
+    deleteMember,
+    deleteAnimal,
+    addWorker,
+	editWorker,
+	getWorkers,
 };

@@ -9,7 +9,10 @@ import {
     FARM_ANIMALS_FAIL,
     FARM_MEMBERS_REQUEST,
     FARM_MEMBERS_SUCCESS,
-    FARM_MEMBERS_FAIL
+    FARM_MEMBERS_FAIL,
+	FARM_WORKERS_REQUEST,
+	FARM_WORKERS_SUCCESS,
+	FARM_WORKERS_FAIL
 } from "../constants/farmConstants";
 
 export const addAnimal = (animalData) => async (dispatch, getState) => {
@@ -125,3 +128,39 @@ export const getTeamMembers = () => async (dispatch, getState) => {
     });
   }
 }
+
+export const getWorkers = () => async (dispatch, getState) => {
+	try {
+		dispatch({ type: FARM_WORKERS_REQUEST });
+	
+		const {
+			login: { loginInfo },
+		} = getState();
+	
+		const config = {
+			headers: {
+			"Content-Type": "application/json",
+			Authorization: loginInfo.token,
+			},
+		};
+	
+		const { data } = await axios.get(
+			"/farm/workers/",
+			config
+		);
+	
+		if (data.success) {
+			dispatch({ type: FARM_WORKERS_SUCCESS, payload: data.workers });
+		} else {
+			dispatch({ type: FARM_WORKERS_FAIL, payload: {} });
+		}
+	} catch (error) {
+		dispatch({
+			type: FARM_WORKERS_FAIL,
+			payload:
+			error.response && error.response.data.message
+				? error.response.data.message
+				: error.message,
+		});
+	}
+  }

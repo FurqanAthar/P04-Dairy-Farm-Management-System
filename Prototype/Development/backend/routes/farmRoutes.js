@@ -1,18 +1,21 @@
 import express from 'express'
 const router = express.Router()
 import {
-  registerFarm,
-  validateSubDomain,
-  authenticateUser,
-  updateUserName,
-  addAnimal,
-  deleteAnimal,
-  getAnimalsData,
-  addMilkRecord,
-  getMilkRecords,
-  addMember,
-  deleteMember,
-  getMembers,
+	registerFarm,
+	validateSubDomain,
+	authenticateUser,
+	updateUserName,
+	addAnimal,
+	deleteAnimal,
+	getAnimalsData,
+	addMilkRecord,
+	getMilkRecords,
+	addMember,
+	deleteMember,
+	getMembers,
+	addWorker,
+	editWorker,
+	getWorkers,
 } from "../controllers/farmController.js";
 import { protect, admin } from '../middleware/authMiddleware.js'
 
@@ -28,5 +31,8 @@ router.route("/animals/delete").post(protect, deleteAnimal)
 router.route("/animals").get(protect, getAnimalsData)
 router.route("/productions/add").post(protect, addMilkRecord)
 router.route("/productions").get(protect, getMilkRecords)
+router.route("/worker/add").post(protect, addWorker)
+router.route("/worker/edit").put(protect, editWorker)
+router.route("/workers").get(protect, getWorkers)
 
 export default router
