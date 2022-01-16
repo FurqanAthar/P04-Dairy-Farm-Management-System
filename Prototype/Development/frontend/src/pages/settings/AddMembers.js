@@ -15,7 +15,7 @@ import DatePicker from "react-datepicker";
 import { useHistory } from "react-router-dom";
 import DataTable from "react-data-table-component";
 import SimpleReactValidator from "simple-react-validator";
-import { addTeamMember, deleteTeamMember } from '../../services/apiServices';
+import { addTeamMember, deleteTeamMember } from "../../services/apiServices";
 import TrashIcon from "../../assets/images/icons/trash.svg";
 import SearchIcon from "../../assets/images/icons/search.svg";
 import AccountModalImage from "../../assets/images/accountsecuritymodal.jpg";
@@ -30,22 +30,21 @@ function AddMembers(props) {
   const [disabled, setDisabled] = useState(false);
   const [teamMembers, setTeamMembers] = useState([]);
   const [validator] = useState(new SimpleReactValidator());
-  
-  useEffect(() => {
-      async function getMembersData() {
-        await props.getTeamMembers();
-      }
-      getMembersData();
-  }, [])
 
   useEffect(() => {
-      console.log('members', props.members)
-      if (!props.members.loading) {
-          if (props.members.success) {
-              setTeamMembers([ ...props.members.members ])
-          }
-      } 
-  }, [props.members])
+    async function getMembersData() {
+      await props.getTeamMembers();
+    }
+    getMembersData();
+  }, []);
+
+  useEffect(() => {
+    if (!props.members.loading) {
+      if (props.members.success) {
+        setTeamMembers([...props.members.members]);
+      }
+    }
+  }, [props.members]);
 
   const customRoleControlStyles = {
     control: (base, state) => ({
@@ -157,34 +156,32 @@ function AddMembers(props) {
           >
             {row.role}
           </div>
-          {
-              row.role != "admin" && props.login.loginInfo.role != "employee" ? (
-                <Button
-                    className="btn-icon m-0"
-                    variant="outline-light"
-                    onClick={() => deleteMember(row._id)}
-                >
-                    <img src={TrashIcon} alt="Trash Icon" className="icon-black" />
-                </Button>
-              ) : null
-          }
+          {row.role != "admin" && props.login.loginInfo.role != "employee" ? (
+            <Button
+              className="btn-icon m-0"
+              variant="outline-light"
+              onClick={() => deleteMember(row._id)}
+            >
+              <img src={TrashIcon} alt="Trash Icon" className="icon-black" />
+            </Button>
+          ) : null}
         </div>
       ),
     },
   ];
 
   const deleteMember = async (id) => {
-      let result = await deleteTeamMember({ id }, props.login.loginInfo.token)
-      if (result.data.success) {
-          async function getMembersData() {
-            await props.getTeamMembers();
-          }
-          getMembersData();
-          toast.success(result.data.message)
-    } else {
-          toast.error(result.data.message)
+    let result = await deleteTeamMember({ id }, props.login.loginInfo.token);
+    if (result.data.success) {
+      async function getMembersData() {
+        await props.getTeamMembers();
       }
-  }
+      getMembersData();
+      toast.success(result.data.message);
+    } else {
+      toast.error(result.data.message);
+    }
+  };
 
   const [formInput, setFormInput] = useReducer(
     (state, newState) => ({ ...state, ...newState }),
@@ -216,22 +213,22 @@ function AddMembers(props) {
     } else {
       let result = await addTeamMember(formInput, props.login.loginInfo.token);
       if (result.data.success) {
-          setFormInput({
-            name: "",
-            email: "",
-            password: "",
-            cnic: "",
-            role: "",
-          });
-          setShow(false)
-          async function getMembersData() {
-            await props.getTeamMembers();
-          }
-          getMembersData();
-          toast.success(result.data.message)
-        } else {
-            toast.error(result.data.message)
+        setFormInput({
+          name: "",
+          email: "",
+          password: "",
+          cnic: "",
+          role: "",
+        });
+        setShow(false);
+        async function getMembersData() {
+          await props.getTeamMembers();
         }
+        getMembersData();
+        toast.success(result.data.message);
+      } else {
+        toast.error(result.data.message);
+      }
     }
 
     setDisabled(false);
@@ -270,7 +267,7 @@ function AddMembers(props) {
           centered
           show={show}
           onHide={() => {
-              setShow(false)
+            setShow(false);
           }}
         >
           <Modal.Header
@@ -375,16 +372,15 @@ function AddMembers(props) {
 
 const mapDispatchToProps = (dispatch) => {
   return {
-      getTeamMembers: (data) => dispatch(getTeamMembers(data)),
+    getTeamMembers: (data) => dispatch(getTeamMembers(data)),
   };
 };
 
 const mapStateToProps = (state) => {
   return {
     login: state.login,
-    members: state.farm.teamMembers
+    members: state.farm.teamMembers,
   };
 };
 
 export default connect(mapStateToProps, mapDispatchToProps)(AddMembers);
-

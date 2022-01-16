@@ -1,10 +1,10 @@
 import "./assets/scss/main.scss";
 import "react-toastify/dist/ReactToastify.css";
 import { BrowserRouter, Switch, Route } from "react-router-dom";
-import BusinessRegistration from "./pages/BusinessRegistration"
-import Login from "./pages/login"
-import AddAnimal from "./pages/Animals/AddAnimal"
-import Animals from "./pages/Animals/Animals"
+import BusinessRegistration from "./pages/BusinessRegistration";
+import Login from "./pages/login";
+import AddAnimal from "./pages/Animals/AddAnimal";
+import Animals from "./pages/Animals/Animals";
 import Navigation from "./components/layouts/Navigation";
 import { ToastContainer } from "react-toastify";
 import Dashboard from "./pages/Dashboard";
@@ -15,6 +15,7 @@ import AddMembers from "./pages/settings/AddMembers";
 import "react-datepicker/dist/react-datepicker.css";
 import Animal from "./pages/Animals/Animal";
 import AddMilkProduction from "./pages/DailyRecord/AddMilkProduction";
+import AddWorkers from "./pages/settings/AddWorkers";
 
 function App() {
   return (
@@ -47,8 +48,8 @@ function App() {
           <PrivateRoute exact path="/animals/add">
             <AddAnimal />
           </PrivateRoute>
-          <PrivateRoute exact path="/animals/:id">
-            <Animal />
+          <PrivateRoute exact path="/animal/:id">
+            <AddAnimal />
           </PrivateRoute>
 
           {/* Daily Record */}
@@ -56,6 +57,7 @@ function App() {
             <AddMilkProduction />
           </PrivateRoute>
 
+		  {/* Team Members and Workers */}
           <PrivateRoute exact path="/dashboard">
             <Dashboard />
           </PrivateRoute>
@@ -64,6 +66,9 @@ function App() {
           </PrivateRoute>
           <PrivateRoute exact path="/farm/settings/addMembers">
             <AddMembers />
+          </PrivateRoute>
+          <PrivateRoute exact path="/farm/settings/addWorkers">
+            <AddWorkers />
           </PrivateRoute>
           <PrivateRoute exact path="/farm/settings/user-profile">
             <UserProfile />

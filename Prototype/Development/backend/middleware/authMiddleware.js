@@ -5,25 +5,23 @@ import Farm from "../models/farmModel.js";
 
 const protect = asyncHandler(async (req, res, next) => {
   let token;
-  if (
-    req.headers.authorization
-  ) {
+  if (req.headers.authorization) {
     try {
-        token = req.headers.authorization
+      token = req.headers.authorization;
 
-        const decoded = jwt.verify(token, process.env.JWT_SECRET);
+      const decoded = jwt.verify(token, process.env.JWT_SECRET);
 
-        let farm = await Farm.findById(decoded.farmId)
-        if (farm) {
-            if (farm.checkUserById(decoded.userId)) {
-                req.user = await User.findById(decoded.userId)
-            } else {
-                res.status(401)
-                throw new Error("Not authorized, token failed")
-            }
+      let farm = await Farm.findById(decoded.farmId);
+      if (farm) {
+        if (farm.checkUserById(decoded.userId)) {
+          req.user = await User.findById(decoded.userId);
+        } else {
+          res.status(401);
+          throw new Error("Not authorized, token failed");
         }
+      }
 
-        next();
+      next();
     } catch (error) {
       console.error(error);
       res.status(401);
