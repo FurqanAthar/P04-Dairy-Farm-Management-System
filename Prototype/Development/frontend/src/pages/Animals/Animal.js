@@ -1,23 +1,28 @@
-import axios from "axios";
-import { connect } from "react-redux";
-import React, { useEffect } from "react";
-import { useParams } from "react-router";
-import { getAnimalData } from "../../services/apiServices";
+import axios from 'axios'
+import { connect } from 'react-redux'
+import React, { useEffect } from 'react'
+import { useParams } from 'react-router'
+import { getAnimalData } from '../../services/apiServices'
 
 function Animal(props) {
-  const { id } = useParams();
+    const { id } = useParams()
 
-  useEffect(() => {
-    async function getData() {
-      await getAnimalData(id, props.login.loginInfo.token);
-    }
-  }, []);
+    useEffect(() => {
+        async function getData() {
+            await getAnimalData(id, props.login.loginInfo.token)
+        }
+    }, [])
 
-  return <div></div>;
+    return (
+        <div>
+            
+        </div>
+    )
 }
 
 const mapDispatchToProps = (dispatch) => {
-  return {};
+  return {
+  };
 };
 const mapStateToProps = (state) => {
   return {
