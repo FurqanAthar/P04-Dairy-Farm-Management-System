@@ -5,18 +5,18 @@ import { userLoginReducer, userUpdateProfileReducer } from './reducers/userReduc
 import farmReducer from "./reducers/farmReducer";
 
 const reducer = combineReducers({
-	login: userLoginReducer,
-	updateUserName: userUpdateProfileReducer,
+  login: userLoginReducer,
+  updateUserName: userUpdateProfileReducer,
 
-	farm: farmReducer,
+  farm: farmReducer,
 });
 
 const userInfoFromStorage = localStorage.getItem("loginInfo")
-	? JSON.parse(localStorage.getItem("loginInfo"))
-	: null;
+  ? JSON.parse(localStorage.getItem("loginInfo"))
+  : null;
 const animalsFromStorage = localStorage.getItem("animals")
-  	? JSON.parse(localStorage.getItem("animals"))
-  	: [];
+  ? JSON.parse(localStorage.getItem("animals"))
+  : [];
 
 const initialState = {
     // cart: {

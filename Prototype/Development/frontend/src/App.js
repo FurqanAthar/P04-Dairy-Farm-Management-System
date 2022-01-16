@@ -15,7 +15,6 @@ import AddMembers from "./pages/settings/AddMembers";
 import "react-datepicker/dist/react-datepicker.css";
 import Animal from "./pages/Animals/Animal";
 import AddMilkProduction from "./pages/DailyRecord/AddMilkProduction";
-import AddWorkers from "./pages/settings/AddWorkers";
 
 function App() {
   return (
@@ -57,7 +56,6 @@ function App() {
             <AddMilkProduction />
           </PrivateRoute>
 
-		  {/* Team Members and Workers */}
           <PrivateRoute exact path="/dashboard">
             <Dashboard />
           </PrivateRoute>
@@ -66,9 +64,6 @@ function App() {
           </PrivateRoute>
           <PrivateRoute exact path="/farm/settings/addMembers">
             <AddMembers />
-          </PrivateRoute>
-          <PrivateRoute exact path="/farm/settings/addWorkers">
-            <AddWorkers />
           </PrivateRoute>
           <PrivateRoute exact path="/farm/settings/user-profile">
             <UserProfile />
