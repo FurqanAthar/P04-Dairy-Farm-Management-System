@@ -1,5 +1,6 @@
 import mongoose from 'mongoose'
 import Animal from './animalModel.js'
+import Customer from './customerModel.js'
 
 const employeeSchema = mongoose.Schema(
     {
@@ -58,6 +59,14 @@ const farmSchema = mongoose.Schema(
         ref: "Animal",
       },
     ],
+    customers: [
+      {
+        type: mongoose.Schema.Types.ObjectId,
+        required: true,
+        ref: "Customer",
+      },
+    ],
+    
     milkRecords: [
       {
         type: mongoose.Schema.Types.ObjectId,
@@ -91,6 +100,22 @@ farmSchema.methods.getAnimalsData = async function() {
     });
 
     return filtered;
+}
+
+
+farmSchema.methods.getCustomersData = async function() {
+  var results = await Promise.all(
+    this.customers.map(async (a) => {
+      let customerData = await Customer.findOne({ _id: a, active: true });
+      return customerData;
+    })
+  );
+
+  var filtered = results.filter(function (el) {
+    return el != null;
+  });
+
+  return filtered;
 }
 
 const Farm = mongoose.model('Farm', farmSchema)

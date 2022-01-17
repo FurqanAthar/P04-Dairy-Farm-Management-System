@@ -4,6 +4,7 @@ import dotenv from 'dotenv'
 import connectDB from './config/db.js'
 import farmRoutes from './routes/farmRoutes.js'
 import uploadRoutes from './routes/uploadRoutes.js'
+import customerRoute from './routes/customerRoute.js'
 
 
 dotenv.config()
@@ -15,6 +16,8 @@ app.use(express.json())
 
 app.use('/farm', farmRoutes)
 app.use('/upload', uploadRoutes)
+app.use('/customer',customerRoute)
+
 
 const __dirname = path.resolve();
 app.use("/uploads", express.static(path.join(__dirname, "/uploads")));

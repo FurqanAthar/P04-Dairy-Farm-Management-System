@@ -57,6 +57,23 @@ function Navigation(props) {
                   <Nav.Link as={NavLink} eventKey="4" to="/milk-records/add">
                     Add Milk Record
                   </Nav.Link>
+                  <Nav.Link as={NavLink} eventKey="8" to="/customer">
+                    Customers 
+                  </Nav.Link>
+                  <Nav.Link
+                    as={NavLink}
+                    className="btn-primary"
+                    eventKey="7"
+                    to="/customer/add"
+                  >
+                    <div className="icon">
+                      <img src={PlusIcon} alt="Icon Image" />
+                    </div>{" "}
+                    Add Customers
+                  </Nav.Link>
+
+
+
                   <Nav.Link
                     as={NavLink}
                     className="btn-primary"

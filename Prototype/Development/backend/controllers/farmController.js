@@ -185,6 +185,7 @@ const getAnimalsData = asyncHandler(async (req, res) => {
     let farm = await Farm.findById(req.user.farmId);
     if (farm) {
       let data = await farm.getAnimalsData();
+      console.log(data )
       res.json({ animalsData: [...data] });
     } else {
       res.status(401);

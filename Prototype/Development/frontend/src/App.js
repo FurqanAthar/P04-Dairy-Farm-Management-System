@@ -16,6 +16,9 @@ import "react-datepicker/dist/react-datepicker.css";
 import Animal from "./pages/Animals/Animal";
 import AddMilkProduction from "./pages/DailyRecord/AddMilkProduction";
 
+import AddCustomer from "./pages/Customer/AddCustomer";
+import Customer from "./pages/Customer/Customers"
+
 function App() {
   return (
     <>
@@ -55,6 +58,18 @@ function App() {
           <PrivateRoute exact path="/milk-records/add">
             <AddMilkProduction />
           </PrivateRoute>
+
+            {/* Customer*/}
+          <PrivateRoute exact path="/customer/:id">
+            <AddCustomer />
+          </PrivateRoute>
+            <PrivateRoute exact path="/customer">
+            <Customer/>
+          </PrivateRoute>
+            <PrivateRoute exact path="/customer/add">
+            <AddCustomer />
+          </PrivateRoute>
+         
 
           <PrivateRoute exact path="/dashboard">
             <Dashboard />

@@ -61,3 +61,23 @@ export const deleteAnimal = async (data, token) => {
     return error;
   }
 };
+
+
+//Customer
+export const getCustomerData = async (id, token) => {
+  config.headers.Authorization = token;
+  try {
+    return await axios.get(`/customer/${id}`, config);
+  } catch (error) {
+    return error;
+  }
+};
+export const deleteCustomer = async (data, token) => {
+  config.headers.Authorization = token;
+  try {
+    return await axios.post(`/customer/delete`, data, config);
+  } catch (error) {
+    return error;
+  }
+};
+
