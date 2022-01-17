@@ -10,6 +10,9 @@ import {
   FARM_MEMBERS_REQUEST,
   FARM_MEMBERS_SUCCESS,
   FARM_MEMBERS_FAIL,
+  FARM_WORKERS_REQUEST,
+  FARM_WORKERS_SUCCESS,
+  FARM_WORKERS_FAIL,
   FARM_ANIMAL_UPDATE_REQUEST,
   FARM_ANIMAL_UPDATE_SUCCESS,
   FARM_ANIMAL_UPDATE_FAIL,
@@ -70,13 +73,27 @@ const teamMembers = (state = {}, action) => {
     default:
       return state;
   }
-};
+}
+
+const workers = (state = {}, action) => {
+	switch (action.type) {
+		case FARM_WORKERS_REQUEST:
+			return { loading: true };
+		case FARM_WORKERS_SUCCESS:
+			return { loading: false, workers: action.payload, success: true };
+		case FARM_WORKERS_FAIL:
+			return { loading: false, error: "Unknown Error Occured", success: false };
+		default:
+			return state;
+	}
+}
 
 const farmReducer = combineReducers({
-  addAnimalReducer,
-  updateAnimalReducer,
-  animals,
-  teamMembers,
+	addAnimalReducer,
+	updateAnimalReducer,
+	animals,
+	teamMembers,
+	workers,
 });
 
 export default farmReducer;

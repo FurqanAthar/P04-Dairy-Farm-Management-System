@@ -81,6 +81,26 @@ function FarmSettings(props) {
                       </Card>
                     </Link>
                 </Col>
+                <Col lg={6}>
+                    <Link to="/farm/settings/addWorkers">
+                        <Card className="mb-4">
+                            <div className="name-char">
+                            </div>
+                            <Card.Body>
+                                <Card.Title>
+                                    Add Workers
+                                </Card.Title>
+                                {/* <Card.Text>
+                                    <strong>
+                                    {props.login.loginInfo.name.split(" ")[0]}{" "}
+                                    {props.login.loginInfo.name.split(" ")[1]}
+                                    </strong>
+                                    <p className="m-0">{props.login.loginInfo.email}</p>
+                                </Card.Text> */}
+                            </Card.Body>
+                        </Card>
+                    </Link>
+                </Col>
               </Row>
             </Col>
           </Row>

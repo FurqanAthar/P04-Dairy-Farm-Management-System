@@ -52,6 +52,13 @@ const farmSchema = mongoose.Schema(
         ref: "User",
       },
     ],
+    workers: [
+        {
+            type: mongoose.Schema.Types.ObjectId,
+            required: true,
+            ref: "Worker"
+        }
+    ],
     animals: [
       {
         type: mongoose.Schema.Types.ObjectId,

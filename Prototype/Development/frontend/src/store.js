@@ -20,8 +20,8 @@ const reducer = combineReducers({
 });
 
 const userInfoFromStorage = localStorage.getItem("loginInfo")
-  ? JSON.parse(localStorage.getItem("loginInfo"))
-  : null;
+	? JSON.parse(localStorage.getItem("loginInfo"))
+	: null;
 const animalsFromStorage = localStorage.getItem("animals")
   ? JSON.parse(localStorage.getItem("animals"))
   : [];

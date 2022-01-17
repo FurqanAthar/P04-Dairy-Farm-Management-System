@@ -39,7 +39,6 @@ function AddMembers(props) {
   }, []);
 
   useEffect(() => {
-    console.log("members", props.members);
     if (!props.members.loading) {
       if (props.members.success) {
         setTeamMembers([...props.members.members]);

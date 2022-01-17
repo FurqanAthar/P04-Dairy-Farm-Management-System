@@ -80,4 +80,32 @@ export const deleteCustomer = async (data, token) => {
     return error;
   }
 };
+export const deleteAnimal = async (data, token) => {
+    config.headers.Authorization = token
+    try {
+        return await axios.post(`/farm/animals/delete`, data, config);
+    }
+    catch(error) {
+        return error
+    }
+}
 
+export const addWorker = async (data, token) => {
+    config.headers.Authorization = token;
+    try {
+        return await axios.post(`/farm/worker/add`, data, config);
+    }
+    catch (error) {
+        return error;
+    }
+}
+
+export const editWorker = async (data, token) => {
+	config.headers.Authorization = token;
+	try {
+		return await axios.put(`/farm/worker/edit`, data, config);
+	}
+	catch (error) {
+		return error;
+	}
+}
