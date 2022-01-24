@@ -20,5 +20,3 @@ Work on Sprint 2 is underway.\
 # WHERE TO ACCESS THE SYSTEM
 
 [https://dfms.herokuapp.com/](https://dfms.herokuapp.com/)
-
-
