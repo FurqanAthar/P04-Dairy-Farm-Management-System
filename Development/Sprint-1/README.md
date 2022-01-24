@@ -9,13 +9,27 @@ Add Link Here.
 # Project Plan on Github
 
 The project plan on github has been updated.\
-Work on Sprint 2 is underway.\
+Work on Sprint 2 is underway.
 
 # LIST OF REQUIREMENTS COMPLETED SO FAR
 
 ## `Prototype`
+1. Sign Up form
+2. Customer Login
+3. Filter Daily Milk Production
+4. Display Milk Production Trends
+5. Add new Animal
+6. Register Account for Dairy Farm
 
 ## `Sprint 1`
+1. Customer
+  - Add
+  - Drop
+  - Edit
+2. Workers/Employee
+  - Add
+  - Drop
+  - Edit
 
 # WHERE TO ACCESS THE SYSTEM
 
