@@ -30,6 +30,13 @@ Work on Sprint 2 is underway.
   - Add
   - Drop
   - Edit
+3. Account Settings
+  - Change Name
+  - Change Email
+  - Update Password
+4. Filter Animals
+  - Based on type
+  - Based on status
 
 # WHERE TO ACCESS THE SYSTEM
 
