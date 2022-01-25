@@ -7,6 +7,7 @@
 Google Drive Folder: https://drive.google.com/drive/folders/1TFYEyY6aTkGu3V4AeK1-Mb48GHbMkp3R?usp=sharing
 
 # Project Plan on Github
+`Note:` Debugging of some issues that we faced in sprint 1 is also in progress in parallel with work on sprint 2.
 
 The project plan on github has been updated.\
 Work on Sprint 2 is underway.
