@@ -12,10 +12,11 @@ import {
 import Select from "react-select";
 import { connect } from 'react-redux'
 import { toast } from 'react-toastify'
-import { Link, useParams } from "react-router-dom";
+import { Link } from "react-router-dom";
 import { useHistory } from "react-router-dom";
 import DatePicker from "react-datepicker";
 import { addCustomer,updateCustomer} from "../../actions/customerAction";
+import { useParams } from "react-router";
 import SimpleReactValidator from "simple-react-validator";
 import chevLeft from "../../assets/images/icons/cheveron-left.svg";
 import axios from "axios";
@@ -74,7 +75,8 @@ const customRoleControlStyles = {
 
 const AddCustomer = (props) => {
   
-  const {id}= useParams()
+  const { id } = useParams();
+  console.log(id ,"id is :")
   const history = useHistory()
 	const [image, setImage] = useState("")
 	const [disabled, setDisabled] = useState(false);
@@ -149,6 +151,7 @@ const AddCustomer = (props) => {
       const handleSubmit = async (e) => {
         console.log({ ...formInput })
           await props.addCustomer({ ...formInput })
+          setDisabled(false);
       }; 
 
       const handleEdit = async (e) => {
@@ -210,18 +213,17 @@ const AddCustomer = (props) => {
 
     return (
         <>
-
           <div className="add-animal">
             <div className="grey-box">
               <Container>
                 <Row className="justify-content-md-center">
                   <Col lg={10}>
-                    <h2 className="title">
-                      <Link to="/dashboard">
-                        <img src={chevLeft} alt="icon" />
-                      </Link>
-                      Add Customer
-                    </h2>
+                  <h2 className="title">
+                  <Link to="/dashboard">
+                    <img src={chevLeft} alt="icon" />
+                  </Link>
+                  {id != undefined ? "Edit Customer" : "Add Customer"}
+                </h2>
                   </Col>
                 </Row>
               </Container>
