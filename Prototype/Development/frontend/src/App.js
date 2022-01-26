@@ -61,13 +61,14 @@ function App() {
           </PrivateRoute>
 
             {/* Customer*/}
-          <PrivateRoute exact path="/customer/:id">
-            <AddCustomer />
-          </PrivateRoute>
+          
             <PrivateRoute exact path="/customer">
             <Customer/>
           </PrivateRoute>
             <PrivateRoute exact path="/customer/add">
+            <AddCustomer />
+          </PrivateRoute>
+          <PrivateRoute exact path="/customer/:id">
             <AddCustomer />
           </PrivateRoute>
          

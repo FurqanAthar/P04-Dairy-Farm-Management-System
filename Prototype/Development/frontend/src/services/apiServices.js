@@ -80,15 +80,7 @@ export const deleteCustomer = async (data, token) => {
     return error;
   }
 };
-export const deleteAnimal = async (data, token) => {
-    config.headers.Authorization = token
-    try {
-        return await axios.post(`/farm/animals/delete`, data, config);
-    }
-    catch(error) {
-        return error
-    }
-}
+
 
 export const addWorker = async (data, token) => {
     config.headers.Authorization = token;
