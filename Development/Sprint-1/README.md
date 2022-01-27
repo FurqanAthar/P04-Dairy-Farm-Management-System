@@ -38,6 +38,8 @@ Work on Sprint 2 is underway.
 4. Filter Animals
   - Based on type
   - Based on status
+5. Filter Customers Based on Status
+6. Delete Animals
 
 # WHERE TO ACCESS THE SYSTEM
 
