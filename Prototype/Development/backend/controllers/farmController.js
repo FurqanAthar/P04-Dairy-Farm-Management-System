@@ -1,10 +1,10 @@
-import asyncHandler from 'express-async-handler'
-import generateToken from '../utils/generateToken.js'
-import User from '../models/userModel.js'
-import Farm from '../models/farmModel.js'
-import Animal from '../models/animalModel.js'
-import MilkProduction from '../models/milkProductionModel.js'
-import Worker from '../models/workerModel.js'
+import asyncHandler from "express-async-handler";
+import generateToken from "../utils/generateToken.js";
+import User from "../models/userModel.js";
+import Farm from "../models/farmModel.js";
+import Animal from "../models/animalModel.js";
+import MilkProduction from "../models/milkProductionModel.js";
+import Worker from "../models/workerModel.js";
 
 const registerFarm = asyncHandler(async (req, res) => {
   const { farmName, subdomain, name, email, cnic, password } = req.body;
@@ -122,11 +122,11 @@ const updateUserPassword = asyncHandler(async (req, res) => {
 
 const updateUserImage = asyncHandler(async (req, res) => {
   const user = await User.findById(req.user._id);
-  const { imageUrl } = req.body;
+  const { image } = req.body;
 
   try {
     if (user) {
-      user.image = imageUrl;
+      user.image = image;
       const updatedUser = await user.save();
 
       res.json({
@@ -186,7 +186,6 @@ const getAnimalsData = asyncHandler(async (req, res) => {
     let farm = await Farm.findById(req.user.farmId);
     if (farm) {
       let data = await farm.getAnimalsData();
-      console.log(data )
       res.json({ animalsData: [...data] });
     } else {
       res.status(401);
@@ -323,120 +322,128 @@ const getMembers = asyncHandler(async (req, res) => {
 });
 
 const addWorker = asyncHandler(async (req, res) => {
-    const { name, number, work, cnic, salary, status } = req.body;
-    let alreadyPresentUser = await Worker.findOne({ cnic: cnic })
-    if (alreadyPresentUser) {
-        res.json({ success: false, message: "Worker already exists!" })
-    } else {
-        try {
-            let worker = await Worker.create({ name, number, work, cnic, salary, farmId: req.user.farmId, status });
-            let farm = await Farm.findById(req.user.farmId);
-            if (farm && worker) {
-                farm.workers = [...farm.workers, worker._id];
-                farm.save();
-                res.json({ success: true, message: "Worker added successfully!" })
-            } else {
-                throw new Error("Unexpected Error")
-            }
-        } catch(error) {
-            res.json({ success: false, message: "Unexpected Error" })
-        }
+  const { name, number, work, cnic, salary, status } = req.body;
+  let alreadyPresentUser = await Worker.findOne({ cnic: cnic });
+  if (alreadyPresentUser) {
+    res.json({ success: false, message: "Worker already exists!" });
+  } else {
+    try {
+      let worker = await Worker.create({
+        name,
+        number,
+        work,
+        cnic,
+        salary,
+        farmId: req.user.farmId,
+        status,
+      });
+      let farm = await Farm.findById(req.user.farmId);
+      if (farm && worker) {
+        farm.workers = [...farm.workers, worker._id];
+        farm.save();
+        res.json({ success: true, message: "Worker added successfully!" });
+      } else {
+        throw new Error("Unexpected Error");
+      }
+    } catch (error) {
+      res.json({ success: false, message: "Unexpected Error" });
     }
+  }
 });
 
 const editWorker = asyncHandler(async (req, res) => {
-	const worker = await Worker.findById(req.body._id);
-	if (worker) {
-		worker.name = req.body.name || worker.name;
-		worker.number = req.body.number || worker.number;
-		worker.work = req.body.work || worker.work;
-		worker.cnic = req.body.cnic || worker.cnic;
-		worker.salary = req.body.salary || worker.salary;
-		worker.status = req.body.status || worker.status;
-		await worker.save();
-		res.json({ success: true, message: "Changes applied successfully!" });
-	} else {
-		res.json({ success: false, message: "Changes could not be applied!" });
-	}
+  const worker = await Worker.findById(req.body._id);
+  if (worker) {
+    worker.name = req.body.name || worker.name;
+    worker.number = req.body.number || worker.number;
+    worker.work = req.body.work || worker.work;
+    worker.cnic = req.body.cnic || worker.cnic;
+    worker.salary = req.body.salary || worker.salary;
+    worker.status = req.body.status || worker.status;
+    await worker.save();
+    res.json({ success: true, message: "Changes applied successfully!" });
+  } else {
+    res.json({ success: false, message: "Changes could not be applied!" });
+  }
 });
 
 const getWorkers = asyncHandler(async (req, res) => {
-	let farm = await Farm.findById(req.user.farmId);
-	if (farm) {
-		var records = await Promise.all(
-			farm.workers.map(async (userId) => {
-			let record = await Worker.findOne({ _id: userId });
-			return record;
-			})
-		);
-		var filtered = records.filter(function (el) {
-			return el != null;
-		});
-		res.status(200).json({ success: true, workers: [...filtered] });
-	} else {
-	  	res.json({ success: false, message: "Unknown Error exists!" });
-	}
+  let farm = await Farm.findById(req.user.farmId);
+  if (farm) {
+    var records = await Promise.all(
+      farm.workers.map(async (userId) => {
+        let record = await Worker.findOne({ _id: userId });
+        return record;
+      })
+    );
+    var filtered = records.filter(function (el) {
+      return el != null;
+    });
+    res.status(200).json({ success: true, workers: [...filtered] });
+  } else {
+    res.json({ success: false, message: "Unknown Error exists!" });
+  }
 });
 
 const getAnimalData = asyncHandler(async (req, res) => {
-	try {
-		let animal = await Animal.findOne({
-			_id: req.params.id,
-			inFarm: req.user.farmId,
-		});
-		if (animal) {
-			res.json({ success: true, details: animal });
-		} else {
-			res.json({ success: false, message: "Animal Data Doesn't Exists" });
-		}
-	} catch (error) {
-		res.json({ success: false, message: "Animal Data Doesn't Exists" });
-	}
+  try {
+    let animal = await Animal.findOne({
+      _id: req.params.id,
+      inFarm: req.user.farmId,
+    });
+    if (animal) {
+      res.json({ success: true, details: animal });
+    } else {
+      res.json({ success: false, message: "Animal Data Doesn't Exists" });
+    }
+  } catch (error) {
+    res.json({ success: false, message: "Animal Data Doesn't Exists" });
+  }
 });
 
 const updateAnimalData = asyncHandler(async (req, res) => {
-	const { id, name, tag, dob, type, status, image } = req.body;
-	try {
-		let animal = await Animal.findOne({
-			_id: id,
-			inFarm: req.user.farmId,
-		});
-		if (animal) {
-			animal.name = name;
-			animal.tag = tag;
-			animal.dob = dob;
-			animal.type = type;
-			animal.status = status;
-			animal.image = image;
-			await animal.save();
-			
-			res.json({ success: true, details: animal });
-		} else {
-			res.json({ success: false, message: "Animal Doesn't Exists" });
-		}
-	} catch (error) {
-		res.json({ success: false, message: "Animal Doesn't Exists" });
-	}
+  const { id, name, tag, dob, type, status, image } = req.body;
+  try {
+    let animal = await Animal.findOne({
+      _id: id,
+      inFarm: req.user.farmId,
+    });
+    if (animal) {
+      animal.name = name;
+      animal.tag = tag;
+      animal.dob = dob;
+      animal.type = type;
+      animal.status = status;
+      animal.image = image;
+      await animal.save();
+
+      res.json({ success: true, details: animal });
+    } else {
+      res.json({ success: false, message: "Animal Doesn't Exists" });
+    }
+  } catch (error) {
+    res.json({ success: false, message: "Animal Doesn't Exists" });
+  }
 });
 
 export {
-	registerFarm,
-	validateSubDomain,
-	authenticateUser,
-	updateUserName,
-	updateUserPassword,
-	updateUserImage,
-	addAnimal,
-	getAnimalsData,
-	getAnimalData,
-	updateAnimalData,
-	addMilkRecord,
-	getMilkRecords,
-	addMember,
-	getMembers,
-	deleteMember,
-	deleteAnimal,
-	addWorker,
-	editWorker,
-	getWorkers,
+  registerFarm,
+  validateSubDomain,
+  authenticateUser,
+  updateUserName,
+  updateUserPassword,
+  updateUserImage,
+  addAnimal,
+  getAnimalsData,
+  getAnimalData,
+  updateAnimalData,
+  addMilkRecord,
+  getMilkRecords,
+  addMember,
+  getMembers,
+  deleteMember,
+  deleteAnimal,
+  addWorker,
+  editWorker,
+  getWorkers,
 };

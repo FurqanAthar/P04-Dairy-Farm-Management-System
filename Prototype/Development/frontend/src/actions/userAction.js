@@ -150,11 +150,10 @@ export const userUpdateImage = (image) => async (dispatch, getState) => {
     if (data.success) {
       dispatch({ type: USER_UPDATEIMAGE_SUCCESS, payload: data });
       dispatch({ type: USER_LOGIN_SUCCESS, payload: data });
+      localStorage.setItem("loginInfo", JSON.stringify(data));
     } else {
       dispatch({ type: USER_UPDATEIMAGE_FAIL, payload: data.message });
     }
-
-    localStorage.setItem("loginInfo", JSON.stringify(data));
   } catch (error) {
     dispatch({
       type: USER_UPDATEIMAGE_FAIL,

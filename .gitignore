@@ -2,6 +2,7 @@
 
 # dependencies
 node_modules
+uploads
 # /Prototype/Development/frontend/node_modules
 /.pnp
 .pnp.js

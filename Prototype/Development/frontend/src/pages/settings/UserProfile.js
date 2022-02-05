@@ -45,16 +45,6 @@ function UserProfile(props) {
 
   const handleShow = async (evt, index) => {
     setStep(index);
-    if (props.login && props.login.loginInfo.name) {
-      let user = props.login.loginInfo;
-      setFormInput({ ["first_name"]: user.name.split(" ")[0] });
-      setFormInput({ ["last_name"]: user.name.split(" ")[1] });
-      setFormInput({ ["email"]: "" });
-      setFormInput({ ["old_password"]: "" });
-      setFormInput({ ["password"]: "" });
-      setFormInput({ ["password_confirmation"]: "" });
-    }
-
     setShow(true);
   };
   const handleClose = () => {
@@ -116,6 +106,18 @@ function UserProfile(props) {
       setUploading(false);
     }
   };
+
+  useEffect(() => {
+    if (props.login && props.login.loginInfo.name) {
+      let user = props.login.loginInfo;
+      setFormInput({ ["first_name"]: user.name.split(" ")[0] });
+      setFormInput({ ["last_name"]: user.name.split(" ")[1] });
+      setFormInput({ ["email"]: "" });
+      setFormInput({ ["old_password"]: "" });
+      setFormInput({ ["password"]: "" });
+      setFormInput({ ["password_confirmation"]: "" });
+    }
+  }, [props.login]);
 
   useEffect(() => {
     console.log(props.updateUserName);
