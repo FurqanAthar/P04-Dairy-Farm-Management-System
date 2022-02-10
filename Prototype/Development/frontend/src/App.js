@@ -78,12 +78,6 @@ function App() {
           </PrivateRoute>
          
 
-         {/*Machines*/}
-         <PrivateRoute exact path="/machine">
-            <Machine/>
-          </PrivateRoute>
-
-
 		  {/* Team Members and Workers */}
           <PrivateRoute exact path="/dashboard">
             <Dashboard />
