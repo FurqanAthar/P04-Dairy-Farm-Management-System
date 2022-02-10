@@ -19,6 +19,7 @@ import AddWorkers from "./pages/settings/AddWorkers";
 
 import AddCustomer from "./pages/Customer/AddCustomer";
 import Customer from "./pages/Customer/Customers"
+import MilkProduction from "./pages/DailyRecord/MilkProduction";
 
 function App() {
   return (
@@ -56,8 +57,11 @@ function App() {
           </PrivateRoute>
 
           {/* Daily Record */}
+          <PrivateRoute exact path="/milk-records">
+            <MilkProduction />
+          </PrivateRoute>
           <PrivateRoute exact path="/milk-records/add">
-            <AddMilkProduction />
+            <AddMilkProduction/>
           </PrivateRoute>
 
             {/* Customer*/}

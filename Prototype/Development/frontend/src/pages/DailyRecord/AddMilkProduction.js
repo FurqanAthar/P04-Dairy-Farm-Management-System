@@ -66,7 +66,7 @@ const AddMilkProduction = (props) => {
             let data = { ...formInput }
             data.date = d
             let result = await addMilkRecord(data, props.login.loginInfo.token);
-            if (result.status != 200) {
+            if (result.status !== 200) {
               toast.error('Record with same date already present')
             } else {
                 toast.success('Record Added');
@@ -124,6 +124,7 @@ const AddMilkProduction = (props) => {
             </Container>
           </div>
           <Container>
+            
             <Row className="justify-content-md-center">
               <Col lg={10}>
                 <div className="details">
@@ -131,6 +132,8 @@ const AddMilkProduction = (props) => {
                     <>
                       {animals.map((a, idx) => {
                         return (
+                          <>
+                          { a.status === "Milking"? (
                           <div key={idx} class="personal-info">
                             <div class="personalDetails">
                               {a.image ? (
@@ -149,6 +152,7 @@ const AddMilkProduction = (props) => {
                             </div>
                             <div className="inputBox d-flex justify-content-end align-items-center">
                               <Form.Group>
+                                <text > Morning Production in Litres</text>
                                 <FormControl
                                   name={`morning-${idx}`}
                                   value={formInput.record[a._id]["morning"]}
@@ -171,6 +175,7 @@ const AddMilkProduction = (props) => {
                                 )}
                               </Form.Group>
                               <Form.Group>
+                              <text > Evening Production in Litres</text>
                                 <FormControl
                                   name={`evening-${idx}`}
                                   value={formInput.record[a._id]["evening"]}
@@ -194,7 +199,14 @@ const AddMilkProduction = (props) => {
                               </Form.Group>
                             </div>
                           </div>
+                        
+                         ): (
+                          ""
+                        ) }
+                        </>
                         );
+                      
+                      
                       })}
                     </>
                   ) : (

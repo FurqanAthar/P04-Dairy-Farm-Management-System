@@ -230,6 +230,7 @@ const addMilkRecord = asyncHandler(async (req, res) => {
 const getMilkRecords = asyncHandler(async (req, res) => {
   let farm = await Farm.findById(req.user.farmId);
   if (farm) {
+    console.log(farm)
     var records = await Promise.all(
       farm.milkRecords.map(async (recordId) => {
         let record = await MilkProduction.findById(recordId);

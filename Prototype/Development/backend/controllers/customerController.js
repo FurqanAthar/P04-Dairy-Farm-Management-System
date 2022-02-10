@@ -6,7 +6,7 @@ import Customer from '../models/customerModel.js'
 const addCustomer = asyncHandler(async(req, res) => {
     const { name, email, cnic ,dob, status, image } = req.body;
     let farm = await Farm.findById(req.user.farmId)
-    console.log("this is the farm",farm)
+    // console.log("this is the farm",farm)
     try {
       console.log("this will be used: ",req.user._id)
       const customer = await Customer.create({ name, email, cnic ,dob, status, image, createdBy: req.user._id, inFarm: req.user.farmId })
