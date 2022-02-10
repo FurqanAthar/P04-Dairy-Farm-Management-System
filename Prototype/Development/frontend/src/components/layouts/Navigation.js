@@ -58,6 +58,9 @@ function Navigation(props) {
                 <Nav.Link as={NavLink} eventKey="3" to="/animals">
                   Animals
                 </Nav.Link>
+                <Nav.Link as={NavLink} eventKey="12" to="/machine">
+                  Machines
+                </Nav.Link>
                 <Nav.Link as={NavLink} eventKey="4" to="/milk-records">
                   Milk Records
                 </Nav.Link>
