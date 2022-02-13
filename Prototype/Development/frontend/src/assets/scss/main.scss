@@ -3,7 +3,6 @@
 @import "~bootstrap/scss/bootstrap";
 @import "defaults";
 
-
 /* Homepage */
 .main-homepage {
   padding-top: 110px;
@@ -125,7 +124,7 @@
         font-size: 23px;
         font-weight: 700;
         color: #dcdce7;
-        margin-bottom: 10px; 
+        margin-bottom: 10px;
       }
       p {
         margin-bottom: 0;
@@ -263,10 +262,10 @@
         overflow: hidden;
         height: 530px;
         .image-scroll {
-        animation: moveSlideshow 16s linear infinite;
-        width: 100%;
-        height: auto;
-        display: block;
+          animation: moveSlideshow 16s linear infinite;
+          width: 100%;
+          height: auto;
+          display: block;
         }
       }
       .image-absolute-5 {
@@ -301,7 +300,7 @@
         width: 50px;
         height: auto;
         display: block;
-      }   
+      }
       .image-absolute-9 {
         position: absolute;
         top: -50px;
@@ -353,7 +352,7 @@
       left: -50px;
     }
   }
-  
+
   .box-3 {
     width: 200px;
     height: 250px;
@@ -462,7 +461,7 @@
         border-radius: 19px;
         margin-top: 0px;
         margin-left: -25px;
-        border: 1px solid #E5E8F5;  
+        border: 1px solid #e5e8f5;
       }
       &:after {
         content: "";
@@ -856,7 +855,7 @@
         height: 40px;
         background-size: 40px;
       }
-      &:after { 
+      &:after {
         content: "";
         position: absolute;
         top: -12px;
@@ -978,7 +977,7 @@
         width: 40px;
         height: 40px;
         border-radius: 100%;
-        position: relative; 
+        position: relative;
       }
     }
     .box-holder-2 {
@@ -3710,7 +3709,7 @@
       color: #767778;
       padding: 20px 40px;
       background: #f8f9ff;
-      .personalDetails{
+      .personalDetails {
         display: flex;
         align-items: center;
         width: 30%;
@@ -3754,10 +3753,10 @@
           }
         }
       }
-      .inputBox{
+      .inputBox {
         width: 70%;
-        .form-group{
-          margin: 5px!important
+        .form-group {
+          margin: 5px !important;
         }
       }
     }
@@ -3881,7 +3880,6 @@
     }
   }
 }
-
 
 /* Account Security Page */
 .account-security-page {
@@ -6070,8 +6068,8 @@
 
 .generic-user-pic {
   .user-pic {
-    width: 40px;
-    height: 40px;
+    width: 35px !important;
+    height: 35px !important;
     background: #fff;
     overflow: hidden;
     border-radius: 100%;
@@ -6081,6 +6079,22 @@
       object-fit: cover;
       object-position: center;
     }
+  }
+}
+.generic-team-name-short {
+  width: 35px;
+  height: 35px;
+  flex: 0 0 35px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  border-radius: 100%;
+  background: lighten($danger, 30%);
+  color: $danger;
+}
+.generic-team-name-role {
+  p {
+    margin: 0px !important;
   }
 }
 
@@ -6317,4 +6331,71 @@
       background: #7848ff;
     }
   }
+}
+
+// category-subheader
+.category-subheader {
+  border: 1px solid $light;
+  border-radius: 8px;
+  padding-bottom: 20px;
+  background: #fff;
+  overflow: hidden;
+  .personal-info {
+    font-size: 13px;
+    font-weight: 300;
+    color: #767778;
+    padding: 20px 40px;
+    background: #f8f9ff;
+    strong {
+      font-weight: 400;
+    }
+  }
+}
+
+.category-item-card {
+  cursor: pointer;
+  margin: 10px 0px;
+  padding: 20px;
+  border-radius: 3px;
+  background: $body-gray;
+  border: 1px solid lighten($primary, 40%);
+  font-size: 13px;
+  p {
+    margin: 2px !important;
+  }
+  strong {
+    font-size: 15px;
+  }
+}
+
+.selected {
+  background: lighten($primary, 50%);
+}
+
+.item-history {
+  .item-body {
+    font-size: 12px;
+    strong {
+      font-size: 15px;
+    }
+    p {
+      margin: 5px 0px;
+    }
+  }
+}
+
+.transaction-card {
+  margin: 10px 0px;
+  padding: 15px;
+  border: 1px solid lighten($primary, 40%);
+}
+
+.icon-black-small {
+  width: 15px;
+  height: 15px;
+  cursor: pointer;
+}
+
+.no-padding {
+  padding: 0px !important;
 }

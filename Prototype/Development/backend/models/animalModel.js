@@ -11,35 +11,35 @@ const animalSchema = mongoose.Schema(
       required: true,
     },
     dob: {
-        type: Date,
-        required: true
+      type: Date,
+      required: true,
     },
     type: {
-        type: String,
-        required: true,
+      type: String,
+      required: true,
     },
     status: {
-        type: String,
-        required: true,
+      type: String,
+      required: true,
     },
     image: {
-        type: String,
-        required: true
+      type: String,
+      required: true,
     },
     createdBy: {
-        type: mongoose.Schema.Types.ObjectId,
-        required: true,
-        ref: "User",
+      type: mongoose.Schema.Types.ObjectId,
+      required: true,
+      ref: "User",
     },
     inFarm: {
-        type: mongoose.Schema.Types.ObjectId,
-        required: true,
-        ref: "Farm",
+      type: mongoose.Schema.Types.ObjectId,
+      required: true,
+      ref: "Farm",
     },
     active: {
       type: Boolean,
-      default: true
-    }
+      default: true,
+    },
   },
   {
     timestamps: true,

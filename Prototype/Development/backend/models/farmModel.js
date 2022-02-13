@@ -1,38 +1,38 @@
-import mongoose from 'mongoose'
-import Animal from './animalModel.js'
-import Customer from './customerModel.js'
+import mongoose from "mongoose";
+import Animal from "./animalModel.js";
+import Customer from "./customerModel.js";
 
 const employeeSchema = mongoose.Schema(
-    {
-        name: {
-            type: String,
-            required: true
-        },
-        cnic: {
-            type: String,
-            required: true,
-            unique: true
-        },
-        dateOfBirth: {
-            type: Date,
-            required: true
-        },
-        joinedAt: {
-            type: Date,
-            required: true
-        },
-        isWorking: {
-            type: Boolean,
-            required: true
-        },
-        leftAt: {
-            type: Date,
-        }
+  {
+    name: {
+      type: String,
+      required: true,
     },
-    {
-        timestamps: true,
-    }
-)
+    cnic: {
+      type: String,
+      required: true,
+      unique: true,
+    },
+    dateOfBirth: {
+      type: Date,
+      required: true,
+    },
+    joinedAt: {
+      type: Date,
+      required: true,
+    },
+    isWorking: {
+      type: Boolean,
+      required: true,
+    },
+    leftAt: {
+      type: Date,
+    },
+  },
+  {
+    timestamps: true,
+  }
+);
 
 const farmSchema = mongoose.Schema(
   {
@@ -53,11 +53,11 @@ const farmSchema = mongoose.Schema(
       },
     ],
     workers: [
-        {
-            type: mongoose.Schema.Types.ObjectId,
-            required: true,
-            ref: "Worker"
-        }
+      {
+        type: mongoose.Schema.Types.ObjectId,
+        required: true,
+        ref: "Worker",
+      },
     ],
     animals: [
       {
@@ -73,7 +73,7 @@ const farmSchema = mongoose.Schema(
         ref: "Customer",
       },
     ],
-    
+
     milkRecords: [
       {
         type: mongoose.Schema.Types.ObjectId,
@@ -81,36 +81,40 @@ const farmSchema = mongoose.Schema(
         ref: "MilkProduction",
       },
     ],
+    inventory: {
+      type: mongoose.Schema.Types.ObjectId,
+      required: true,
+      ref: "Inventory",
+    },
   },
   {
     timestamps: true,
   }
 );
 
-farmSchema.methods.checkUserById = async function(id) {
-    let user = this.users.find(u => {
-        return u == id ? u : null
+farmSchema.methods.checkUserById = async function (id) {
+  let user = this.users.find((u) => {
+    return u == id ? u : null;
+  });
+  return user ? true : false;
+};
+
+farmSchema.methods.getAnimalsData = async function () {
+  var results = await Promise.all(
+    this.animals.map(async (a) => {
+      let animalData = await Animal.findOne({ _id: a, active: true });
+      return animalData;
     })
-    return user ? true : false
-}
+  );
 
-farmSchema.methods.getAnimalsData = async function() {
-    var results = await Promise.all(
-      this.animals.map(async (a) => {
-        let animalData = await Animal.findOne({ _id: a, active: true });
-        return animalData;
-      })
-    );
+  var filtered = results.filter(function (el) {
+    return el != null;
+  });
 
-    var filtered = results.filter(function (el) {
-      return el != null;
-    });
+  return filtered;
+};
 
-    return filtered;
-}
-
-
-farmSchema.methods.getCustomersData = async function() {
+farmSchema.methods.getCustomersData = async function () {
   var results = await Promise.all(
     this.customers.map(async (a) => {
       let customerData = await Customer.findOne({ _id: a, active: true });
@@ -123,8 +127,8 @@ farmSchema.methods.getCustomersData = async function() {
   });
 
   return filtered;
-}
+};
 
-const Farm = mongoose.model('Farm', farmSchema)
+const Farm = mongoose.model("Farm", farmSchema);
 
-export default Farm
+export default Farm;
