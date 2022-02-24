@@ -1,8 +1,7 @@
-@import "variables";
-@import "mixins";
-@import "~bootstrap/scss/bootstrap";
-@import "defaults";
-
+@import 'variables';
+@import 'mixins';
+@import '~bootstrap/scss/bootstrap';
+@import 'defaults';
 
 /* Homepage */
 .main-homepage {
@@ -125,7 +124,7 @@
         font-size: 23px;
         font-weight: 700;
         color: #dcdce7;
-        margin-bottom: 10px; 
+        margin-bottom: 10px;
       }
       p {
         margin-bottom: 0;
@@ -263,10 +262,10 @@
         overflow: hidden;
         height: 530px;
         .image-scroll {
-        animation: moveSlideshow 16s linear infinite;
-        width: 100%;
-        height: auto;
-        display: block;
+          animation: moveSlideshow 16s linear infinite;
+          width: 100%;
+          height: auto;
+          display: block;
         }
       }
       .image-absolute-5 {
@@ -301,7 +300,7 @@
         width: 50px;
         height: auto;
         display: block;
-      }   
+      }
       .image-absolute-9 {
         position: absolute;
         top: -50px;
@@ -323,7 +322,7 @@
     left: 20px;
     z-index: -1;
     &:after {
-      content: "";
+      content: '';
       position: absolute;
       width: 70px;
       height: 70px;
@@ -343,7 +342,7 @@
     right: 120px;
     z-index: -1;
     &:after {
-      content: "";
+      content: '';
       position: absolute;
       width: 120px;
       height: 70px;
@@ -353,7 +352,7 @@
       left: -50px;
     }
   }
-  
+
   .box-3 {
     width: 200px;
     height: 250px;
@@ -364,7 +363,7 @@
     left: 130px;
     z-index: -1;
     &:after {
-      content: "";
+      content: '';
       position: absolute;
       width: 120px;
       height: 90px;
@@ -384,7 +383,7 @@
     left: 130px;
     z-index: -1;
     &:after {
-      content: "";
+      content: '';
       position: absolute;
       width: 80px;
       height: 80px;
@@ -455,17 +454,17 @@
         width: 150px !important;
       }
       &:before {
-        content: "";
+        content: '';
         position: absolute;
         width: 19px;
         height: 19px;
         border-radius: 19px;
         margin-top: 0px;
         margin-left: -25px;
-        border: 1px solid #E5E8F5;  
+        border: 1px solid #e5e8f5;
       }
       &:after {
-        content: "";
+        content: '';
         position: absolute;
         width: 9px;
         height: 5px;
@@ -684,7 +683,7 @@
         margin-bottom: 20px;
         position: relative;
         &:before {
-          content: "";
+          content: '';
           position: absolute;
           width: 60px;
           height: 60px;
@@ -733,7 +732,7 @@
           margin-right: 20px;
           position: relative;
           &:before {
-            content: "";
+            content: '';
             position: absolute;
             width: 60px;
             height: 60px;
@@ -847,7 +846,7 @@
       color: #fff;
       position: relative;
       &:before {
-        content: "";
+        content: '';
         position: absolute;
         background: url(../images/mark.png) no-repeat;
         top: -18px;
@@ -856,8 +855,8 @@
         height: 40px;
         background-size: 40px;
       }
-      &:after { 
-        content: "";
+      &:after {
+        content: '';
         position: absolute;
         top: -12px;
         left: -12px;
@@ -978,7 +977,7 @@
         width: 40px;
         height: 40px;
         border-radius: 100%;
-        position: relative; 
+        position: relative;
       }
     }
     .box-holder-2 {
@@ -1180,7 +1179,7 @@
         color: #142433;
         position: relative;
         &:after {
-          content: "";
+          content: '';
           position: absolute;
           left: 0;
           right: 0;
@@ -1272,7 +1271,7 @@
           }
         }
         &:before {
-          content: "";
+          content: '';
           position: absolute;
           width: 20px;
           height: 20px;
@@ -1585,7 +1584,7 @@
       padding: 0 30px;
     }
     &:after {
-      content: "";
+      content: '';
       position: absolute;
       top: 12px;
       left: 0;
@@ -2019,7 +2018,7 @@
       }
     }
   }
-  .btn[type="submit"] {
+  .btn[type='submit'] {
     margin: 20px 0;
     width: 100%;
     font-weight: 400;
@@ -2041,7 +2040,7 @@
       padding: 0 30px;
     }
     &:after {
-      content: "";
+      content: '';
       position: absolute;
       top: 12px;
       left: 0;
@@ -3710,7 +3709,7 @@
       color: #767778;
       padding: 20px 40px;
       background: #f8f9ff;
-      .personalDetails{
+      .personalDetails {
         display: flex;
         align-items: center;
         width: 30%;
@@ -3754,10 +3753,10 @@
           }
         }
       }
-      .inputBox{
+      .inputBox {
         width: 70%;
-        .form-group{
-          margin: 5px!important
+        .form-group {
+          margin: 5px !important;
         }
       }
     }
@@ -3881,7 +3880,6 @@
     }
   }
 }
-
 
 /* Account Security Page */
 .account-security-page {
@@ -4087,7 +4085,7 @@
       right: -24px;
       top: 100%;
       position: absolute;
-      content: "";
+      content: '';
       background: $light;
       height: 1px;
     }
@@ -4972,7 +4970,7 @@
         min-width: 70px;
       }
       .custom-checkbox {
-        input[type="radio"] {
+        input[type='radio'] {
           display: none;
         }
         label {
@@ -5089,7 +5087,7 @@
         padding-bottom: 10px;
         position: relative;
         &:before {
-          content: "";
+          content: '';
           position: absolute;
           left: 0;
           top: 7px;
@@ -5334,7 +5332,7 @@
           }
           .custom-checkbox {
             margin-top: 20px;
-            input[type="checkbox"] {
+            input[type='checkbox'] {
               opacity: 0;
               & + label {
                 position: relative;
@@ -5350,7 +5348,7 @@
                   border-color: $dark;
                 }
                 &:before {
-                  content: "";
+                  content: '';
                   position: absolute;
                   top: -1px;
                   right: -1px;
@@ -5364,7 +5362,7 @@
                   visibility: hidden;
                 }
                 &:after {
-                  content: "";
+                  content: '';
                   position: absolute;
                   width: 20px;
                   height: 20px;
@@ -5378,7 +5376,7 @@
                 }
               }
             }
-            input[type="checkbox"]:checked {
+            input[type='checkbox']:checked {
               & + label {
                 border-color: $dark;
                 &:before {
@@ -5417,7 +5415,7 @@
       display: none;
       position: relative;
       &:after {
-        content: "";
+        content: '';
         position: absolute;
         width: 8px;
         height: 8px;
@@ -5754,7 +5752,7 @@
         padding-left: 20px;
         margin-left: 15px;
         &:before {
-          content: "";
+          content: '';
           position: absolute;
           top: -20px;
           bottom: -20px;
@@ -5913,7 +5911,7 @@
   .add-more-states {
     position: relative;
     &:before {
-      content: "";
+      content: '';
       position: absolute;
       left: -31px;
       right: -31px;
@@ -5952,7 +5950,7 @@
       margin-bottom: 10px;
       position: relative;
       &:after {
-        content: "";
+        content: '';
         position: absolute;
         left: -35px;
         right: -35px;
@@ -6297,7 +6295,7 @@
 
     /* Create the indicator (the dot/circle - hidden when not checked) */
     .checkmark:after {
-      content: "";
+      content: '';
       position: absolute;
       display: none;
     }

@@ -1,3 +1,6 @@
+/*****************Issue/15************************ */
+// Developed by: Khawaja Junaid 
+
 import React, { useEffect, useReducer, useCallback, useState } from "react";
 import { connect } from "react-redux";
 import { getAnimals } from "../../actions/farmActions";
@@ -101,35 +104,7 @@ function MilkProduction(props) {
     //   sortable: true,
     //   cell: (row) => <div>{row.type}</div>,
     // },
-    {
-      name: "Morning Production in Litres",
-      selector: "Morning",
-      sortable: true,
-      cell: (row) => (
-      
-          record.data? record.data.milkRecords.map((milk)=>{
-          return(
-              <div>
-                  { prod=Object.keys(milk.record).map((key) => {
-                      return (
-
-
-                        row._id=== key?
-                        moment(row.dob).format("MM/DD/YYYY")===moment(milk.date).format("MM/DD/YYYY")? milk.record[key].morning:""
-        
-                        :"")
-                  }
-                  
-                  )
-                  }
-              </div>
-              )
-          
-
-        }) :"no record"
-      
-      ),
-    },
+    
     {
       name: "Name:",
       selector: "name",
@@ -156,11 +131,70 @@ function MilkProduction(props) {
         </div>
       ),
     },
+    
     {
       name: "Date of Birth",
       selector: "dob",
       sortable: true,
       cell: (row) => moment(row.dob).format("MM/DD/YYYY"),
+    },
+    {
+      name: "Morning Production (L)",
+      selector: "Morning",
+  
+      cell: (row) => (
+      
+          record.data? record.data.milkRecords.map((milk)=>{
+          return(
+              <div>
+                  { prod=Object.keys(milk.record).map((key) => {
+                      return (
+
+
+                        row._id=== key?
+                        moment(row.dob).format("MM/DD/YYYY")===moment(milk.date).format("MM/DD/YYYY")? milk.record[key].morning:""
+        
+                        :"")
+                  }
+                  
+                  )
+                  }
+              </div>
+              )
+          
+
+        }) :"no record"
+      
+      ),
+    },
+    {
+      name: "Evening Production (L)",
+      selector: "Evening",
+  
+      cell: (row) => (
+      
+          record.data? record.data.milkRecords.map((milk)=>{
+          return(
+              <div>
+                  { prod=Object.keys(milk.record).map((key) => {
+                      return (
+
+
+                        row._id=== key?
+                        moment(row.dob).format("MM/DD/YYYY")===moment(milk.date).format("MM/DD/YYYY")? milk.record[key].evening:""
+        
+                        :"")
+                  }
+                  
+                  )
+                  }
+              </div>
+              )
+          
+
+        }) :"no record"
+      
+      ),
     },
     {
       name: "Status:",
@@ -372,7 +406,7 @@ function MilkProduction(props) {
 
     
     <div className="animals-page mt-4 mb-4">
-      {console.log("theere is",prod)}
+  
       <Container>
         <DataTable
           customStyles={filterTableStyles}

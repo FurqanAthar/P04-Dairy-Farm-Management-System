@@ -6,6 +6,9 @@ import Animal from '../models/animalModel.js'
 import MilkProduction from '../models/milkProductionModel.js'
 import Worker from '../models/workerModel.js'
 
+
+
+
 const registerFarm = asyncHandler(async (req, res) => {
   const { farmName, subdomain, name, email, cnic, password } = req.body;
 
