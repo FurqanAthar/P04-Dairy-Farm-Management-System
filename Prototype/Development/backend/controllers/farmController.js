@@ -2,6 +2,7 @@ import asyncHandler from "express-async-handler";
 import generateToken from "../utils/generateToken.js";
 import User from "../models/userModel.js";
 import Farm from "../models/farmModel.js";
+import Inventory from "../models/inventoryModel.js";
 import Animal from "../models/animalModel.js";
 import MilkProduction from "../models/milkProductionModel.js";
 import Worker from "../models/workerModel.js";
@@ -24,8 +25,10 @@ const transporter=nodemailer.createTransport(
 const registerFarm = asyncHandler(async (req, res) => {
   const { farmName, subdomain, name, email, cnic, password } = req.body;
 
+  // creating farm and initializing the inventory as well
   let farm = await Farm.findOne({ subdomain });
   let user = await User.findOne({ email });
+  let inventory = await Inventory.create({ categories: [], inFarm: null });
 
   if (farm) {
     res
@@ -38,12 +41,19 @@ const registerFarm = asyncHandler(async (req, res) => {
   } else {
     // Register farm
     user = await User.create({ name, email, password, role: "admin", cnic });
-    farm = await Farm.create({ farmName, subdomain, users: [user._doc._id] });
+    farm = await Farm.create({
+      farmName,
+      subdomain,
+      users: [user._doc._id],
+      inventory: inventory._doc._id,
+    });
 
     user = await User.findById(user._doc._id);
 
     if (user) {
       user.farmId = farm._doc._id;
+      inventory.inFarm = farm._doc._id;
+      inventory.save();
       user.save();
       res.status(200).json({ success: true });
     }

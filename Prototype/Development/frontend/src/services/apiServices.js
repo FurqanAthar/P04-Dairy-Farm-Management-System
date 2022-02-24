@@ -62,7 +62,6 @@ export const deleteAnimal = async (data, token) => {
   }
 };
 
-
 //Customer
 export const getCustomerData = async (id, token) => {
   config.headers.Authorization = token;
@@ -81,23 +80,73 @@ export const deleteCustomer = async (data, token) => {
   }
 };
 
-
 export const addWorker = async (data, token) => {
-    config.headers.Authorization = token;
-    try {
-        return await axios.post(`/farm/worker/add`, data, config);
-    }
-    catch (error) {
-        return error;
-    }
-}
+  config.headers.Authorization = token;
+  try {
+    return await axios.post(`/farm/worker/add`, data, config);
+  } catch (error) {
+    return error;
+  }
+};
 
 export const editWorker = async (data, token) => {
-	config.headers.Authorization = token;
-	try {
-		return await axios.put(`/farm/worker/edit`, data, config);
-	}
-	catch (error) {
-		return error;
-	}
-}
+  config.headers.Authorization = token;
+  try {
+    return await axios.put(`/farm/worker/edit`, data, config);
+  } catch (error) {
+    return error;
+  }
+};
+
+export const addInventoryCategory = async (data, token) => {
+  config.headers.Authorization = token;
+  try {
+    return await axios.post(`/farm/inventory/category/add`, data, config);
+  } catch (error) {
+    return error;
+  }
+};
+
+export const addInventoryItem = async (data, token) => {
+  config.headers.Authorization = token;
+  try {
+    return await axios.post(`/farm/inventory/item/add`, data, config);
+  } catch (error) {
+    return error;
+  }
+};
+
+export const addItemTransaction = async (data, token) => {
+  config.headers.Authorization = token;
+  try {
+    return await axios.post(
+      `/farm/inventory/item/transaction/add`,
+      data,
+      config
+    );
+  } catch (error) {
+    return error;
+  }
+};
+
+export const getItemTransactions = async (id, token) => {
+  config.headers.Authorization = token;
+  try {
+    return await axios.get(`/farm/inventory/item/${id}`, config);
+  } catch (error) {
+    return error;
+  }
+};
+
+export const deleteItemTransaction = async (data, token) => {
+  config.headers.Authorization = token;
+  try {
+    return await axios.post(
+      `/farm/inventory/item/transaction/delete`,
+      data,
+      config
+    );
+  } catch (error) {
+    return error;
+  }
+};

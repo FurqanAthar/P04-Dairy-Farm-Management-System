@@ -1,5 +1,6 @@
 import "./assets/scss/main.scss";
 import "react-toastify/dist/ReactToastify.css";
+import "react-datepicker/dist/react-datepicker.css";
 import { BrowserRouter, Switch, Route } from "react-router-dom";
 import BusinessRegistration from "./pages/BusinessRegistration";
 import Login from "./pages/login";
@@ -12,14 +13,16 @@ import PrivateRoute from "./privateRouting/PrivateRoute";
 import FarmSettings from "./pages/settings/FarmSettings";
 import UserProfile from "./pages/settings/UserProfile";
 import AddMembers from "./pages/settings/AddMembers";
-import "react-datepicker/dist/react-datepicker.css";
 import Animal from "./pages/Animals/Animal";
+import Inventory from "./pages/Inventory/Inventory";
 import AddMilkProduction from "./pages/DailyRecord/AddMilkProduction";
 import AddWorkers from "./pages/settings/AddWorkers";
 
 import AddCustomer from "./pages/Customer/AddCustomer";
+
 import Customer from "./pages/Customer/Customers"
 import MilkProduction from "./pages/DailyRecord/MilkProduction";
+import Category from "./pages/Inventory/Category";
 
 
 function App() {
@@ -65,23 +68,31 @@ function App() {
             <AddMilkProduction/>
           </PrivateRoute>
 
-            {/* Customer*/}
-          
-            <PrivateRoute exact path="/customer">
-            <Customer/>
+          {/* Customer*/}
+
+          <PrivateRoute exact path="/customer">
+            <Customer />
           </PrivateRoute>
-            <PrivateRoute exact path="/customer/add">
+          <PrivateRoute exact path="/customer/add">
             <AddCustomer />
           </PrivateRoute>
           <PrivateRoute exact path="/customer/:id">
             <AddCustomer />
           </PrivateRoute>
-         
+
 
 		  {/* Team Members and Workers */}
       <PrivateRoute exact path="/">
             <Dashboard />
           </PrivateRoute>
+          {/* Inventory Pages */}
+          <PrivateRoute exact path="/inventory">
+            <Inventory />
+          </PrivateRoute>
+          <PrivateRoute exact path="/inventory/category/:id">
+            <Category />
+          </PrivateRoute>
+          {/* Team Members and Workers */}
           <PrivateRoute exact path="/dashboard">
             <Dashboard />
           </PrivateRoute>
