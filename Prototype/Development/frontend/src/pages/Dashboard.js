@@ -1,8 +1,10 @@
 import React, { useEffect,useState } from 'react'
+import { SunspotLoader } from "react-awesome-loaders";
 import { connect } from 'react-redux'
 import { getAnimals } from '../actions/farmActions';
 import {Bar} from 'react-chartjs-2'
 import { useSelector} from "react-redux";
+// import Loader from "../components/layouts/SunspotLoaderComponent"
 import { getMilkProductionRecords } from '../services/apiServices';
 import moment from "moment";
 // const data1=[
@@ -144,12 +146,24 @@ function Dashboard(props) {
     //   }
     // }, [props.animals])
     return (
-        <div style={{width:"720px"}}>
+        <>
            
             {/* {console.log(data1)} */}
-            {record? <LineChart {...record} />: <p> Waiting for Records </p>}
+            {record?<div style={{width:"720px"}}> <LineChart {...record} /></div>: 
+            <div class="container" style={{ display: "flex",width:"100%",justifyContent:"center",
+            paddingTop:"10%"
+                
+            }}>
+            <SunspotLoader
+  
+        gradientColors={["#28A745", "#E0E7FF"]}
+        shadowColor={"#3730A3"}
+        desktopSize={"128px"}
+        mobileSize={"100px"}
+      />
+      </div> }
             
-        </div>
+        </>
     )
 }
 

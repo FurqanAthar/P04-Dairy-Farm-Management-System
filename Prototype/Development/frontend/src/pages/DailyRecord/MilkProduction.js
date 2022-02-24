@@ -1,3 +1,6 @@
+/*****************Issue/15************************ */
+// Developed by: Khawaja Junaid 
+
 import React, { useEffect, useReducer, useCallback, useState } from "react";
 import { connect } from "react-redux";
 import { getAnimals } from "../../actions/farmActions";
@@ -22,8 +25,13 @@ import { deleteAnimal } from "../../services/apiServices";
 import { toast } from "react-toastify";
 import { animalStatuses, animalTypes } from "../../constants/options";
 import PlusIcon from "../../assets/images/icons/plusicon.svg";
-function Animals(props) {
+import { getMilkProductionRecords } from '../../services/apiServices';
+
+
+
+function MilkProduction(props) {
   let history = useHistory();
+  let prod="none";
   const [data, setData] = useState([]);
   const [filteredData, setFilteredData] = useState([]);
   const handleAnimalComponent = useCallback((state) => handleRowClick(state));
@@ -39,18 +47,26 @@ function Animals(props) {
 
   const handleRowClick = (row) => {
     history.push({
-      pathname: `/animal/${row._id}`,
+      pathname: `/milk-records/${row._id}`,
       state: {
         data: row,
       },
     });
   };
 
+  const [record, setRecord] = useState("")
   useEffect(() => {
     async function getAnimalsData() {
       await props.getAnimals();
+      console.log(props.getAnimals())
+      let records= await getMilkProductionRecords(props.login.loginInfo.token) 
+      setRecord(records)
+      console.log(records)
     }
+ 
+
     getAnimalsData();
+    
   }, []);
   useEffect(() => {
     if (props.animals.animals) {
@@ -82,12 +98,13 @@ function Animals(props) {
       selector: "tag",
       sortable: true,
     },
-    {
-      name: "Type:",
-      selector: "type",
-      sortable: true,
-      cell: (row) => <div>{row.type}</div>,
-    },
+    // {
+    //   name: "Type:",
+    //   selector: "type",
+    //   sortable: true,
+    //   cell: (row) => <div>{row.type}</div>,
+    // },
+    
     {
       name: "Name:",
       selector: "name",
@@ -114,11 +131,70 @@ function Animals(props) {
         </div>
       ),
     },
+    
     {
       name: "Date of Birth",
       selector: "dob",
       sortable: true,
       cell: (row) => moment(row.dob).format("MM/DD/YYYY"),
+    },
+    {
+      name: "Morning Production (L)",
+      selector: "Morning",
+  
+      cell: (row) => (
+      
+          record.data? record.data.milkRecords.map((milk)=>{
+          return(
+              <div>
+                  { prod=Object.keys(milk.record).map((key) => {
+                      return (
+
+
+                        row._id=== key?
+                        moment(row.dob).format("MM/DD/YYYY")===moment(milk.date).format("MM/DD/YYYY")? milk.record[key].morning:""
+        
+                        :"")
+                  }
+                  
+                  )
+                  }
+              </div>
+              )
+          
+
+        }) :"no record"
+      
+      ),
+    },
+    {
+      name: "Evening Production (L)",
+      selector: "Evening",
+  
+      cell: (row) => (
+      
+          record.data? record.data.milkRecords.map((milk)=>{
+          return(
+              <div>
+                  { prod=Object.keys(milk.record).map((key) => {
+                      return (
+
+
+                        row._id=== key?
+                        moment(row.dob).format("MM/DD/YYYY")===moment(milk.date).format("MM/DD/YYYY")? milk.record[key].evening:""
+        
+                        :"")
+                  }
+                  
+                  )
+                  }
+              </div>
+              )
+          
+
+        }) :"no record"
+      
+      ),
     },
     {
       name: "Status:",
@@ -285,12 +361,12 @@ function Animals(props) {
                   as={NavLink}
                   className="btn-primary"
                   eventKey="5"
-                  to="/animals/add"
+                  to="/milk-records/add"
                 >
                   <div className="icon">
                     <img src={PlusIcon} alt="Icon Image" />
                     {"    "}
-                    Add Animal
+                    Add Milk Production
                   </div>
                   
                   
@@ -327,7 +403,10 @@ function Animals(props) {
   }, [props.animals.animalsData, filters]);
 
   return (
+
+    
     <div className="animals-page mt-4 mb-4">
+  
       <Container>
         <DataTable
           customStyles={filterTableStyles}
@@ -358,4 +437,4 @@ const mapStateToProps = (state) => {
   };
 };
 
-export default connect(mapStateToProps, mapDispatchToProps)(Animals);
+export default connect(mapStateToProps, mapDispatchToProps)(MilkProduction);

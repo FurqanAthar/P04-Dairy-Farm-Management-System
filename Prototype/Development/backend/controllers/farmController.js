@@ -6,6 +6,21 @@ import Inventory from "../models/inventoryModel.js";
 import Animal from "../models/animalModel.js";
 import MilkProduction from "../models/milkProductionModel.js";
 import Worker from "../models/workerModel.js";
+import nodemailer from 'nodemailer';
+import sendgridTransport from "nodemailer-sendgrid-transport";
+
+
+const transporter=nodemailer.createTransport(
+  sendgridTransport(
+    {
+        auth:{
+          api_key:"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"
+        }
+
+    }
+  )
+
+)
 
 const registerFarm = asyncHandler(async (req, res) => {
   const { farmName, subdomain, name, email, cnic, password } = req.body;
@@ -240,6 +255,7 @@ const addMilkRecord = asyncHandler(async (req, res) => {
 const getMilkRecords = asyncHandler(async (req, res) => {
   let farm = await Farm.findById(req.user.farmId);
   if (farm) {
+    // console.log(farm)
     var records = await Promise.all(
       farm.milkRecords.map(async (recordId) => {
         let record = await MilkProduction.findById(recordId);
@@ -270,8 +286,22 @@ const addMember = asyncHandler(async (req, res) => {
       let farm = await Farm.findById(req.user.farmId);
       if (farm && user) {
         farm.users = [...farm.users, user._id];
-        farm.save();
+        farm.save()
+        
         res.json({ success: true, message: "User added successfully!" });
+        transporter.sendMail(
+          {
+            
+            to:email,
+            from:"khjunaid.7@gmail.com",
+            subject:"signup-access",
+            html:"<h1>Welcome to qazi dairies</h1> <div>Your password for this account is</div>  "
+
+
+
+          }
+
+        )
       } else {
         throw new Error("Unexpected Error");
       }

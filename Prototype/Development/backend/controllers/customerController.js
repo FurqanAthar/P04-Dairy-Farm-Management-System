@@ -6,7 +6,7 @@ import Customer from '../models/customerModel.js'
 const addCustomer = asyncHandler(async(req, res) => {
     const { name, email, cnic ,dob, status, image } = req.body;
     let farm = await Farm.findById(req.user.farmId)
-    console.log("this is the farm",farm)
+    // console.log("this is the farm",farm)
     try {
       console.log("this will be used: ",req.user._id)
       const customer = await Customer.create({ name, email, cnic ,dob, status, image, createdBy: req.user._id, inFarm: req.user.farmId })
@@ -91,7 +91,7 @@ const getCustomersData = asyncHandler(async (req, res) => {
 const updateCustomerData = asyncHandler(async (req, res) => {
   
   const { id,name, email, cnic ,dob, status, image} = req.body;
-  console.log({ id,name, email, cnic ,dob, status, image})
+  // console.log({ id,name, email, cnic ,dob, status, image})
   
   try {
    
@@ -109,7 +109,7 @@ const updateCustomerData = asyncHandler(async (req, res) => {
       customer.image = image;
       await customer.save();
      
-      console.log("the values are here now",customer)
+      // console.log("the values are here now",customer)
       res.json({ success: true, details: customer });
     } else {
       

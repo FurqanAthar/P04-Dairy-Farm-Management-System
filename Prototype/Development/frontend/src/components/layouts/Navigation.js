@@ -58,8 +58,9 @@ function Navigation(props) {
                 <Nav.Link as={NavLink} eventKey="3" to="/animals">
                   Animals
                 </Nav.Link>
-                <Nav.Link as={NavLink} eventKey="4" to="/milk-records/add">
-                  Add Milk Record
+               
+                <Nav.Link as={NavLink} eventKey="4" to="/milk-records">
+                  Milk Records
                 </Nav.Link>
                 <Nav.Link as={NavLink} eventKey="8" to="/customer">
                   Customers
@@ -86,7 +87,7 @@ function Navigation(props) {
                     <img src={PlusIcon} alt="Icon Image" />
                   </div>{" "}
                   Add Animal
-                </Nav.Link>
+                </Nav.Link> 
                 <Nav.Link
                   as={NavLink}
                   className="mob-nav"
