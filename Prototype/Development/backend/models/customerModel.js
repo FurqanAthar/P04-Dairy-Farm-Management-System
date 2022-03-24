@@ -11,7 +11,7 @@ const CustomerSchema = mongoose.Schema(
         required:true,
     },
     cnic:{
-        type: Number,
+        type: String,
         required:true,
     },
     dob: {
@@ -22,15 +22,31 @@ const CustomerSchema = mongoose.Schema(
         type: String,
         required: true,
     },
-    image: {
+   image: {
         type: String,
         default:"",
     },
-    createdBy: {
-        type: mongoose.Schema.Types.ObjectId,
-        required: true,
-        ref: "Customer",
+    type: {
+      type: String,
+      required: true,
     },
+    sellingrate: {
+        type: Number,
+        required: true,
+     },
+    quantityperday: {
+    type: String,
+    required: true,
+    },
+    address: {
+      type: String,
+      required: true,
+    },
+createdBy: {
+    type: mongoose.Schema.Types.ObjectId,
+    required: true,
+    ref: "Customer",
+},
     
   },
   {

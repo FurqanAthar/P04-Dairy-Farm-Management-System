@@ -33,6 +33,7 @@ function MilkProduction(props) {
   let history = useHistory();
   let prod="none";
   const [data, setData] = useState([]);
+  const [proddate,setProddate]=useState("");
   const [filteredData, setFilteredData] = useState([]);
   const handleAnimalComponent = useCallback((state) => handleRowClick(state));
   const [filters, setFilters] = useReducer(
@@ -152,7 +153,7 @@ function MilkProduction(props) {
 
 
                         row._id=== key?
-                        moment(row.dob).format("MM/DD/YYYY")===moment(milk.date).format("MM/DD/YYYY")? milk.record[key].morning:""
+                        moment(proddate).format("MM/DD/YYYY")===moment(milk.date).format("MM/DD/YYYY")? milk.record[key].morning:""
         
                         :"")
                   }
@@ -181,7 +182,7 @@ function MilkProduction(props) {
 
 
                         row._id=== key?
-                        moment(row.dob).format("MM/DD/YYYY")===moment(milk.date).format("MM/DD/YYYY")? milk.record[key].evening:""
+                        moment(proddate).format("MM/DD/YYYY")===moment(milk.date).format("MM/DD/YYYY")? milk.record[key].evening:""
         
                         :"")
                   }
@@ -238,6 +239,8 @@ function MilkProduction(props) {
     let filtersCopy = filters;
     if (index === "dob") {
       filtersCopy[index] = e;
+      setProddate(e);
+      console.log("this is the date filter",e)
       eTarget.target.closest(".input-group").classList.remove("active");
     } else if (index === "search") {
       filtersCopy[index] = e.target.value;
@@ -348,7 +351,11 @@ function MilkProduction(props) {
               isClearable={true}
               // minDate={new Date()}
               className="datepicker-form-control"
-              onChange={(date, e) => handleFilter("dob", date, e)}
+              onChange={(date, e) => {
+                handleFilter("dob", date, e)
+              setProddate(e);
+              alert("the prod date",proddate);
+            }}
               onFocus={handleDatepickerFocus}
               onBlur={handleDatepickerBlur}
             />
@@ -420,6 +427,7 @@ function MilkProduction(props) {
           pagination
           persistTableHead
         />
+        {console.log(filteredData,"it comes here")}
       </Container>
     </div>
   );
