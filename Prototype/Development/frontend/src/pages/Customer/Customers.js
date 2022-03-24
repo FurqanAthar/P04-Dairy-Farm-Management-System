@@ -7,11 +7,12 @@ import {
   Form,
   InputGroup,
   FormControl,
+  Nav,
 } from "react-bootstrap";
 import moment from "moment";
 import Select from "react-select";
 import DatePicker from "react-datepicker";
-import { useHistory } from "react-router-dom";
+import { NavLink,useHistory } from "react-router-dom";
 import DataTable from "react-data-table-component";
 import TrashIcon from "../../assets/images/icons/trash.svg";
 import SearchIcon from "../../assets/images/icons/search.svg";
@@ -19,6 +20,7 @@ import { filterTableStyles } from "../../assets/styledComponents/tableStyles";
 import { filterTableSelectStyles } from "../../assets/styledComponents/selectStyles";
 import { deleteCustomer } from "../../services/apiServices";
 import { toast } from "react-toastify";
+import PlusIcon from "../../assets/images/icons/plusicon.svg";
 import { customerStatuses } from "../../constants/customerOptions";
 
 
@@ -219,7 +221,9 @@ function Customers(props) {
       dataCopy = [...filteredDataCopy];
       filteredDataCopy = [];
     }
+    
     setFilteredData([...dataCopy]);
+    {console.log("it comes here",...dataCopy)}
   }, [filters]);
 
   const FilterComponent = ({}) => (
@@ -256,6 +260,22 @@ function Customers(props) {
           </InputGroup>
         </Form.Group>
       </div>
+      <Button>
+      <Nav.Link
+                  as={NavLink}
+                  className="btn-primary"
+                  eventKey="7"
+                  to="/customer/add"
+                >
+                  <div className="icon">
+                    <img src={PlusIcon} alt="Icon Image" />
+                    {"    "}
+                    Add Customer
+                  </div>
+                  
+                  
+      </Nav.Link>
+      </Button>
       <div className="table-filters justify-content-end">
         <InputGroup>
           <Form.Control
@@ -300,7 +320,9 @@ function Customers(props) {
           pagination
           persistTableHead
         />
+     
       </Container>
+    
     </div>
   );
 }

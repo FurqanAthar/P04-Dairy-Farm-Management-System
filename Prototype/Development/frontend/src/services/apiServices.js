@@ -26,6 +26,15 @@ export const addMilkRecord = async (data, token) => {
   }
 };
 
+export const updateMilkRecord = async (data, token) => {
+  config.headers.Authorization = token;
+  try {
+    return await axios.post(`/farm/productions/edit`, data, config);
+  } catch (error) {
+    return error;
+  }
+};
+
 export const getMilkProductionRecords = async (token) => {
   config.headers.Authorization = token;
   try {

@@ -185,7 +185,7 @@ const updateUserImage = asyncHandler(async (req, res) => {
 
 const addAnimal = asyncHandler(async (req, res) => {
   const { name, tag, dob, type, status, image } = req.body;
-
+  // console.log("the request: ",req.body)
   let farm = await Farm.findById(req.user.farmId);
   try {
     const animal = await Animal.create({
@@ -198,6 +198,7 @@ const addAnimal = asyncHandler(async (req, res) => {
       createdBy: req.user._id,
       inFarm: req.user.farmId,
     });
+    console.log("the animal details are",animal)
     if (animal && farm) {
       farm.animals = [...farm.animals, animal._id];
       farm.save();
