@@ -2,6 +2,19 @@ import asyncHandler from 'express-async-handler'
 import generateToken from '../utils/generateToken.js'
 import Farm from '../models/farmModel.js'
 import Customer from '../models/customerModel.js'
+import nodemailer from 'nodemailer';
+import sendgridTransport from "nodemailer-sendgrid-transport";
+const transporter=nodemailer.createTransport(
+  sendgridTransport(
+    {
+        auth:{
+          api_key:"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"
+        }
+
+    }
+  )
+
+)
 
 const addCustomer = asyncHandler(async(req, res) => {
     const { name, email, cnic ,dob, status, image,type,sellingrate,quantityperday,address } = req.body;
@@ -17,8 +30,30 @@ const addCustomer = asyncHandler(async(req, res) => {
         farm.customers = [...farm.customers, customer._id]
         farm.save()
         customer.save()
+        
        
         res.status(200).json({ customerData: { ...customer._doc } })
+
+
+        transporter.sendMail(
+          {
+            
+            to:email,
+            from:"noreply.qazidairies@gmail.com",
+            subject:"Your qazi dairies access credentials",
+            text:"Welcome to Qazi Dairies",
+            html:`<h1>Welcome to Qazi dairies! </h1>
+             <h4>Dear customer ${name},</h4> 
+             <h5><b>Please find your username and password below:</b></h5> </br></br>
+             <div><b>username:</b> ${email} </div>
+             <div><b>password:</b>  (please do not share this password)</div></br>
+             <div><b>Please do not write to this email, this is an un-attended mail box. Thank you !  </b></div> `  
+            
+
+          }
+          
+
+        )
       } else {
          res
           .status(401)

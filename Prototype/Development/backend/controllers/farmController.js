@@ -294,13 +294,19 @@ const addMember = asyncHandler(async (req, res) => {
           {
             
             to:email,
-            from:"khjunaid.7@gmail.com",
-            subject:"signup-access",
-            html:"<h1>Welcome to qazi dairies</h1> <div>Your password for this account is</div>  "
-
-
+            from:"noreply.qazidairies@gmail.com",
+            subject:"Your qazi dairies access credentials",
+            text:"Welcome to Qazi Dairies",
+            html:`<h1>Welcome to the team! </h1>
+             <h4>Dear team member ${name},</h4> 
+             <h5><b>Please find your username and password below:</b></h5> </br></br>
+             <div><b>username:</b> ${email} </div>
+             <div><b>password:</b>  ${password} (please do not share this password)</div></br>
+             <div><b>Please do not write to this email, this is an un-attended mail box. Thank you !  </b></div> `  
+            
 
           }
+          
 
         )
       } else {
