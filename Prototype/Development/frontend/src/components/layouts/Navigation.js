@@ -65,7 +65,11 @@ function Navigation(props) {
                 <Nav.Link as={NavLink} eventKey="8" to="/customer">
                   Customers
                 </Nav.Link>
-                <Nav.Link
+
+                <Nav.Link as={NavLink} eventKey="9" to="/inventory">
+                  Inventory
+                </Nav.Link>
+                {/* <Nav.Link
                   as={NavLink}
                   className="btn-primary"
                   eventKey="7"
@@ -75,7 +79,7 @@ function Navigation(props) {
                     <img src={PlusIcon} alt="Icon Image" />
                   </div>{" "}
                   Add Customers
-                </Nav.Link>
+                </Nav.Link> */}
 
                 <Nav.Link
                   as={NavLink}

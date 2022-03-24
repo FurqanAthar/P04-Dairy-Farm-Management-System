@@ -93,6 +93,10 @@ const AddCustomer = (props) => {
     cnic:"",
 		dob: "",
 		status: "",
+    type:"",
+    sellingrate:0,
+    quantityperday:0,
+    address:"",
 		image: ""
 	  }
 	);
@@ -101,7 +105,16 @@ const AddCustomer = (props) => {
 	  { label: "active", value: "active" },
 	  { label: "Inactive", value: "Inactive" },
 	];
+	const types = [
+	  { label: "Regular", value: "Regular" },
+	  { label: "Milkman", value: "Milkman" },
+	];
 
+  const rates = [
+	  { label: "100", value: 100 },
+	  { label: "110", value: 110 },
+    { label: "140", value: 140 },
+	];
 
     const handleInput = (evt) => {
         const name = evt.target.name;
@@ -117,6 +130,10 @@ const AddCustomer = (props) => {
           } else if (which == 'date') {
               setFormInput({ ['dob']: e })
           }
+          else if (which == 'sellingrate') {
+            setFormInput({ ['sellingrate']: e.value })
+        }
+        
       }
   
       const handleAnimalImage = async (e) => {
@@ -180,6 +197,10 @@ const AddCustomer = (props) => {
               dob: new Date(d.dob),
               cnic: d.cnic,
               status: d.status,
+              type:d.type,
+              sellingrate:d.sellingrate,
+              quantityperday:d.quantityperday,
+              address:d.address,
               image: d.image,
             });
             setImage(d.image);
@@ -205,7 +226,7 @@ const AddCustomer = (props) => {
             toast.success("Customer updated Successfully!");
             history.push("/customer");
           } else {
-            console.log("it comes heere:",props.updateCustomerState.error)
+            // console.log("it comes heere:",props.updateCustomerState.error)
             toast.error(props.updateCustomerState.error);
           }
         }
@@ -296,7 +317,7 @@ const AddCustomer = (props) => {
                               onChange={handleInput}
                             />
                             {validator.message(
-                              "emial",
+                              "email",
                               formInput.name,
                               "required",
                               {
@@ -304,8 +325,32 @@ const AddCustomer = (props) => {
                               }
                             )}
                           </Form.Group>
+                          
                         </Col>
-                        <Col lg={3} className="">
+                        <Col lg={6}>
+                        <Form.Group>
+                            <Form.Label>address</Form.Label>
+                            <FormControl
+                              name="address"
+                              value={formInput.address}
+                              required
+                              id="address"
+                              placeholder="24-B, Gulberg"
+                              label="address"
+                              autoComplete="address"
+                              onChange={handleInput}
+                            />
+                            {validator.message(
+                              "name",
+                              formInput.name,
+                              "required",
+                              {
+                                className: "text-danger",
+                              }
+                            )}
+                          </Form.Group>
+                          </Col>
+                        <Col lg={6} className="">
                         <Form.Group>
                           <Form.Label>CNIC</Form.Label>
                           <FormControl
@@ -326,6 +371,24 @@ const AddCustomer = (props) => {
                               className: "text-danger",
                             }
                             )}
+                          
+
+                          
+                        </Form.Group>
+                        <Form.Group>
+                            <Form.Label>Quantity per day</Form.Label>
+                            <FormControl
+                              name="quantityperday"
+                              value={formInput.quantityperday}
+                              type="number"
+                              required
+                              id="quantityperday"
+                              placeholder="2.5"
+                              label="quantityperday"
+                              autoComplete="quantityperday"
+                              onChange={handleInput}
+                            />
+    
                           </Form.Group>
                     
                           <Form.Group className="datepicker">
@@ -346,9 +409,42 @@ const AddCustomer = (props) => {
                               {/* </InputGroup.Append> */}
                             </InputGroup>
                           </Form.Group>
+                          <Form.Label>Type</Form.Label>
+                          
+                          <Select
+                            className="type"
+                            options={types}
+                            styles={customRoleControlStyles}
+                            value={{
+                              label: formInput.type,
+                              value: formInput.type,
+                            }}
+                            name="type"
+                            onChange={(e) => {
+                              handleSelect(e, "type");
+                            }}
+                          />
                         </Col>
-  
+
                         <Col lg={6}>
+                        <Form.Label>Current Selling rate</Form.Label>
+                          
+                          <Select
+                            className="sellingrate"
+                            options={rates}
+                            styles={customRoleControlStyles}
+                            value={{
+                              label: formInput.sellingrate,
+                              value: formInput.sellingrate,
+                            }}
+                            name="sellingrate"
+                            onChange={(e) => {
+                              handleSelect(e, "sellingrate");
+                            }}
+                          />
+
+
+
                           <Form.Label>Status</Form.Label>
                           
                           <Select
@@ -364,6 +460,7 @@ const AddCustomer = (props) => {
                               handleSelect(e, "status");
                             }}
                           />
+                         
                         </Col>
                         <Col lg={12} className="mt-5">
                         <Button

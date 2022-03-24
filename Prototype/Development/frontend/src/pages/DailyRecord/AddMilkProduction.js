@@ -13,6 +13,7 @@ import {
 import moment from "moment";
 import { toast } from 'react-toastify'
 import DatePicker from "react-datepicker";
+import { useParams } from "react-router";
 import { Link, useHistory } from "react-router-dom";
 import SimpleReactValidator from "simple-react-validator";
 import chevLeft from "../../assets/images/icons/cheveron-left.svg";
@@ -20,6 +21,7 @@ import { addMilkRecord } from '../../services/apiServices';
 
 const AddMilkProduction = (props) => {
     let history = useHistory()
+    const { id } = useParams();
     const [, forceUpdate] = useState()
     const [animals, setAnimals] = useState([])
     const [disabled, setDisabled] = useState(false)
@@ -56,6 +58,12 @@ const AddMilkProduction = (props) => {
     const handleDateSelect = (date) => {
         setFormInput({ ['date']: date})
     }
+
+    const handleEdit = async (e) => {
+      setDisabled(true);
+      await props.updateAnimal({ ...formInput, id: id });
+      setDisabled(false);
+    };
 
     const handleSubmit = async (e) => {
         if (!validator.allValid()) {
@@ -100,7 +108,7 @@ const AddMilkProduction = (props) => {
                     <Link to="/dashboard">
                       <img src={chevLeft} alt="icon" />
                     </Link>
-                    Add Milk Record
+                    {id != undefined ? "Edit Milk Record" : "Add Milk Record"} 
                   </h2>
                   <Form.Group className="datepicker">
                     <InputGroup className={"input-group"}>
@@ -217,10 +225,10 @@ const AddMilkProduction = (props) => {
               <Col lg={10} className="pt-3">
                 <Button
                   variant="primary"
-                    onClick={handleSubmit}
+                    onClick={id != undefined ? handleEdit : handleSubmit}
                     disabled={disabled}
                 >
-                  Save
+                 {id != undefined ? "Update" : "Save"}
                 </Button>
               </Col>
             </Row>

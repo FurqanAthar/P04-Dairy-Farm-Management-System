@@ -67,6 +67,9 @@ function App() {
           <PrivateRoute exact path="/milk-records/add">
             <AddMilkProduction/>
           </PrivateRoute>
+          <PrivateRoute exact path="/milk-records/:id">
+            <AddMilkProduction/>
+          </PrivateRoute>
 
           {/* Customer*/}
 
