@@ -86,6 +86,16 @@ const farmSchema = mongoose.Schema(
       required: true,
       ref: "Inventory",
     },
+    milkSupply: {
+      type: mongoose.Schema.Types.ObjectId,
+      required: true,
+      ref: "MilkSupply",
+    },
+    miscellaneous: {
+      type: mongoose.Schema.Types.ObjectId,
+      required: true,
+      ref: "Miscellaneous",
+    },
   },
   {
     timestamps: true,

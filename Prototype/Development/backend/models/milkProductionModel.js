@@ -1,50 +1,48 @@
 import mongoose from "mongoose";
 import Animal from "./animalModel.js";
 
-const singleAnimalRecordSchema = mongoose.Schema()
+const singleAnimalRecordSchema = mongoose.Schema();
 
-const milkRecordSchema = mongoose.Schema(
-    {
-        morning: {
-            type: Number,
-            required: true
-        },
-        evening: {
-            type: Number,
-            required: true
-        },
-        name: {
-            type: String,
-            required: true
-        },
-        tag: {
-            type: String,
-            required: true
-        }
-    },
-)
+const milkRecordSchema = mongoose.Schema({
+  morning: {
+    type: Number,
+    required: true,
+  },
+  evening: {
+    type: Number,
+    required: true,
+  },
+  name: {
+    type: String,
+    required: true,
+  },
+  tag: {
+    type: String,
+    required: true,
+  },
+});
 
 const milkProductionSchema = mongoose.Schema(
   {
     farmId: {
       type: mongoose.Schema.Types.ObjectId,
       required: true,
-      ref: 'Farm'
+      ref: "Farm",
     },
     userId: {
-        type: mongoose.Schema.Types.ObjectId,
-        required: true,
-        ref: 'User'
+      type: mongoose.Schema.Types.ObjectId,
+      required: true,
+      ref: "User",
     },
     date: {
-        type: Date,
-        required: true,
+      type: Date,
+      required: true,
     },
     record: {
-        type: Map,
-        of: milkRecordSchema,
-        required: true   
-    }
+      type: Map,
+      of: milkRecordSchema,
+      required: true,
+    },
   },
   {
     timestamps: true,

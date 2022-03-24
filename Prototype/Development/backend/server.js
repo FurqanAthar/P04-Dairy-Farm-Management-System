@@ -3,6 +3,7 @@ import express from "express";
 import dotenv from "dotenv";
 import connectDB from "./config/db.js";
 import farmRoutes from "./routes/farmRoutes.js";
+import recordRoutes from "./routes/recordRoutes.js";
 import uploadRoutes from "./routes/uploadRoutes.js";
 import customerRoute from "./routes/customerRoute.js";
 
@@ -14,6 +15,7 @@ const app = express();
 app.use(express.json());
 
 app.use("/farm", farmRoutes);
+app.use("/record", recordRoutes);
 app.use("/upload", uploadRoutes);
 app.use("/customer", customerRoute);
 

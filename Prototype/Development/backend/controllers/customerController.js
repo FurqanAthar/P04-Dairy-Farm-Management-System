@@ -24,6 +24,7 @@ const addCustomer = asyncHandler(async(req, res) => {
         throw new Error('Unknown Error Occured');
       }
     } catch(error) {
+      console.log(error)
       res.status(401).json({ success: false, message: "Please confirm that image is added " });
     }
   })

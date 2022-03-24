@@ -22,6 +22,7 @@ import AddCustomer from "./pages/Customer/AddCustomer";
 
 import Customer from "./pages/Customer/Customers"
 import MilkProduction from "./pages/DailyRecord/MilkProduction";
+import MilkSupply from "./pages/DailyRecord/MilkSupply";
 import Category from "./pages/Inventory/Category";
 
 
@@ -66,6 +67,10 @@ function App() {
           </PrivateRoute>
           <PrivateRoute exact path="/milk-records/add">
             <AddMilkProduction/>
+          </PrivateRoute>
+          
+          <PrivateRoute exact path="/milk-supply">
+            <MilkSupply/>
           </PrivateRoute>
 
           {/* Customer*/}

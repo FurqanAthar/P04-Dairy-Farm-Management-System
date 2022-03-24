@@ -20,6 +20,8 @@ import {
   addMember,
   deleteMember,
   getMembers,
+  updateRateList,
+  getRateList,
 } from "../controllers/farmController.js";
 import {
   getItemData,
@@ -72,5 +74,9 @@ router
   .route("/inventory/item/transaction/delete")
   .post(protect, deleteItemTransaction);
 router.route("/inventory/item/:id").get(protect, getItemData);
+
+// Miscellaneous Routes
+router.route("/miscellaneous/rate/update").put(protect, updateRateList);
+router.route("/miscellaneous/rate").get(protect, getRateList);
 
 export default router;

@@ -27,3 +27,9 @@ export const metricUnits = {
     { label: "kg", value: "kg" },
   ],
 };
+
+export const rates = [
+  { label: 90, value: 90 },
+  { label: 100, value: 100 },
+  { label: 110, value: 110 },
+];
