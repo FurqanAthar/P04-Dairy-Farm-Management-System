@@ -4,14 +4,16 @@ import Farm from '../models/farmModel.js'
 import Customer from '../models/customerModel.js'
 
 const addCustomer = asyncHandler(async(req, res) => {
-    const { name, email, cnic ,dob, status, image } = req.body;
+    const { name, email, cnic ,dob, status, image,type,sellingrate,quantityperday,address } = req.body;
     let farm = await Farm.findById(req.user.farmId)
-    // console.log("this is the farm",farm)
+    // console.log("this is the farm", req.user.farmId)
     try {
-      console.log("this will be used: ",req.user._id)
-      const customer = await Customer.create({ name, email, cnic ,dob, status, image, createdBy: req.user._id, inFarm: req.user.farmId })
-      console.log("customer details that will be added ",customer)
+      // console.log("this will be used: ", name, email, cnic ,dob, status, image,type,sellingrate,quantityperday,address)
+      const customer = await Customer.create({ name, email, cnic ,dob, status, image, type, sellingrate, quantityperday, address ,createdBy: req.user._id, inFarm: req.user.farmId })
+      // console.log("customer details that will be added ",customer)
+     
       if (customer && farm) {
+        // console.log("customer details that will be added ",customer)
         farm.customers = [...farm.customers, customer._id]
         farm.save()
         customer.save()
@@ -24,6 +26,7 @@ const addCustomer = asyncHandler(async(req, res) => {
         throw new Error('Unknown Error Occured');
       }
     } catch(error) {
+      console.log("error is ",error)
       res.status(401).json({ success: false, message: "Please confirm that image is added " });
     }
   })
@@ -90,7 +93,7 @@ const getCustomersData = asyncHandler(async (req, res) => {
 
 const updateCustomerData = asyncHandler(async (req, res) => {
   
-  const { id,name, email, cnic ,dob, status, image} = req.body;
+  const { id,name, email, cnic ,dob, status, image,type,sellingrate,quantityperday,address} = req.body;
   // console.log({ id,name, email, cnic ,dob, status, image})
   
   try {
@@ -107,6 +110,10 @@ const updateCustomerData = asyncHandler(async (req, res) => {
       customer.cnic=cnic;
       customer.status = status;
       customer.image = image;
+      customer.address=address;
+      customer.type=type;
+      customer.sellingrate=sellingrate;
+      customer.quantityperday=quantityperday;
       await customer.save();
      
       // console.log("the values are here now",customer)
