@@ -1,6 +1,8 @@
 import mongoose from "mongoose";
 import Animal from "./animalModel.js";
 import Customer from "./customerModel.js";
+import MilkSupply from "./milkSupply.js";
+import MilkSupplyData from "./milkSupplyData.js";
 
 const employeeSchema = mongoose.Schema(
   {
@@ -86,6 +88,16 @@ const farmSchema = mongoose.Schema(
       required: true,
       ref: "Inventory",
     },
+    milkSupply: {
+      type: mongoose.Schema.Types.ObjectId,
+      required: true,
+      ref: "MilkSupply",
+    },
+    miscellaneous: {
+      type: mongoose.Schema.Types.ObjectId,
+      required: true,
+      ref: "Miscellaneous",
+    },
   },
   {
     timestamps: true,
@@ -127,6 +139,40 @@ farmSchema.methods.getCustomersData = async function () {
   });
 
   return filtered;
+};
+
+farmSchema.methods.getSuppliesData = async function () {
+  let milkSupply = await MilkSupply.findById(this.milkSupply);
+  var results = await Promise.all(
+    Object.keys(milkSupply._doc.data).map(async (date) => {
+      let milkSupplyData = await MilkSupplyData.findById(
+        milkSupply._doc.data[date].dataId
+      );
+      return milkSupplyData;
+    })
+  );
+
+  var filtered = results.filter(function (el) {
+    return el != null;
+  });
+
+  // var formatted = {};
+
+  // key: date, value: data
+  // filtered.forEach((f) => {
+  //   formatted = {
+  //     ...formatted,
+  //     [f._doc.date]: f._doc,
+  //   };
+  // });
+
+  var formatted = [];
+  // array of data
+  filtered.forEach((f) => {
+    formatted = [...formatted, f._doc];
+  });
+
+  return formatted;
 };
 
 const Farm = mongoose.model("Farm", farmSchema);

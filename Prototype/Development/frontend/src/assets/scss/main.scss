@@ -1,9 +1,7 @@
-
 @import "variables";
 @import "mixins";
 @import "~bootstrap/scss/bootstrap";
 @import "defaults";
-
 
 /* Homepage */
 .main-homepage {
@@ -324,7 +322,7 @@
     left: 20px;
     z-index: -1;
     &:after {
-      content: '';
+      content: "";
       position: absolute;
       width: 70px;
       height: 70px;
@@ -344,7 +342,7 @@
     right: 120px;
     z-index: -1;
     &:after {
-      content: '';
+      content: "";
       position: absolute;
       width: 120px;
       height: 70px;
@@ -365,7 +363,7 @@
     left: 130px;
     z-index: -1;
     &:after {
-      content: '';
+      content: "";
       position: absolute;
       width: 120px;
       height: 90px;
@@ -385,7 +383,7 @@
     left: 130px;
     z-index: -1;
     &:after {
-      content: '';
+      content: "";
       position: absolute;
       width: 80px;
       height: 80px;
@@ -456,7 +454,7 @@
         width: 150px !important;
       }
       &:before {
-        content: '';
+        content: "";
         position: absolute;
         width: 19px;
         height: 19px;
@@ -466,7 +464,7 @@
         border: 1px solid #e5e8f5;
       }
       &:after {
-        content: '';
+        content: "";
         position: absolute;
         width: 9px;
         height: 5px;
@@ -685,7 +683,7 @@
         margin-bottom: 20px;
         position: relative;
         &:before {
-          content: '';
+          content: "";
           position: absolute;
           width: 60px;
           height: 60px;
@@ -734,7 +732,7 @@
           margin-right: 20px;
           position: relative;
           &:before {
-            content: '';
+            content: "";
             position: absolute;
             width: 60px;
             height: 60px;
@@ -848,7 +846,7 @@
       color: #fff;
       position: relative;
       &:before {
-        content: '';
+        content: "";
         position: absolute;
         background: url(../images/mark.png) no-repeat;
         top: -18px;
@@ -858,7 +856,6 @@
         background-size: 40px;
       }
       &:after {
-
         content: "";
         position: absolute;
         top: -12px;
@@ -1182,7 +1179,7 @@
         color: #142433;
         position: relative;
         &:after {
-          content: '';
+          content: "";
           position: absolute;
           left: 0;
           right: 0;
@@ -1274,7 +1271,7 @@
           }
         }
         &:before {
-          content: '';
+          content: "";
           position: absolute;
           width: 20px;
           height: 20px;
@@ -1587,7 +1584,7 @@
       padding: 0 30px;
     }
     &:after {
-      content: '';
+      content: "";
       position: absolute;
       top: 12px;
       left: 0;
@@ -2021,7 +2018,7 @@
       }
     }
   }
-  .btn[type='submit'] {
+  .btn[type="submit"] {
     margin: 20px 0;
     width: 100%;
     font-weight: 400;
@@ -2043,7 +2040,7 @@
       padding: 0 30px;
     }
     &:after {
-      content: '';
+      content: "";
       position: absolute;
       top: 12px;
       left: 0;
@@ -4088,7 +4085,7 @@
       right: -24px;
       top: 100%;
       position: absolute;
-      content: '';
+      content: "";
       background: $light;
       height: 1px;
     }
@@ -4973,7 +4970,7 @@
         min-width: 70px;
       }
       .custom-checkbox {
-        input[type='radio'] {
+        input[type="radio"] {
           display: none;
         }
         label {
@@ -5090,7 +5087,7 @@
         padding-bottom: 10px;
         position: relative;
         &:before {
-          content: '';
+          content: "";
           position: absolute;
           left: 0;
           top: 7px;
@@ -5335,7 +5332,7 @@
           }
           .custom-checkbox {
             margin-top: 20px;
-            input[type='checkbox'] {
+            input[type="checkbox"] {
               opacity: 0;
               & + label {
                 position: relative;
@@ -5351,7 +5348,7 @@
                   border-color: $dark;
                 }
                 &:before {
-                  content: '';
+                  content: "";
                   position: absolute;
                   top: -1px;
                   right: -1px;
@@ -5365,7 +5362,7 @@
                   visibility: hidden;
                 }
                 &:after {
-                  content: '';
+                  content: "";
                   position: absolute;
                   width: 20px;
                   height: 20px;
@@ -5379,7 +5376,7 @@
                 }
               }
             }
-            input[type='checkbox']:checked {
+            input[type="checkbox"]:checked {
               & + label {
                 border-color: $dark;
                 &:before {
@@ -5418,7 +5415,7 @@
       display: none;
       position: relative;
       &:after {
-        content: '';
+        content: "";
         position: absolute;
         width: 8px;
         height: 8px;
@@ -5755,7 +5752,7 @@
         padding-left: 20px;
         margin-left: 15px;
         &:before {
-          content: '';
+          content: "";
           position: absolute;
           top: -20px;
           bottom: -20px;
@@ -5914,7 +5911,7 @@
   .add-more-states {
     position: relative;
     &:before {
-      content: '';
+      content: "";
       position: absolute;
       left: -31px;
       right: -31px;
@@ -5953,7 +5950,7 @@
       margin-bottom: 10px;
       position: relative;
       &:after {
-        content: '';
+        content: "";
         position: absolute;
         left: -35px;
         right: -35px;
@@ -6314,7 +6311,7 @@
 
     /* Create the indicator (the dot/circle - hidden when not checked) */
     .checkmark:after {
-      content: '';
+      content: "";
       position: absolute;
       display: none;
     }
@@ -6401,4 +6398,352 @@
 
 .no-padding {
   padding: 0px !important;
+}
+
+.milk-supply {
+  .main-details-section {
+    padding-top: 30px;
+    .graph-box {
+      background: #fff;
+      border: 1px solid $light;
+      border-radius: 6px;
+      padding: 20px 15px;
+      @media (max-width: 767px) {
+        margin-bottom: 15px;
+      }
+      .icon-image {
+        width: 40px;
+        height: 40px;
+        border-radius: 60px;
+        margin-right: 10px;
+        img {
+          width: 18px;
+          height: auto;
+          display: block;
+        }
+        &.primary-icon {
+          background: lighten($primary, 30%);
+          color: $primary;
+          display: flex;
+          align-items: center;
+          justify-content: center;
+        }
+        &.purple-icon {
+          background: lighten(#7848ff, 30%);
+          color: $primary;
+          display: flex;
+          align-items: center;
+          justify-content: center;
+        }
+        &.danger-icon {
+          background: lighten($danger, 30%);
+          color: $success;
+          display: flex;
+          align-items: center;
+          justify-content: center;
+        }
+        &.success-icon {
+          background: lighten($green, 50%);
+          color: $success;
+          display: flex;
+          align-items: center;
+          justify-content: center;
+        }
+        &.info-icon {
+          background: lighten($blue, 30%);
+          color: $blue;
+          display: flex;
+          align-items: center;
+          justify-content: center;
+        }
+      }
+      .title {
+        font-size: 12px;
+        font-weight: 300;
+        color: #43536d;
+        display: block;
+      }
+      .g-value {
+        font-size: 1.2rem;
+        font-weight: 500;
+        display: flex;
+        align-items: center;
+      }
+      .custom-tooltip {
+        background: #000;
+        color: #fff;
+        display: flex;
+        padding: 20px;
+        border-radius: 6px;
+        div {
+          font-size: 14px;
+          font-weight: 600;
+          color: #fff;
+          span {
+            font-size: 13px;
+            color: #888888;
+            font-weight: 300;
+            margin-bottom: 3px;
+            display: block;
+          }
+          & + div {
+            margin-left: 20px;
+          }
+        }
+      }
+      .box-holder {
+        position: relative;
+        padding-left: 20px;
+        margin-left: 15px;
+        &:before {
+          content: "";
+          position: absolute;
+          top: -20px;
+          bottom: -20px;
+          left: 2px;
+          width: 1px;
+          background: $light;
+        }
+        & > div {
+          margin-right: 20px;
+          &:last-child {
+            margin: 0;
+          }
+        }
+      }
+      .badge {
+        padding: 4px 6px 4px 15px;
+        margin-left: 10px;
+        font-weight: 500;
+        &:after {
+          width: 5px;
+          height: 5px;
+          top: 9px;
+          left: 7px;
+          border-left: 1px solid $success;
+          border-bottom: 1px solid $success;
+        }
+      }
+    }
+  }
+  .milk-supply-date,
+  .save-button {
+    padding: 15px 40px;
+    .title {
+      font-size: 26px;
+      font-weight: 400;
+      display: flex;
+      margin: 0px;
+      align-items: center;
+    }
+  }
+  .supply-info {
+    margin: 15px 0px;
+    .supply-card {
+      padding: 10px;
+      margin-right: 5px;
+      border: 1px solid $light;
+      background: #fff;
+    }
+  }
+  .details {
+    border: 1px solid $light;
+    // border-radius: 8px;
+    // padding-bottom: 20px;
+    background: #fff;
+    // overflow: hidden;
+    .personal-info {
+      display: flex;
+      align-items: center;
+      font-size: 13px;
+      font-weight: 300;
+      color: #767778;
+      padding: 5px 40px;
+      .personalDetails {
+        display: flex;
+        align-items: center;
+        // width: 40%;
+        .user-pic {
+          width: 60px;
+          height: 60px;
+          background: #fff;
+          margin-right: 10px;
+          overflow: hidden;
+          border-radius: 100%;
+          img {
+            width: 100%;
+            height: 100%;
+            object-fit: cover;
+            object-position: center;
+          }
+        }
+        .name-spell {
+          width: 80px;
+          height: 80px;
+          background: lighten($green, 50%);
+          color: $green;
+          border-radius: 80px;
+          margin-right: 20px;
+          font-size: 18px;
+          display: flex;
+          align-items: center;
+          justify-content: center;
+          font-weight: 600;
+        }
+        .text-details {
+          p {
+            font-size: 13px;
+            color: #000;
+            margin: 0px;
+          }
+        }
+      }
+      // .inputBox {
+      //   width: 70%;
+      //   .form-group {
+      //     margin: 5px !important;
+      //   }
+      // }
+    }
+    .form-label {
+      font-size: 12px;
+      margin: 0 !important;
+    }
+    .form-control {
+      font-size: 12px;
+      margin: 0 !important;
+      padding: 0px 10px;
+    }
+    .social-title {
+      max-width: 760px;
+      margin: 35px auto 20px;
+      color: #767778;
+      font-size: 13px;
+    }
+    .other-info {
+      margin-top: 10px;
+      padding: 0 40px;
+      .social-title {
+        max-width: 760px;
+        margin: 35px auto 20px;
+        color: #767778;
+        font-size: 13px;
+      }
+      .list {
+        padding: 20px 0;
+        & + .list {
+          border-top: 2px dotted $light;
+        }
+      }
+      .box {
+        .icon {
+          width: 18px;
+          height: 18px;
+          margin-right: 15px;
+          svg {
+            vertical-align: top;
+            filter: grayscale(100%);
+          }
+          img {
+            width: 100%;
+            height: 100%;
+            display: block;
+            object-fit: contain;
+          }
+          &.lock-icon {
+            img {
+              width: 20px;
+              height: 20px;
+              margin-left: -1px;
+            }
+          }
+        }
+        .label {
+          font-size: 14px;
+          font-weight: 400;
+        }
+        .title {
+          font-size: 14px;
+          font-weight: 400;
+          color: #767778;
+        }
+        a {
+          font-size: 13px;
+          font-weight: 400;
+          color: #151b26;
+          margin: 0 0 0 40px;
+          text-decoration: none;
+          &:hover {
+            opacity: 0.6;
+          }
+        }
+      }
+    }
+  }
+  @media screen and (max-width: 1200px) {
+    .details {
+      .personal-info {
+        padding: 20px;
+      }
+      .other-info {
+        .list {
+          padding: 12px 20px;
+        }
+      }
+      .social-title {
+        margin: 20px 15px 10px;
+      }
+    }
+  }
+  @media screen and (max-width: 767px) {
+    .grey-box {
+      padding: 40px 0;
+      .title {
+        font-size: 22px;
+      }
+    }
+    .details {
+      .personal-info {
+        .name-spell {
+          width: 50px;
+          height: 50px;
+          font-size: 12px;
+        }
+      }
+      .other-info {
+        .list {
+          padding: 12px 20px 35px;
+          position: relative;
+        }
+        .box {
+          .title {
+            font-size: 13px;
+            position: absolute;
+            left: 51px;
+            top: 35px;
+          }
+        }
+      }
+    }
+  }
+}
+
+.rates-body {
+  .rates-data {
+    .single-rate {
+      .rate-field {
+        padding: 0px !important;
+      }
+    }
+  }
+}
+
+.cursor {
+  cursor: pointer;
+}
+.text-purple {
+  color: $purple;
+}
+.text-red {
+  color: $danger;
 }

@@ -6,57 +6,53 @@ const CustomerSchema = mongoose.Schema(
       type: String,
       required: true,
     },
-    email:{
-        type: String,
-        required:true,
+    email: {
+      type: String,
+      required: true,
     },
-    cnic:{
-        type: String,
-        required:true,
+    cnic: {
+      type: String,
+      required: true,
     },
     dob: {
-        type: Date,
-        required: true
+      type: Date,
+      required: true,
     },
     status: {
-        type: String,
-        required: true,
+      type: String,
+      required: true,
     },
-   image: {
-        type: String,
-        default:"",
+    image: {
+      type: String,
+      default: "",
     },
     type: {
       type: String,
       required: true,
     },
     sellingrate: {
-        type: Number,
-        required: true,
-     },
+      type: Number,
+      required: true,
+    },
     quantityperday: {
-    type: String,
-    required: true,
+      type: String,
+      required: true,
     },
     address: {
       type: String,
       required: true,
     },
-createdBy: {
-    type: mongoose.Schema.Types.ObjectId,
-    required: true,
-    ref: "Customer",
-},
-    
+    createdBy: {
+      type: mongoose.Schema.Types.ObjectId,
+      required: true,
+      ref: "Customer",
+    },
+    supplyRecord: [],
   },
   {
     timestamps: true,
   }
 );
-
-
-
-
 
 const Customer = mongoose.model("Customer", CustomerSchema);
 

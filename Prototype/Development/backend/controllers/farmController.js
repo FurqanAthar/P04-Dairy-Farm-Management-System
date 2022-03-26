@@ -3,24 +3,22 @@ import generateToken from "../utils/generateToken.js";
 import User from "../models/userModel.js";
 import Farm from "../models/farmModel.js";
 import Inventory from "../models/inventoryModel.js";
+import MilkSupply from "../models/milkSupply.js";
+import Miscellaneous from "../models/miscellaneousModel.js";
 import Animal from "../models/animalModel.js";
 import MilkProduction from "../models/milkProductionModel.js";
 import Worker from "../models/workerModel.js";
-import nodemailer from 'nodemailer';
+import nodemailer from "nodemailer";
 import sendgridTransport from "nodemailer-sendgrid-transport";
 
-
-const transporter=nodemailer.createTransport(
-  sendgridTransport(
-    {
-        auth:{
-          api_key:"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"
-        }
-
-    }
-  )
-
-)
+const transporter = nodemailer.createTransport(
+  sendgridTransport({
+    auth: {
+      api_key:
+        "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",
+    },
+  })
+);
 
 const registerFarm = asyncHandler(async (req, res) => {
   const { farmName, subdomain, name, email, cnic, password } = req.body;
@@ -29,6 +27,12 @@ const registerFarm = asyncHandler(async (req, res) => {
   let farm = await Farm.findOne({ subdomain });
   let user = await User.findOne({ email });
   let inventory = await Inventory.create({ categories: [], inFarm: null });
+  let milkSupply = await MilkSupply.create({ data: {}, inFarm: null });
+  let miscellaneous = await Miscellaneous.create({
+    rateList: [],
+    addressList: [],
+    inFarm: null,
+  });
 
   if (farm) {
     res
@@ -46,6 +50,8 @@ const registerFarm = asyncHandler(async (req, res) => {
       subdomain,
       users: [user._doc._id],
       inventory: inventory._doc._id,
+      milkSupply: milkSupply._doc._id,
+      miscellaneous: miscellaneous._doc._id,
     });
 
     user = await User.findById(user._doc._id);
@@ -53,7 +59,11 @@ const registerFarm = asyncHandler(async (req, res) => {
     if (user) {
       user.farmId = farm._doc._id;
       inventory.inFarm = farm._doc._id;
+      milkSupply.inFarm = farm._doc._id;
+      miscellaneous.inFarm = farm._doc._id;
       inventory.save();
+      milkSupply.save();
+      miscellaneous.save();
       user.save();
       res.status(200).json({ success: true });
     }
@@ -287,22 +297,15 @@ const addMember = asyncHandler(async (req, res) => {
       let farm = await Farm.findById(req.user.farmId);
       if (farm && user) {
         farm.users = [...farm.users, user._id];
-        farm.save()
-        
+        farm.save();
+
         res.json({ success: true, message: "User added successfully!" });
-        transporter.sendMail(
-          {
-            
-            to:email,
-            from:"khjunaid.7@gmail.com",
-            subject:"signup-access",
-            html:"<h1>Welcome to qazi dairies</h1> <div>Your password for this account is</div>  "
-
-
-
-          }
-
-        )
+        transporter.sendMail({
+          to: email,
+          from: "khjunaid.7@gmail.com",
+          subject: "signup-access",
+          html: "<h1>Welcome to qazi dairies</h1> <div>Your password for this account is</div>  ",
+        });
       } else {
         throw new Error("Unexpected Error");
       }
@@ -467,6 +470,36 @@ const updateAnimalData = asyncHandler(async (req, res) => {
   }
 });
 
+const updateRateList = asyncHandler(async (req, res) => {
+  const { rateList } = req.body;
+  try {
+    let miscellaneous = await Miscellaneous.findOne({
+      inFarm: req.user.farmId,
+    });
+    if (miscellaneous) {
+      miscellaneous.rateList = rateList;
+      await miscellaneous.save();
+      res.json({ success: true, message: "Rate List Updated" });
+    }
+  } catch (error) {
+    console.log(error);
+    res.json({ success: false, message: "Unknown Error Occured" });
+  }
+});
+
+const getRateList = asyncHandler(async (req, res) => {
+  try {
+    let miscellaneous = await Miscellaneous.findOne({
+      inFarm: req.user.farmId,
+    });
+    if (miscellaneous) {
+      res.json({ success: true, data: miscellaneous._doc.rateList });
+    }
+  } catch (error) {
+    res.json({ success: false, message: "Unknown Error Occured" });
+  }
+});
+
 export {
   registerFarm,
   validateSubDomain,
@@ -487,4 +520,6 @@ export {
   addWorker,
   editWorker,
   getWorkers,
+  updateRateList,
+  getRateList,
 };
