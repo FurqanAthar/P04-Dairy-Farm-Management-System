@@ -169,6 +169,33 @@ export const addMilkSupply = async (data, token) => {
   }
 };
 
+export const getMilkSupply = async (token) => {
+  config.headers.Authorization = token;
+  try {
+    return await axios.get(`/record/supply`, config);
+  } catch (error) {
+    return error;
+  }
+};
+
+export const getMilkSupplyById = async (id, token) => {
+  config.headers.Authorization = token;
+  try {
+    return await axios.get(`/record/supply/${id}`, config);
+  } catch (error) {
+    return error;
+  }
+};
+
+export const updateMilkSupplyById = async (data, token) => {
+  config.headers.Authorization = token;
+  try {
+    return await axios.put(`/record/supply/update`, data, config);
+  } catch (error) {
+    return error;
+  }
+};
+
 export const updateRateList = async (data, token) => {
   config.headers.Authorization = token;
   try {

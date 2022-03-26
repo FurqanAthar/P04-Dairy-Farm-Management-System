@@ -23,6 +23,7 @@ import AddCustomer from "./pages/Customer/AddCustomer";
 import Customer from "./pages/Customer/Customers";
 import MilkProduction from "./pages/DailyRecord/MilkProduction";
 import MilkSupply from "./pages/DailyRecord/MilkSupply";
+import MilkSupplyList from "./pages/DailyRecord/MilkSupplyList";
 import Category from "./pages/Inventory/Category";
 
 function App() {
@@ -68,9 +69,17 @@ function App() {
             <AddMilkProduction />
           </PrivateRoute>
 
-          <PrivateRoute exact path="/milk-supply">
+          {/* Milk Supply Dairy */}
+          <PrivateRoute exact path="/milk-supply/add">
             <MilkSupply />
           </PrivateRoute>
+          <PrivateRoute exact path="/milk-supply">
+            <MilkSupplyList />
+          </PrivateRoute>
+          <PrivateRoute exact path="/milk-supply/:id">
+            <MilkSupply />
+          </PrivateRoute>
+
           <PrivateRoute exact path="/milk-records/:id">
             <AddMilkProduction />
           </PrivateRoute>

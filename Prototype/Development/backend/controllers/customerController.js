@@ -33,6 +33,7 @@ const addCustomer = asyncHandler(async (req, res) => {
       address,
       createdBy: req.user._id,
       inFarm: req.user.farmId,
+      supplyRecord: [],
     });
     // console.log("customer details that will be added ",customer)
 

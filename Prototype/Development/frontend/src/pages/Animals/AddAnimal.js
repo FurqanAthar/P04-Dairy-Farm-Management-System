@@ -75,7 +75,6 @@ const customRoleControlStyles = {
 
 function AddAnimal(props) {
   const { id } = useParams();
-  console.log({ id }, "id is :");
   const history = useHistory();
   const [image, setImage] = useState("");
   const [disabled, setDisabled] = useState(false);

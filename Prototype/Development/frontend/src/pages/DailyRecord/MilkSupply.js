@@ -4,10 +4,16 @@ import { getAnimals } from "../../actions/farmActions";
 import { rates } from "../../constants/options";
 import DatePicker from "react-datepicker";
 import { toast } from "react-toastify";
+import { useParams } from "react-router";
 import { customRoleControlStyles } from "../../constants/designs";
 import SimpleReactValidator from "simple-react-validator";
 import { getCustomers } from "../../actions/customerAction";
 import TrashIcon from "../../assets/images/icons/trash.svg";
+import BagIcon from "../../assets/images/icons/bag.svg";
+import WalletIconGreen from "../../assets/images/icons/calculator-2-green.svg";
+import WalletIcon from "../../assets/images/icons/calculator-2.svg";
+import WalletIconRed from "../../assets/images/icons/calculator-2-red.svg";
+import PersentIcon from "../../assets/images/icons/persent-icon.svg";
 import NewRateModal from "../../components/layouts/NewRateModal";
 import {
   Container,
@@ -23,12 +29,22 @@ import {
 import moment from "moment";
 import Select from "react-select";
 import axios from "axios";
-import { addMilkSupply, getRateList } from "../../services/apiServices";
+import {
+  addMilkSupply,
+  getMilkSupplyById,
+  getRateList,
+  updateMilkSupplyById,
+} from "../../services/apiServices";
 
 function MilkSupply(props) {
+  const { id } = useParams();
   const [, forceUpdate] = useState();
   const [rateList, setRateList] = useState([]);
   const [customers, setCustomers] = useState([]);
+  const [toCustomersType, setToCustomersType] = useState({
+    regular: {},
+    milkman: {},
+  });
   const [disabled, setDisabled] = useState(false);
   const [validator] = useState(new SimpleReactValidator());
   const [supplyDataForm, setSupplyDataForm] = useState([]);
@@ -45,6 +61,32 @@ function MilkSupply(props) {
     }
   );
 
+  async function getDetails() {
+    let result = await getMilkSupplyById(id, props.login.loginInfo.token);
+    if (result.data.success) {
+      let data = result.data.data;
+      setSupplyDataForm([...data.customers]);
+      setSupplyInfo({
+        totalRevenue: data.totalRevenue,
+        totalQuantitySupplied: data.totalQuantitySupplied,
+        totalWasted: data.waste.quantity,
+        reasonWasted: data.waste.reason,
+        totalCustomers: data.customers.length,
+        date: new Date(data.date),
+      });
+      setToCustomersType({
+        regular: data.totalToCustomers,
+        milkman: data.totalToMilkmans,
+      });
+    }
+  }
+
+  useEffect(async () => {
+    if (id !== undefined) {
+      await getDetails();
+    }
+  }, [id]);
+
   useEffect(async () => {
     async function getCustomersData() {
       await props.getCustomers();
@@ -54,13 +96,28 @@ function MilkSupply(props) {
     let result = await getRateList(props.login.loginInfo.token);
     if (result.data.success) {
       let button = (
-        <div
-          onClick={() => {
-            return <NewRateModal />;
-          }}
-        >
-          Add New Rate
-        </div>
+        <Button className="btn-light btn-block">
+          <svg
+            stroke="currentColor"
+            fill="currentColor"
+            stroke-wid="0"
+            viewBox="0 0 16 16"
+            height="1em"
+            width="1em"
+            xmlns="http://www.w3.org/2000/svg"
+          >
+            <path
+              fill-rule="evenodd"
+              d="M8 3.5a.5.5 0 01.5.5v4a.5.5 0-01-.5.5H4a.5.5 0 010-1h3.5V4a.5.5 0 01.5-.5z"
+              clip-rule="evenodd"
+            ></path>
+            <path
+              fill-rule="evenodd"
+              d="M7.5 8a.5.5 0 01.5-.5h4a.5.5 0 010 1H8.5V12a.5.5 0 01-1 OV8z"
+              clip-rule="evenodd"
+            ></path>
+          </svg>{" "}
+        </Button>
       );
       let keyValueRates = result.data.data.map((r) => {
         return {
@@ -68,7 +125,13 @@ function MilkSupply(props) {
           value: r,
         };
       });
-      let newRates = [...keyValueRates, button];
+      let newRates = [
+        ...keyValueRates,
+        {
+          label: button,
+          value: "add",
+        },
+      ];
       setRateList([...newRates]);
     }
   }, []);
@@ -80,19 +143,21 @@ function MilkSupply(props) {
   }, [props.customers]);
 
   useEffect(() => {
-    let supplyDataTemp = [];
-    supplyDataTemp = customers.map((c) => {
-      return {
-        _id: c._id,
-        image: c.image,
-        name: c.name,
-        status: c.status,
-        milkSupplyQuantity: 2,
-        milkSupplyRate: 100,
-        type: "Milkman",
-      };
-    });
-    setSupplyDataForm([...supplyDataTemp]);
+    if (id === undefined) {
+      let supplyDataTemp = [];
+      supplyDataTemp = customers.map((c) => {
+        return {
+          _id: c._id,
+          image: c.image,
+          name: c.name,
+          status: c.status,
+          milkSupplyQuantity: c.quantityperday,
+          milkSupplyRate: c.sellingrate,
+          type: c.type,
+        };
+      });
+      setSupplyDataForm([...supplyDataTemp]);
+    }
   }, [customers]);
 
   useEffect(() => {
@@ -112,10 +177,6 @@ function MilkSupply(props) {
     });
   }, [supplyDataForm]);
 
-  useEffect(() => {
-    console.log("suppplyInfo", supplyInfo);
-  }, [supplyInfo]);
-
   const handleDatepickerFocus = (e) => {
     e.target.parentNode.parentNode.parentNode.classList.add("active");
   };
@@ -132,7 +193,11 @@ function MilkSupply(props) {
         supplyDataTemp[index].milkSupplyQuantity = e.target.value;
       }
     } else if (which === "rate") {
-      supplyDataTemp[index].milkSupplyRate = e.value;
+      if (e.value == "add") {
+        setShowNewRateModal(!showNewRateModal);
+      } else {
+        supplyDataTemp[index].milkSupplyRate = e.value;
+      }
     } else if (which === "date") {
       setSupplyInfo({ date: new Date(e) });
     } else if (which === "wastedQuantity") {
@@ -156,21 +221,46 @@ function MilkSupply(props) {
       validator.showMessages();
       forceUpdate(1);
     } else {
-      let result = await addMilkSupply(
-        {
-          customersData: supplyDataForm,
-          info: {
-            ...supplyInfo,
-            totalWasted: parseFloat(supplyInfo.totalWasted),
-            date: moment(supplyInfo.date).format("YYYY-MM-DD[T00:00:00.000Z]"),
+      if (id === undefined) {
+        let result = await addMilkSupply(
+          {
+            customersData: supplyDataForm,
+            info: {
+              ...supplyInfo,
+              totalWasted: parseFloat(supplyInfo.totalWasted),
+              date: moment(supplyInfo.date).format(
+                "YYYY-MM-DD[T00:00:00.000Z]"
+              ),
+            },
           },
-        },
-        props.login.loginInfo.token
-      );
-      if (result.data && result.data.success) {
-        // setStep("details");
+          props.login.loginInfo.token
+        );
+        if (result.data && result.data.success) {
+          toast.success(result.data.message);
+        } else {
+          toast.error(result.data.message);
+        }
       } else {
-        toast.error(result.data.message);
+        let result = await updateMilkSupplyById(
+          {
+            id: id,
+            customersData: supplyDataForm,
+            info: {
+              ...supplyInfo,
+              totalWasted: parseFloat(supplyInfo.totalWasted),
+              date: moment(supplyInfo.date).format(
+                "YYYY-MM-DD[T00:00:00.000Z]"
+              ),
+            },
+          },
+          props.login.loginInfo.token
+        );
+        if (result.data && result.data.success) {
+          await getDetails();
+          toast.success(result.data.message);
+        } else {
+          toast.error(result.data.message);
+        }
       }
     }
     setDisabled(false);
@@ -178,23 +268,66 @@ function MilkSupply(props) {
 
   return (
     <>
-      <Button
-        onClick={() => {
-          setShowNewRateModal(!showNewRateModal);
-          // setShowNewRateModal(false);
-        }}
-      >
-        Add New Rate
-      </Button>
       <div className="milk-supply">
-        <Row className="supply-info justify-content-md-center">
-          <Col lg={8}>
-            <span className="supply-card">
-              Total Revenue: {supplyInfo.totalRevenue}
-            </span>
-            <span className="supply-card">
-              Total Revenue: {supplyInfo.totalRevenue}
-            </span>
+        <Row className="justify-content-md-center">
+          <Col lg={8} className="supply-info main-details-section ">
+            <div className="graph-box-holder d-flex flex-column h-100">
+              <Row>
+                <Col lg={3} md={6}>
+                  <div className="graph-box d-flex align-items-center">
+                    <div className="icon-image success-icon">
+                      <img src={PersentIcon} alt="Icon" />
+                    </div>
+                    <div>
+                      <span className="title">Sales</span>
+                      <div className="g-value">
+                        <span className="text-success mr-1">Rs.</span>{" "}
+                        {supplyInfo.totalRevenue}
+                      </div>
+                    </div>
+                  </div>
+                </Col>
+                <Col lg={3} md={6}>
+                  <div className="graph-box d-flex align-items-center">
+                    <div className="icon-image purple-icon">
+                      <img src={WalletIcon} alt="Icon" />
+                    </div>
+                    <div>
+                      <span className="title">Supplied Qty.</span>
+                      <div className="g-value">
+                        <span className="text-purple mr-1">Ltr </span>{" "}
+                        {supplyInfo.totalQuantitySupplied}
+                      </div>
+                    </div>
+                  </div>
+                </Col>
+                <Col lg={3} md={6}>
+                  <div className="graph-box d-flex align-items-center">
+                    <div className="icon-image danger-icon">
+                      <img src={WalletIconRed} alt="Icon" />
+                    </div>
+                    <div>
+                      <span className="title">Wasted Qty.</span>
+                      <div className="g-value">
+                        <span className="text-red mr-1">Ltr </span>{" "}
+                        {supplyInfo.totalWasted}
+                      </div>
+                    </div>
+                  </div>
+                </Col>
+                <Col lg={3} md={6}>
+                  <div className="graph-box d-flex align-items-center">
+                    <div className="icon-image info-icon">
+                      <img src={BagIcon} alt="Icon" />
+                    </div>
+                    <div>
+                      <span className="title">Customers</span>
+                      <div className="g-value">{supplyInfo.totalCustomers}</div>
+                    </div>
+                  </div>
+                </Col>
+              </Row>
+            </div>
           </Col>
         </Row>
         <Row className="justify-content-md-center">
@@ -228,7 +361,19 @@ function MilkSupply(props) {
               <Row className="milk-supply-date d-flex justify-content-between">
                 {/* <Col lg={4}>Wasted</Col> */}
                 <Col lg={12}>
-                  <p className="badge badge-danger">Wasted Milk</p>
+                  <div className="d-flex justify-content-between">
+                    <p className="badge badge-danger">Wasted Milk</p>
+                    <p
+                      className="badge badge-info cursor"
+                      onClick={() =>
+                        setCustomers([
+                          ...props.customers.customers.customersData,
+                        ])
+                      }
+                    >
+                      Refresh List
+                    </p>
+                  </div>
                   <Form.Group className="mr-2">
                     <Form.Label>Quantity (ltr)</Form.Label>
                     <FormControl
@@ -256,7 +401,7 @@ function MilkSupply(props) {
                     <Form.Label>Reason</Form.Label>
                     <FormControl
                       name={`wasted-reason`}
-                      value={supplyInfo.reason}
+                      value={supplyInfo.reasonWasted}
                       required
                       id={`wasted-reason`}
                       placeholder="Reason"
@@ -300,7 +445,7 @@ function MilkSupply(props) {
                             {/* Type:{" "} */}
                             <span
                               className={
-                                c.type === "milkman"
+                                c.type === "Milkman"
                                   ? "badge badge-info mt-1"
                                   : "badge badge-success mt-1"
                               }
@@ -380,13 +525,23 @@ function MilkSupply(props) {
               })}
               <Row className="save-button d-flex justify-content-end">
                 <Col lg={4} className="d-flex justify-content-end">
-                  <Button
-                    variant="primary"
-                    onClick={handleSubmit}
-                    disabled={disabled}
-                  >
-                    Add Record
-                  </Button>
+                  {id === undefined ? (
+                    <Button
+                      variant="primary"
+                      onClick={handleSubmit}
+                      disabled={disabled}
+                    >
+                      Add Record
+                    </Button>
+                  ) : (
+                    <Button
+                      variant="primary"
+                      onClick={handleSubmit}
+                      disabled={disabled}
+                    >
+                      Update Record
+                    </Button>
+                  )}
                 </Col>
               </Row>
               {showNewRateModal ? (
