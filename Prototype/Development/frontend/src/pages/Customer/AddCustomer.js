@@ -90,6 +90,7 @@ const AddCustomer = (props) => {
 	  {
 		name: "",
 		email: "",
+    password:"",
     cnic:"",
 		dob: "",
 		status: "",
@@ -184,8 +185,8 @@ const AddCustomer = (props) => {
         if (id !== undefined && props.login.loginInfo) {
           console.log(id);
           async function getDetails() {
-            console.log(props.login.loginInfo.token);
-            console.log("herherh",getCustomerData(id, props.login.loginInfo.token))
+            // console.log(props.login.loginInfo.token);
+            // console.log("herherh",getCustomerData(id, props.login.loginInfo.token))
             return await getCustomerData(id, props.login.loginInfo.token);
           }
           let result = await getDetails();
@@ -194,6 +195,7 @@ const AddCustomer = (props) => {
             setFormInput({
               name: d.name,
               email: d.email,
+              password:"can be updated by user",
               dob: new Date(d.dob),
               cnic: d.cnic,
               status: d.status,
@@ -324,7 +326,30 @@ const AddCustomer = (props) => {
                                 className: "text-danger",
                               }
                             )}
+
+                            <Form.Label>Create Password (cannot be updated only added the first time)</Form.Label>
+                            <FormControl
+                              required
+                              value={formInput.password}
+                              name="password"
+                              label="Password"
+                              type="password"
+                              placeholder="Min. 8 Character"
+                              id="password"
+                              autoComplete="password"
+                              onChange={handleInput}
+                              disabled={id===undefined? false:true }
+                            />
+                            {validator.message(
+                              "password",
+                              formInput.password,
+                              "required",
+                              {
+                                className: "text-danger",
+                              }
+                            )}
                           </Form.Group>
+
                           
                         </Col>
                         <Col lg={6}>

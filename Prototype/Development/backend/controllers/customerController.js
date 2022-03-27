@@ -1,62 +1,71 @@
-import asyncHandler from "express-async-handler";
-import generateToken from "../utils/generateToken.js";
-import Farm from "../models/farmModel.js";
-import Customer from "../models/customerModel.js";
+import asyncHandler from 'express-async-handler'
+import generateToken from '../utils/generateToken.js'
+import Farm from '../models/farmModel.js'
+import Customer from '../models/customerModel.js'
+import nodemailer from 'nodemailer';
+import sendgridTransport from "nodemailer-sendgrid-transport";
+const transporter=nodemailer.createTransport(
+  sendgridTransport(
+    {
+        auth:{
+          api_key:"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"
+        }
 
-const addCustomer = asyncHandler(async (req, res) => {
-  const {
-    name,
-    email,
-    cnic,
-    dob,
-    status,
-    image,
-    type,
-    sellingrate,
-    quantityperday,
-    address,
-  } = req.body;
-  let farm = await Farm.findById(req.user.farmId);
-  // console.log("this is the farm", req.user.farmId)
-  try {
-    // console.log("this will be used: ", name, email, cnic ,dob, status, image,type,sellingrate,quantityperday,address)
-    const customer = await Customer.create({
-      name,
-      email,
-      cnic,
-      dob,
-      status,
-      image,
-      type,
-      sellingrate,
-      quantityperday,
-      address,
-      createdBy: req.user._id,
-      inFarm: req.user.farmId,
-      supplyRecord: [],
-    });
-    // console.log("customer details that will be added ",customer)
-
-    if (customer && farm) {
-      // console.log("customer details that will be added ",customer)
-      farm.customers = [...farm.customers, customer._id];
-      farm.save();
-      customer.save();
-
-      res.status(200).json({ customerData: { ...customer._doc } });
-    } else {
-      res
-        .status(401)
-        .json({ success: false, message: "Unknown Error Occured" });
-      throw new Error("Unknown Error Occured");
     }
-  } catch (error) {
-    console.log("error is ", error);
-    res
-      .status(401)
-      .json({ success: false, message: "Please confirm that image is added " });
-  }
-});
+  )
+
+)
+
+const addCustomer = asyncHandler(async(req, res) => {
+    const { name, email, password,cnic ,dob, status, image,type,sellingrate,quantityperday,address } = req.body;
+    let farm = await Farm.findById(req.user.farmId)
+    // console.log("this is the farm", req.user.farmId)
+    try {
+      // console.log("this will be used: ", name, email, cnic ,dob, status, image,type,sellingrate,quantityperday,address)
+      const customer = await Customer.create({ name, email, password,cnic ,dob, status, image, type, sellingrate, quantityperday, address ,createdBy: req.user._id, inFarm: req.user.farmId })
+      // console.log("customer details that will be added ",customer)
+     
+      if (customer && farm) {
+        // console.log("customer details that will be added ",customer)
+        farm.customers = [...farm.customers, customer._id]
+        farm.save()
+        customer.save()
+        
+       
+        res.status(200).json({ customerData: { ...customer._doc } })
+
+
+        transporter.sendMail(
+          {
+            
+            to:email,
+            from:"noreply.qazidairies@gmail.com",
+            subject:"Your qazi dairies access credentials",
+            text:"Welcome to Qazi Dairies",
+            html:`<h1>Welcome to Qazi dairies! </h1>
+             <h4>Dear customer ${name},</h4> 
+             <h5><b>Please find your username and password below:</b></h5> </br></br>
+             <div><b>username:</b> ${email} </div>
+             <div><b>password:</b>${password}  (please do not share this password)</div></br>
+             <div><b>Please do not write to this email, this is an un-attended mail box. Thank you !  </b></div> `  
+            
+
+          }
+          
+
+        )
+      } else {
+         res
+          .status(401)
+          .json({ success: false, message: "Unknown Error Occured" });
+        throw new Error('Unknown Error Occured');
+      }
+    } catch(error) {
+      console.log("error is ",error)
+      res.status(401).json({ success: false, message: "Please confirm that image is added " });
+    }
+  })
+
 
 const deleteCustomer = asyncHandler(async (req, res) => {
   const { id } = req.body;

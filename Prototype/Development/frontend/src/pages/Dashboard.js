@@ -7,30 +7,7 @@ import { useSelector} from "react-redux";
 // import Loader from "../components/layouts/SunspotLoaderComponent"
 import { getMilkProductionRecords } from '../services/apiServices';
 import moment from "moment";
-// const data1=[
-//     {
-//         date: '12/11/2021',
-//         record: {
-//             '1291juasuq77q': {
-//                 'morning': 11,
-//                 'evening': 13,
-//                 'name': 'Raani',
-//                 'tag': '001',
-//             }
-//         }
-//     },
-//     {
-//         date: '13/11/2021',
-//         record: {
-//             '8921829hsa77q': {
-//                 'morning': 31,
-//                 'evening': 23,
-//                 'name': 'Maharaani',
-//                 'tag': '002',
-//             }
-//         }
-//     }
-// ]
+
 function LineChart(milkrecord){
 
   const options = {
@@ -69,6 +46,11 @@ function LineChart(milkrecord){
     let l_dates=[]
     let total_morning=[]
     let total_evening=[]
+
+    let sorted_morning=[]
+    let sorted_evening=[]
+    var dict_morning ={} ;
+    var dict_evening ={} ;
     const print=milkrecord.data? milkrecord.data.milkRecords.forEach(element => {
         console.log("printing ",element);
        
@@ -80,19 +62,42 @@ function LineChart(milkrecord){
             e=e + element.record[key].evening 
             
             })
+        dict_morning[ moment(element.date).format("MM/DD/YYYY")]=m
+        dict_evening[ moment(element.date).format("MM/DD/YYYY")]=e
         
-        console.log(m)
+        console.log(moment(element.date).format("MM/DD/YYYY"),m)
         total_morning.push(m)
         total_evening.push(e)
         milkp=0
+        
+        
+        
+        
+
     }):""
-    console.log(total_morning)
+
+    var keys = Object.keys(dict_morning); // or loop over the object to get the array
+        // keys will be in any order
+        console.log(keys,"check th eorder")
+        keys=keys.sort(); // maybe use custom sort, to change direction use .reverse()
+        // keys now will be in wanted order
+
+        for (var i=0; i<keys.length; i++) { // now lets iterate in sort order
+            var key = keys[i];
+            var value_morning = dict_morning[key];
+            var value_evenning =dict_evening[key]
+            /* do something with key & value here */
+            sorted_morning.push(value_morning);
+            sorted_evening.push(value_evenning);
+          } 
+          console.log(sorted_morning,"this is the correct order")
+    console.log(total_morning,"here")
 
 
 
     const data={
 
-        labels:l_dates.sort(),
+        labels:keys,
         datasets:[
 
             {
@@ -103,7 +108,7 @@ function LineChart(milkrecord){
                 //stack: 1,
                 hoverBackgroundColor: "rgba(255,99,132,1)",
                 hoverBorderColor: "rgba(255,0,132,4)",
-                data: total_morning
+                data: sorted_morning
               },
     
               {
@@ -114,7 +119,7 @@ function LineChart(milkrecord){
                 //stack: 1,
                 hoverBackgroundColor: "rgba(255,0,132,1)",
                 hoverBorderColor: "rgba(255,0,132,4)",
-                data: total_evening
+                data:sorted_evening
               }
         ]
 
