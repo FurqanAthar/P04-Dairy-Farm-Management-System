@@ -159,3 +159,57 @@ export const deleteItemTransaction = async (data, token) => {
     return error;
   }
 };
+
+export const addMilkSupply = async (data, token) => {
+  config.headers.Authorization = token;
+  try {
+    return await axios.post(`/record/supply/add`, data, config);
+  } catch (error) {
+    return error;
+  }
+};
+
+export const getMilkSupply = async (token) => {
+  config.headers.Authorization = token;
+  try {
+    return await axios.get(`/record/supply`, config);
+  } catch (error) {
+    return error;
+  }
+};
+
+export const getMilkSupplyById = async (id, token) => {
+  config.headers.Authorization = token;
+  try {
+    return await axios.get(`/record/supply/${id}`, config);
+  } catch (error) {
+    return error;
+  }
+};
+
+export const updateMilkSupplyById = async (data, token) => {
+  config.headers.Authorization = token;
+  try {
+    return await axios.put(`/record/supply/update`, data, config);
+  } catch (error) {
+    return error;
+  }
+};
+
+export const updateRateList = async (data, token) => {
+  config.headers.Authorization = token;
+  try {
+    return await axios.put(`/farm/miscellaneous/rate/update`, data, config);
+  } catch (error) {
+    return error;
+  }
+};
+
+export const getRateList = async (token) => {
+  config.headers.Authorization = token;
+  try {
+    return await axios.get(`/farm/miscellaneous/rate`, config);
+  } catch (error) {
+    return error;
+  }
+};
