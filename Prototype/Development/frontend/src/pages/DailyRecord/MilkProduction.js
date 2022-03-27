@@ -47,12 +47,14 @@ function MilkProduction(props) {
   );
 
   const handleRowClick = (row) => {
-    history.push({
-      pathname: `/milk-records/${row._id}`,
-      state: {
-        data: row,
-      },
-    });
+    
+    //feature needs to be implemented for editing record if necessary
+    // history.push({
+    //   pathname: `/milk-records/${row._id}`,
+    //   state: {
+    //     data: row,
+    //   },
+    // });
   };
 
   const [record, setRecord] = useState("")
@@ -62,7 +64,7 @@ function MilkProduction(props) {
       console.log(props.getAnimals())
       let records= await getMilkProductionRecords(props.login.loginInfo.token) 
       setRecord(records)
-      console.log(records)
+      console.log(records,"This is where we get our unfiltered ddata")
     }
  
 
@@ -72,6 +74,7 @@ function MilkProduction(props) {
   useEffect(() => {
     if (props.animals.animals) {
       setData(props.animals.animals.animalsData);
+      // setData(record? record.data.milkRecords:"" )
     }
   }, [props.animals]);
 
@@ -134,10 +137,10 @@ function MilkProduction(props) {
     },
     
     {
-      name: "Date of Birth",
+      name: "Production date for animal",
       selector: "dob",
       sortable: true,
-      cell: (row) => moment(row.dob).format("MM/DD/YYYY"),
+      cell: (row) =>(proddate? moment(proddate).format("MM/DD/YYYY"):"Please select a date"),
     },
     {
       name: "Morning Production (L)",
@@ -238,9 +241,8 @@ function MilkProduction(props) {
   const handleFilter = (index, e, eTarget = null) => {
     let filtersCopy = filters;
     if (index === "dob") {
-      filtersCopy[index] = e;
-      setProddate(e);
-      console.log("this is the date filter",e)
+      filtersCopy[index] = 
+      setProddate(moment(e).format("MM/DD/YYYY"))
       eTarget.target.closest(".input-group").classList.remove("active");
     } else if (index === "search") {
       filtersCopy[index] = e.target.value;
@@ -310,6 +312,7 @@ function MilkProduction(props) {
       filteredDataCopy = [];
     }
     setFilteredData([...dataCopy]);
+
   }, [filters]);
 
   const FilterComponent = ({}) => (
@@ -353,8 +356,8 @@ function MilkProduction(props) {
               className="datepicker-form-control"
               onChange={(date, e) => {
                 handleFilter("dob", date, e)
-              setProddate(e);
-              alert("the prod date",proddate);
+               console.log(e,"setting date here")
+              
             }}
               onFocus={handleDatepickerFocus}
               onBlur={handleDatepickerBlur}
@@ -427,7 +430,7 @@ function MilkProduction(props) {
           pagination
           persistTableHead
         />
-        {console.log(filteredData,"it comes here")}
+        {console.log(record,"it comes here the filtered ")}
       </Container>
     </div>
   );
