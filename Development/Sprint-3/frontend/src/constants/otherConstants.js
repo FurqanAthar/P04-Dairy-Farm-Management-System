@@ -1,0 +1,1 @@
+export const loginFirst = 'You need to login first'
