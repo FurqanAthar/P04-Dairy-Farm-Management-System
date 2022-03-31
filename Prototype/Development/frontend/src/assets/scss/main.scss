@@ -6751,3 +6751,25 @@
 .graph-container {
   padding: 30px;
 }
+
+.btn-with-icon {
+  background: $primary;
+  font-size: 14px;
+  padding: 12px 50px 13px 25px;
+  color: #fff !important;
+  border-radius: 8px;
+  .icon {
+    // position: absolute;
+    // right: 25px;
+    // top: 15px;
+    margin-left: 15px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    width: 15px;
+    height: 15px;
+    background: #fff;
+    padding: 8px;
+    border-radius: 20px;
+  }
+}

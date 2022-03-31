@@ -37,8 +37,8 @@ function MilkSupplyList(props) {
   const [graphOptions, setGraphOptions] = useState({});
   const [graphDataFormat, setGraphFormatData] = useState({ labels: [] });
   const [data, setData] = useState([]);
-  const [showList, setShowList] = useState(false);
-  const [showGraph, setShowGraph] = useState(true);
+  const [showList, setShowList] = useState(true);
+  const [showGraph, setShowGraph] = useState(false);
   const [sortedData, setSortedData] = useState([]);
   const [filteredData, setFilteredData] = useState([]);
   const [validator] = useState(new SimpleReactValidator());
