@@ -75,7 +75,13 @@ const farmSchema = mongoose.Schema(
         ref: "Customer",
       },
     ],
-
+    invoices: [
+      {
+        type: mongoose.Schema.Types.ObjectId,
+        required: true,
+        ref: "Invoice",
+      },
+    ],
     milkRecords: [
       {
         type: mongoose.Schema.Types.ObjectId,

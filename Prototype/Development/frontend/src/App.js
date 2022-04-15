@@ -17,14 +17,14 @@ import Animal from "./pages/Animals/Animal";
 import Inventory from "./pages/Inventory/Inventory";
 import AddMilkProduction from "./pages/DailyRecord/AddMilkProduction";
 import AddWorkers from "./pages/settings/AddWorkers";
-
 import AddCustomer from "./pages/Customer/AddCustomer";
-
 import Customer from "./pages/Customer/Customers";
 import MilkProduction from "./pages/DailyRecord/MilkProduction";
 import MilkSupply from "./pages/DailyRecord/MilkSupply";
 import MilkSupplyList from "./pages/DailyRecord/MilkSupplyList";
 import Category from "./pages/Inventory/Category";
+import Expense from "./pages/Expenses/Expense";
+import AddInvoice from "./pages/Expenses/AddInvoice";
 
 function App() {
   return (
@@ -85,7 +85,6 @@ function App() {
           </PrivateRoute>
 
           {/* Customer*/}
-
           <PrivateRoute exact path="/customer">
             <Customer />
           </PrivateRoute>
@@ -100,6 +99,7 @@ function App() {
           <PrivateRoute exact path="/">
             <Dashboard />
           </PrivateRoute>
+
           {/* Inventory Pages */}
           <PrivateRoute exact path="/inventory">
             <Inventory />
@@ -107,6 +107,15 @@ function App() {
           <PrivateRoute exact path="/inventory/category/:id">
             <Category />
           </PrivateRoute>
+
+          {/* Expense Pages */}
+          <PrivateRoute exact path="/expense">
+            <Expense />
+          </PrivateRoute>
+          <PrivateRoute exact path="/expense/addInvoice">
+            <AddInvoice />
+          </PrivateRoute>
+
           {/* Team Members and Workers */}
           <PrivateRoute exact path="/dashboard">
             <Dashboard />

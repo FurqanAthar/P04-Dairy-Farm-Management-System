@@ -15,7 +15,7 @@ const reducer = combineReducers({
   updateUserName: userUpdateProfileReducer,
   updateUserPassword: userUpdatePasswordReducer,
   updateUserImage: userUpdateImageReducer,
-  customer:customerReducer, 
+  customer:customerReducer,
   farm: farmReducer,
 });
 
