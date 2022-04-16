@@ -218,11 +218,8 @@ export const getRateList = async (token) => {
 export const addInvoice = async(data, token) => {
   config.headers.Authorization = token;
   try {
-    console.log("Here in API");
     return await axios.post(`/farm/expense/addInvoice`, data, config);
   } catch (error) {
-    console.log("Here in api");
-    console.log(error.message);
     return error.message;
   }
 };

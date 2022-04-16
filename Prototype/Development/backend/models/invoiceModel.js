@@ -6,10 +6,6 @@ const invoiceSchema = mongoose.Schema(
             type: Number,
             required: true,
         },
-        date: {
-            type: Date,
-            required: true,
-        },
         items: [
             {
                 name: {
@@ -30,6 +26,10 @@ const invoiceSchema = mongoose.Schema(
                 },
             },
         ],
+		amount: {
+			type: Number,
+			required: true,
+		},
     },
     {
         timestamps: true,

@@ -1,249 +1,288 @@
-import React, { useState, useEffect, useReducer, useCallback } from "react";
+import React, { useState, useEffect } from "react";
 import {
-    Col,
-    Row,
-    InputGroup,
     Container,
     Modal,
     Button,
     Form,
     FormControl,
 } from "react-bootstrap";
-import Select from "react-select";
 import { connect } from "react-redux";
-import { toast } from "react-toastify";
 import { useHistory, Link } from "react-router-dom";
 import DataTable from "react-data-table-component";
-import { inventoryMetrics } from "../../constants/options";
-import SearchIcon from "../../assets/images/icons/search.svg";
 import { filterTableStyles } from "../../assets/styledComponents/tableStyles";
-import { filterTableSelectStyles } from "../../assets/styledComponents/selectStyles";
+import DatePicker from "react-datepicker";
+import "react-datepicker/dist/react-datepicker.css";
 import { getInvoiceData } from "../../actions/expenseActions";
 
 function Expense(props) {
-    // variables and states to handle fields
-    let history = useHistory();
-    const [, forceUpdate] = useState();
-    const [categories, setCategories] = useState([]);
-    const [filteredCategories, setFilteredCategories] = useState([]);
-    const handleCategoryComponent = useCallback((state) => handleRowClick(state));
+    // Variables and states to handle fields
+	const [invoices, setInvoices] = useState([]);
+	const [show, setShow] = useState(false);
+	const [invoice, setInvoice] = useState({});
+	const [filteredInvoices, setFilteredInvoices] = useState([]);
+	const [date, setDate] = useState("");
+	const [filter, setFilter] = useState(false);
 
-    // columns to display on data table
+    // Columns to display on data table
     const columns = [
         {
-        name: "Invoice No",
-        selector: "number",
+			name: "Invoice No",
+			selector: "number",
+			sortable: true,
+			cell: (row) => <div>{row.number}</div>,
+        },
+        {
+			name: "Date",
+			selector: "date",
+			cell: (row) => <div>{row.createdAt}</div>,
+        },
+        {
+			name: "Total Items",
+			selector: "items",
+			sortable: true,
+			cell: (row) => <div>{row.items.length}</div>,
+        },
+        {
+			name: "Total Amount",
+			selector: "amount",
+			cell: (row) => <div> {row.amount} </div>,
+		},
+		{
+            name: "",
+            selector: "actions",
+            cell: (row) => (
+					<Button
+						className="btn-icon m-0"
+						variant="outline-primary"
+						onClick={() => { setInvoice(row); setShow(true) } }
+					>
+						View Invoice
+					</Button>
+            )
+        },
+	];
+
+	// Columns to display on data table in modal
+    const modalColumns = [
+        {
+        name: "Name",
+        selector: "name",
         sortable: true,
         cell: (row) => <div>{row.name}</div>,
         },
         {
-        name: "Date",
-        selector: "date",
-        cell: (row) => <div>{row.description}</div>,
+        name: "Quantity",
+        selector: "quantity",
+        cell: (row) => <div>{row.quantity}</div>,
         },
         {
-        name: "Total Items",
-        selector: "items",
+        name: "Rate",
+        selector: "rate",
         sortable: true,
-        cell: (row) => <div>{row.items.length}</div>,
+        cell: (row) => <div>{row.rate}</div>,
         },
         {
-        name: "Total Amount",
+        name: "Amount",
         selector: "amount",
-        cell: (row) => <div> {row.metric} </div>,
+        cell: (row) => <div> {row.amount} </div>,
         },
     ];
+	
+	// Default function to call action function to fetch invoices
+	async function getInvoices() {
+		await props.getInvoiceData();
+	};
 
-    // filters field to filter data
-    const [filters, setFilters] = useReducer(
-        (state, newState) => ({ ...state, ...newState }),
-        {
-        metric: "",
-        itemsCount: 0,
-        search: "",
-        }
-    );
+	// Function for getting all invoices everytime the page is rendered
+	useEffect(() => {
+		getInvoices();
+	}, []);
+	
+	// Helper function for getting invoices
+	useEffect(() => {
+		if (!props.expense.loading) {
+			if (props.expense.success) {
+				setInvoices(props.expense);
+			}
+		}
+	}, [props.expense]);
+	
+	// Function to update filter date
+	const handleUpdateFilterDate = (date) => {
+		let day = date.getDate().toString();
+		let month = (date.getMonth() + 1).toString();
+		let year = date.getFullYear().toString();
+		if (month.length == 1) {
+			date = day + "/" + "0" + month + "/" + year;
+		} else if (day.length == 1) {
+			date = "0" + day + "/" + "0" +  month + "/" + year;
+		} else {
+			date = day + "/" + month + "/" + year;
+		};
+		setDate(date);
+	};
+	
+	// Function to filter invoices
+	const handleFilterInvoices = () => {
+		let tempInvoices = [];
+		for (let i=0; i<invoices.invoices.length; i++) {
+			let createdDate = invoices.invoices[i].createdAt;
+			createdDate = createdDate.toString();
+			let day = createdDate.slice(8, 10);
+			let month = createdDate.slice(5, 7);
+			let year = createdDate.slice(0, 4);
+			createdDate = day + "/" + month + "/" + year;
+			if (createdDate == date) {
+				tempInvoices.push(invoices.invoices[i]);
+			};
+		};
+		setFilteredInvoices(tempInvoices);
+		setFilter(true);
+	};
 
-    useEffect(() => {
-        getInvoices();
-    }, []);
-
-    useEffect(() => {
-        if (!props.inventoryCategories.loading) {
-        if (props.inventoryCategories.success) {
-            console.log(props.inventoryCategories.inventory);
-            setCategories(props.inventoryCategories.inventory);
-        }
-        }
-    }, [props.inventoryCategories]);
-
-    useEffect(() => {
-        console.log(categories);
-    }, [categories]);
-
-    //   When filter changes, this function will be called
-    useEffect(() => {
-        let dataCopy = categories;
-        let filteredDataCopy = [];
-
-        // Filtering based on status
-        if (filters.metric) {
-        dataCopy.forEach((c, idx) => {
-            if (c.metric == filters.metric) {
-            filteredDataCopy.push(c);
-            }
-        });
-        dataCopy = [...filteredDataCopy];
-        filteredDataCopy = [];
-        }
-
-        // performing search based on category name and description
-        if (filters.search) {
-        let searchField = filters.search.toLowerCase();
-        dataCopy.forEach((c, idx) => {
-            let check = false;
-            if (c.name) {
-            if (c.name.toLowerCase().includes(searchField)) {
-                check = true;
-            }
-            }
-            if (c.description) {
-            if (c.description.toLowerCase().includes(searchField)) {
-                check = true;
-            }
-            }
-            if (check) {
-            filteredDataCopy.push(c);
-            }
-        });
-        dataCopy = [...filteredDataCopy];
-        filteredDataCopy = [];
-        }
-        setFilteredCategories([...dataCopy]);
-    }, [filters]);
-
-    // Default function to call action function to fetch categories
-    async function getInvoices() {
-        await props.getInvoiceData();
-    }
-
-    // when any row will be clicked in the table
-    const handleRowClick = (row) => {
-        console.log(row);
-        history.push(`/inventory/category/${row._id}`);
-    };
-
-    // function to change filter fields
-    const handleFilter = (index, e, eTarget = null) => {
-        let filtersCopy = filters;
-        if (index === "search") {
-        filtersCopy[index] = e.target.value;
-        } else {
-        if (e) {
-            filtersCopy[index] = e.value;
-        } else {
-            filtersCopy[index] = "";
-        }
-        }
-        setFilters({ ...filtersCopy });
-    };
-
-    // checking if any filter fields are filled or all are empty
-    // then displaying data on the basis of that
-    const filtersIsSet = () => {
-        let set = false;
-        Object.keys(filters).forEach((k, idx) => {
-        if (filters[k]) {
-            set = true;
-        }
-        });
-        return set;
-    };
-
-    const handleDatepickerFocus = (e) => {
-        e.target.parentNode.parentNode.parentNode.classList.add("active");
-    };
-    const handleDatepickerBlur = (e) => {
-        e.target.parentNode.parentNode.parentNode.classList.remove("active");
-    };
-
-    const FilterComponent = ({}) => (
-        <div className="d-flex align-items-center justify-content-between tableHead">
-        <div className="table-filters">
-            <Form.Group className="mb-0">
-            <Select
-                styles={filterTableSelectStyles}
-                options={inventoryMetrics}
-                placeholder="Metrics"
-                isClearable={true}
-                onChange={(e) => handleFilter("metric", e)}
-                value={inventoryMetrics.find((s) => {
-                return s.value === filters.metric;
-                })}
-            />
-            </Form.Group>
-        </div>
-        <div className="table-filters justify-content-end">
-            <InputGroup>
-            <Form.Control
-                type="text"
-                autoFocus={true}
-                id="search_field"
-                name="search_field"
-                placeholder="Search"
-                value={filters.search}
-                onFocus={(e) => e.target.parentNode.classList.add("active")}
-                onBlur={(e) => {
-                e.target.parentNode.classList.remove("active");
-                }}
-                onChange={(e) => handleFilter("search", e)}
-            />
-            <InputGroup.Append>
-                <InputGroup.Text>
-                <img src={SearchIcon} />
-                </InputGroup.Text>
-            </InputGroup.Append>
-            </InputGroup>
-        </div>
-        </div>
-    );
-
+	// Header component to show filter options in invoices table
     const subHeaderComponentMemo = React.useMemo(() => {
-        return <FilterComponent />;
-    }, [props.inventoryCategories, filters]);
+        return(
+			<div className="d-flex align-items-center justify-content-between tableHead">
+				<div className="table-filters">
+					<Form.Group className="mb-0">
+						<DatePicker
+						placeholderText={date === "" ? "Select Date" : date}
+						onChange={(date) => handleUpdateFilterDate(date)}
+						/>
+					</Form.Group>
+				</div>
+				< div className="table-filters justify-content-end">
+					<Button variant="outline-primary" onClick={() => handleFilterInvoices()}>
+						Apply Filter
+					</Button>
+				</div>
+				< div className="table-filters justify-content-end">
+					<Button 
+					variant="outline-light" 
+					onClick={() => { setFilter(false); setDate(""); setFilteredInvoices([]) }}
+					>
+						Remove Filter
+					</Button>
+				</div>
+			</div>
+		);
+    });
 
     return (
         <div className="animals-page mt-4 mb-4">
         <Container>
             <div>
-            <div className="d-flex mb-4 justify-content-center">
-                Expenses
-            </div>
+				<div className="d-flex mb-4 justify-content-center">
+					Expenses
+				</div>
 
-            {/* Button to Modal for adding new category */}
-            <div className="d-flex mb-4 justify-content-end">
-                <Link to="/expense/addInvoice">
-                    <Button variant="primary">
-                        New Invoice
-                    </Button>
-                </Link>
-            </div>
+				{/* Button to Modal for adding new category */}
+				<div className="d-flex mb-4 justify-content-end">
+					<Link to="/expense/addInvoice">
+						<Button variant="primary">
+							New Invoice
+						</Button>
+					</Link>
+				</div>
 
-            {/* Table to display all categories in inventory */}
-            <Container>
-                <DataTable
-                customStyles={filterTableStyles}
-                responsive
-                fixedHeader={true}
-                columns={columns}
-                data={filtersIsSet() ? filteredCategories : categories}
-                onRowClicked={handleCategoryComponent}
-                subHeader
-                subHeaderComponent={subHeaderComponentMemo}
-                pagination
-                persistTableHead
-                />
-            </Container>
+				{/* Table to display all categories in inventory */}
+				<Container>
+					<DataTable
+					customStyles={filterTableStyles}
+					responsive
+					fixedHeader={true}
+					columns={columns}
+					data={filter ? filteredInvoices : invoices.invoices}
+					subHeader
+					subHeaderComponent={subHeaderComponentMemo}
+					pagination
+					persistTableHead
+					/>
+				</Container>
+
+				{/* Modal to view invoice */}
+				<Container>
+					<Modal
+						animation={false}
+						className="account-settings-modal"
+						size="sm"
+						centered
+						show={show}
+						onHide={() => {
+						setShow(false);
+						}}
+					>
+						<Modal.Header
+						closeButton
+						onClick={() => {
+							setShow(false);
+						}}
+						></Modal.Header>
+						<Modal.Body>
+						<div className="details">
+							<div className="title">Invoice</div>
+							<Form.Group>
+							<Form.Label>Number</Form.Label>
+							<FormControl
+								id="number"
+								name="number"
+								value={invoice.number}
+								readOnly
+							/>
+							</Form.Group>
+							<Form.Group>
+							<Form.Label>Created On</Form.Label>
+							<FormControl
+								id="date"
+								name="date"
+								value={invoice.createdAt}
+								readOnly
+							/>
+							</Form.Group>
+							<Form.Group>
+							<Form.Label>Items</Form.Label>
+							{/* Table to show items in the invoice */}
+							{
+								<div className="row">
+									{
+										<Container>
+											<DataTable
+											customStyles={filterTableStyles}
+											responsive
+											fixedHeader={true}
+											columns={modalColumns}
+											data={invoice.items}
+											persistTableHead
+											/>
+										</Container>
+									}
+								</div>
+							}
+							</Form.Group>
+							<Form.Group>
+							<Form.Label>Total Amount</Form.Label>
+							<FormControl
+								id="amount"
+								name="amount"
+								value={invoice.amount}
+								readOnly
+							/>
+							</Form.Group>
+						</div>
+						</Modal.Body>
+						<Modal.Footer>
+						<Button
+							variant="primary"
+							onClick={() => {
+								setShow(false);
+							}}
+						>
+							Close
+						</Button>
+						</Modal.Footer>
+					</Modal>
+				</Container>
 
             </div>
         </Container>
@@ -258,9 +297,9 @@ const mapDispatchToProps = (dispatch) => {
 };
 
 const mapStateToProps = (state) => {
-    return {
+	return {
         login: state.login,
-        inventoryCategories: state.farm.inventory,
+        expense: state.farm.expense,
     };
 };
 

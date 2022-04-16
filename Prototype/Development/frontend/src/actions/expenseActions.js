@@ -20,15 +20,13 @@ export const getInvoiceData = () => async (dispatch, getState) => {
             },
         };
 
-        const { data } = await axios.get("/farm/expense/invoices", config);
+        const { data } = await axios.get("/farm/expense/getInvoices", config);
 
         if (data.success) {
-            console.log("Data:", data);
-            dispatch({ type: FARM_EXPENSE_SUCCESS, payload: data.categoriesData });
+            dispatch({ type: FARM_EXPENSE_SUCCESS, payload: data.invoices });
         } else {
             dispatch({ type: FARM_EXPENSE_FAIL, payload: data.message });
         }
-        console.log("HERE");
     } catch (error) {
         dispatch({
         type: FARM_EXPENSE_FAIL,

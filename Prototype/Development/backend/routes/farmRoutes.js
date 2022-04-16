@@ -23,6 +23,7 @@ import {
   updateRateList,
   getRateList,
 } from "../controllers/farmController.js";
+
 import {
   getItemData,
   addInventoryItem,
@@ -31,11 +32,16 @@ import {
   deleteItemTransaction,
   getInventoryCategories,
 } from "../controllers/inventoryController.js";
+
 import {
   addInvoice,
-  // dummyFunction,
+  getInvoices,
 } from "../controllers/expenseController.js";
-import { protect, admin } from "../middleware/authMiddleware.js";
+
+import { 
+  protect,
+  admin 
+} from "../middleware/authMiddleware.js";
 
 router.route("/validate/subdomain").post(validateSubDomain);
 router.route("/register").post(registerFarm);
@@ -81,7 +87,7 @@ router
 router.route("/inventory/item/:id").get(protect, getItemData);
 
 // Expense Routes
-// router.route("/expense/invoices").get(protect, getInvoicesData);
+router.route("/expense/getInvoices").get(protect, getInvoices);
 router.route("/expense/addInvoice").post(protect, addInvoice);
 
 

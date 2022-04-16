@@ -1,8 +1,5 @@
-import React, { useState, useEffect, useReducer, useCallback } from "react";
+import React, { useState, useReducer, useEffect } from "react";
 import {
-    Col,
-    Row,
-    InputGroup,
     Container,
     Modal,
     Button,
@@ -14,22 +11,20 @@ import { toast } from "react-toastify";
 import { useHistory, Link } from "react-router-dom";
 import DataTable from "react-data-table-component";
 import SimpleReactValidator from "simple-react-validator";
-import { addInventoryCategory } from "../../services/apiServices";
-import { getInventoryCategories } from "../../actions/inventoryActions";
 import AccountModalImage from "../../assets/images/accountsecuritymodal.jpg";
+import TrashIcon from "../../assets/images/icons/trash.svg";
 import { filterTableStyles } from "../../assets/styledComponents/tableStyles";
+import { getInvoiceData } from "../../actions/expenseActions";
 import { addInvoice } from "../../services/apiServices";
 
 function AddInvoice(props) {
     // variables and states to handle fields
-    let history = useHistory();
-    const [, forceUpdate] = useState();
+	const history = useHistory();
+	const [, forceUpdate] = useState();
     const [validator] = useState(new SimpleReactValidator());
-    const [categories, setCategories] = useState([]);
     const [items, setItems] = useState([]);
-    const [filteredCategories, setFilteredCategories] = useState([]);
     const [showItemModal, setShowItemModal] = useState(false);
-    const handleCategoryComponent = useCallback((state) => handleRowClick(state));
+	const [showAlertModal, setShowAlertModal] = useState(false);
 
     // columns to display on data table
     const columns = [
@@ -55,14 +50,18 @@ function AddInvoice(props) {
         selector: "amount",
         cell: (row) => <div> {row.amount} </div>,
         },
+		{
+			name: "",
+			selector: "remove",
+			cell: (row) => <Button variant="outline-light" onClick={() => handleRemoveItem(row)}> <img src={TrashIcon} /> </Button>,
+		},
     ];
 
     // Invoice form inputs
     const [invoiceForm, setInvoiceForm] = useReducer(
         (state, newState) => ({ ...state, ...newState }),
         {
-            number: 69,
-            date: Date(),
+            number: 0,
             items: [],
             amount: 0,
         }
@@ -78,6 +77,27 @@ function AddInvoice(props) {
             amount: 0,
         }
     );
+
+	// Default function to call action function to fetch invoices
+	async function getInvoices() {
+		await props.getInvoiceData();
+	};
+
+	// Function for getting all invoices everytime the page is rendered
+	useEffect(() => {
+		getInvoices();
+	}, []);
+	
+	// Helper function for getting invoices
+	useEffect(() => {
+		if (!props.expense.loading) {
+			if (props.expense.success) {
+				setInvoiceForm({
+					number: props.expense.invoices.length + 1,
+				});
+			}
+		}
+	}, [props.expense]);
 
     // Function for item form inputs
     const handleNewItemInputs = (evt) => {
@@ -112,133 +132,35 @@ function AddInvoice(props) {
         });
     };
 
+	// Function to remove item
+	const handleRemoveItem = (item) => {
+		setItems(items.filter(i => i != item));
+	};
+
     // Function for adding new invoice
     const handleAddNewInvoice = async () => {
-        let result = await addInvoice(invoiceForm, props.login.loginInfo.token);
-        console.log(result);
-        if (result.data.success) {
-            // getCategoriesData();
-            setInvoiceForm({
-                number: 69,
-                date: Date(),
-                items: [],
-                amount: 0,
-            });
-            toast.success("Invoice Added Successfuly!");
-        } else {
-            toast.error(result.data.message);
-        }
-    };
-
-    // filters field to filter data
-    const [filters, setFilters] = useReducer(
-        (state, newState) => ({ ...state, ...newState }),
-        {
-        metric: "",
-        itemsCount: 0,
-        search: "",
-        }
-    );
-
-    useEffect(() => {
-        getCategoriesData();
-    }, []);
-
-    useEffect(() => {
-        if (!props.inventoryCategories.loading) {
-        if (props.inventoryCategories.success) {
-            console.log(props.inventoryCategories.inventory);
-            setCategories(props.inventoryCategories.inventory);
-        }
-        }
-    }, [props.inventoryCategories]);
-
-    useEffect(() => {
-        console.log(categories);
-    }, [categories]);
-
-    //   When filter changes, this function will be called
-    useEffect(() => {
-        let dataCopy = categories;
-        let filteredDataCopy = [];
-
-        // Filtering based on status
-        if (filters.metric) {
-        dataCopy.forEach((c, idx) => {
-            if (c.metric == filters.metric) {
-            filteredDataCopy.push(c);
-            }
-        });
-        dataCopy = [...filteredDataCopy];
-        filteredDataCopy = [];
-        }
-
-        // performing search based on category name and description
-        if (filters.search) {
-        let searchField = filters.search.toLowerCase();
-        dataCopy.forEach((c, idx) => {
-            let check = false;
-            if (c.name) {
-            if (c.name.toLowerCase().includes(searchField)) {
-                check = true;
-            }
-            }
-            if (c.description) {
-            if (c.description.toLowerCase().includes(searchField)) {
-                check = true;
-            }
-            }
-            if (check) {
-            filteredDataCopy.push(c);
-            }
-        });
-        dataCopy = [...filteredDataCopy];
-        filteredDataCopy = [];
-        }
-        setFilteredCategories([...dataCopy]);
-    }, [filters]);
-
-    // Default function to call action function to fetch categories
-    async function getCategoriesData() {
-        await props.getInventoryCategories();
-    }
-
-    // when any row will be clicked in the table
-    const handleRowClick = (row) => {
-        console.log(row);
-        history.push(`/inventory/category/${row._id}`);
-    };
-
-    const handleNewCategoryMetric = (e) => {
-        setInvoiceForm({ ["metric"]: e.value });
-    };
-
-    //   API Call to add new category in inventory
-    const submitNewCategory = async () => {
-        if (!validator.allValid()) {
-        validator.showMessages();
-        forceUpdate(1);
-        } else {
-        let result = await addInventoryCategory(
-            invoiceForm,
-            props.login.loginInfo.token
-        );
-        //   closing the modal and setting form fields empty
-        if (result.data.success) {
-            getCategoriesData();
-            setInvoiceForm({ ["name"]: "", ["description"]: "", ["metric"]: "" });
-            toast.success("Category Added Into Your Inventory!");
-        } else {
-            toast.error(result.data.message);
-        }
-        }
-    };
-
-    const handleDatepickerFocus = (e) => {
-        e.target.parentNode.parentNode.parentNode.classList.add("active");
-    };
-    const handleDatepickerBlur = (e) => {
-        e.target.parentNode.parentNode.parentNode.classList.remove("active");
+		for (let i=0; i<items.length; i++) {
+			setInvoiceForm({
+				items: invoiceForm.items.push(items[i]),
+			});
+		};
+		if (invoiceForm.items.length == 0) {
+			toast.error("No items added!");
+		} else {
+			let result = await addInvoice(invoiceForm, props.login.loginInfo.token);
+			if (result.data.success) {
+				setItems([]);
+				setInvoiceForm({
+					number: 69,
+					items: [],
+					amount: 0,
+				});
+				toast.success("Invoice Added Successfuly!");
+			} else {
+				toast.error(result.data.message);
+			}
+			history.push("/expense");
+		}
     };
 
     const subHeaderComponentMemo = React.useMemo(() => {
@@ -249,7 +171,7 @@ function AddInvoice(props) {
                 </Button>
             </div>
         )
-    }, [props.inventoryCategories, filters]);
+    });
 
     return (
         <div className="animals-page mt-4 mb-4">
@@ -272,15 +194,6 @@ function AddInvoice(props) {
                     />
                     </Form.Group>
                     <Form.Group>
-                    <Form.Label>Date</Form.Label>
-                    <FormControl
-                        id="date"
-                        name="date"
-                        value={invoiceForm.date}
-                        readOnly
-                    />
-                    </Form.Group>
-                    <Form.Group>
                     <Form.Label>Items</Form.Label>
                     {/* Table to show items in the invoice */}
                     {
@@ -293,7 +206,6 @@ function AddInvoice(props) {
                                     fixedHeader={true}
                                     columns={columns}
                                     data={items}
-                                    onRowClicked={handleCategoryComponent}
                                     subHeader
                                     subHeaderComponent={subHeaderComponentMemo}
                                     pagination
@@ -322,13 +234,13 @@ function AddInvoice(props) {
                         >
                             Cancel
                         </Button>
-                    </Link>
-                    <Button
-                        variant="primary"
-                        onClick={handleAddNewInvoice}
-                    >
-                        Add
-                    </Button>
+                    </Link>	
+					<Button
+						variant="primary"
+						onClick={() => setShowAlertModal(true)}
+					>
+						Add Invoice
+					</Button>
                 </div>
             </Container>
 
@@ -426,6 +338,31 @@ function AddInvoice(props) {
                 </Modal.Footer>
             </Modal>
 
+			<Modal
+			size="sm"
+			centered
+			show={showAlertModal}
+			>
+				<Modal.Body>
+					Once the invoice is added, it cannot be altered. Do you want to continue?
+				</Modal.Body>
+				<Modal.Footer>
+					<Button
+					variant="primary"
+					onClick={handleAddNewInvoice}
+					>
+						Continue
+					</Button>
+					<Button
+					variant="outline-light"
+					onClick={() => setShowAlertModal(false)}
+					>
+						Cancel
+					</Button>
+				</Modal.Footer>
+
+			</Modal>
+
             </div>
         </Container>
         </div>
@@ -433,16 +370,16 @@ function AddInvoice(props) {
 }
 
 const mapDispatchToProps = (dispatch) => {
-  return {
-    getInventoryCategories: (data) => dispatch(getInventoryCategories(data)),
-  };
+    return {
+        getInvoiceData: (data) => dispatch(getInvoiceData(data)),
+    };
 };
 
 const mapStateToProps = (state) => {
-  return {
-    login: state.login,
-    inventoryCategories: state.farm.inventory,
-  };
+	return {
+		login: state.login,
+		expense: state.farm.expense,
+	};
 };
 
 export default connect(mapStateToProps, mapDispatchToProps)(AddInvoice);
