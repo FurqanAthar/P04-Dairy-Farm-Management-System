@@ -91,6 +91,7 @@ export const deleteCustomer = async (data, token) => {
 
 export const addWorker = async (data, token) => {
   config.headers.Authorization = token;
+  console.log(token);
   try {
     return await axios.post(`/farm/worker/add`, data, config);
   } catch (error) {
@@ -211,5 +212,14 @@ export const getRateList = async (token) => {
     return await axios.get(`/farm/miscellaneous/rate`, config);
   } catch (error) {
     return error;
+  }
+};
+
+export const addInvoice = async(data, token) => {
+  config.headers.Authorization = token;
+  try {
+    return await axios.post(`/farm/expense/addInvoice`, data, config);
+  } catch (error) {
+    return error.message;
   }
 };

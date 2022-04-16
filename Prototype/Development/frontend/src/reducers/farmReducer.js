@@ -20,6 +20,9 @@ import {
   FARM_INVENTORY_REQUEST,
   FARM_INVENTORY_SUCCESS,
   FARM_INVENTORY_FAIL,
+  FARM_EXPENSE_REQUEST,
+  FARM_EXPENSE_SUCCESS,
+  FARM_EXPENSE_FAIL,
 } from "../constants/farmConstants";
 
 const addAnimalReducer = (state = {}, action) => {
@@ -104,6 +107,19 @@ const inventory = (state = { loading: true }, action) => {
   }
 };
 
+const expense = (state = {}, action) => {
+	switch (action.type) {
+		case FARM_EXPENSE_REQUEST:
+			return { loading: true };
+		case FARM_EXPENSE_SUCCESS:
+			return { loading: false, invoices: action.payload, success: true };
+		case FARM_EXPENSE_FAIL:
+			return { loading: false, error: "Unknown Error Occured", success: false };
+		default:
+			return state;
+	}
+};
+
 const farmReducer = combineReducers({
   addAnimalReducer,
   updateAnimalReducer,
@@ -111,6 +127,7 @@ const farmReducer = combineReducers({
   teamMembers,
   workers,
   inventory,
+  expense,
 });
 
 export default farmReducer;

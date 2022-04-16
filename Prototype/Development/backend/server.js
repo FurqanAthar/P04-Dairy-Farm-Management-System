@@ -22,7 +22,7 @@ app.use("/customer", customerRoute);
 const __dirname = path.resolve();
 app.use("/uploads", express.static(path.join(__dirname, "/uploads")));
 
-const PORT = process.env.PORT || 8080;
+const PORT = process.env.PORT || 6000;
 
 app.listen(
   PORT,

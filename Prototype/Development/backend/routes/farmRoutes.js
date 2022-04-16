@@ -23,6 +23,7 @@ import {
   updateRateList,
   getRateList,
 } from "../controllers/farmController.js";
+
 import {
   getItemData,
   addInventoryItem,
@@ -31,7 +32,16 @@ import {
   deleteItemTransaction,
   getInventoryCategories,
 } from "../controllers/inventoryController.js";
-import { protect, admin } from "../middleware/authMiddleware.js";
+
+import {
+  addInvoice,
+  getInvoices,
+} from "../controllers/expenseController.js";
+
+import { 
+  protect,
+  admin 
+} from "../middleware/authMiddleware.js";
 
 router.route("/validate/subdomain").post(validateSubDomain);
 router.route("/register").post(registerFarm);
@@ -50,6 +60,7 @@ router.route("/animals/delete").post(protect, deleteAnimal);
 router.route("/animals").get(protect, getAnimalsData);
 router.route("/productions/add").post(protect, addMilkRecord);
 router.route("/productions").get(protect, getMilkRecords);
+
 router.route("/worker/add").post(protect, addWorker);
 router.route("/worker/edit").put(protect, editWorker);
 router.route("/workers").get(protect, getWorkers);
@@ -74,6 +85,11 @@ router
   .route("/inventory/item/transaction/delete")
   .post(protect, deleteItemTransaction);
 router.route("/inventory/item/:id").get(protect, getItemData);
+
+// Expense Routes
+router.route("/expense/getInvoices").get(protect, getInvoices);
+router.route("/expense/addInvoice").post(protect, addInvoice);
+
 
 // Miscellaneous Routes
 router.route("/miscellaneous/rate/update").put(protect, updateRateList);

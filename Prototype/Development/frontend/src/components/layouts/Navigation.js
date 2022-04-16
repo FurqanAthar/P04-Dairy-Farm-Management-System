@@ -75,6 +75,10 @@ function Navigation(props) {
                   Milk Supply
                 </Nav.Link>
 
+                <Nav.Link as={NavLink} eventKey="7" to="/expense">
+                  Expenses
+                </Nav.Link>
+
                 {/* <Nav.Link
                   as={NavLink}
                   className="btn-primary"

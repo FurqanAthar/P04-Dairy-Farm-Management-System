@@ -475,6 +475,7 @@ const mapDispatchToProps = (dispatch) => {
 };
 
 const mapStateToProps = (state) => {
+	console.log("YOHOOOO:", state.farm.workers);
     return {
         login: state.login,
         workers: state.farm.workers
