@@ -37,8 +37,8 @@ function MilkSupplyList(props) {
   const [graphOptions, setGraphOptions] = useState({});
   const [graphDataFormat, setGraphFormatData] = useState({ labels: [] });
   const [data, setData] = useState([]);
-  const [showList, setShowList] = useState(true);
-  const [showGraph, setShowGraph] = useState(false);
+  const [showList, setShowList] = useState(props.onlyGraph ? false : true);
+  const [showGraph, setShowGraph] = useState(props.onlyGraph ? true : false);
   const [sortedData, setSortedData] = useState([]);
   const [filteredData, setFilteredData] = useState([]);
   const [validator] = useState(new SimpleReactValidator());
@@ -515,12 +515,14 @@ function MilkSupplyList(props) {
   return (
     <div className="animals-page mt-4 mb-4">
       <Container>
-        <Row className="d-flex justify-content-center">
-          <Col lg={3}>
-            <Button onClick={() => handleShowList()}>Show List</Button>{" "}
-            <Button onClick={() => handleShowGraph()}>Show Graph</Button>
-          </Col>
-        </Row>
+        {!props.onlyGraph ? (
+          <Row className="d-flex justify-content-center">
+            <Col lg={3}>
+              <Button onClick={() => handleShowList()}>Show List</Button>{" "}
+              <Button onClick={() => handleShowGraph()}>Show Graph</Button>
+            </Col>
+          </Row>
+        ) : null}
         {showGraph ? (
           <Row className="d-flex justify-content-center mt-5">
             <Col lg={10} className="bg-white graph-container">

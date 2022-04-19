@@ -6081,6 +6081,27 @@
     }
   }
 }
+
+.generic-user-pic-lg {
+  .user-pic {
+    width: 45px !important;
+    height: 45px !important;
+    background: #fff;
+    overflow: hidden;
+    border-radius: 100%;
+    img {
+      width: 100%;
+      height: 100%;
+      object-fit: cover;
+      object-position: center;
+    }
+  }
+}
+
+.p-30 {
+  padding: 30px;
+}
+
 .generic-team-name-short {
   width: 35px;
   height: 35px;
