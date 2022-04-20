@@ -282,9 +282,6 @@ function Dashboard(props) {
             <Col lg={10}>
               <div className="details">
                 <Row className="p-30">
-                  <Col lg={12}>
-                    <MilkSupplyList onlyGraph={true} />
-                  </Col>
                   <Col lg={6}>
                     <h4>Animals</h4>
                     {animalsList.length > 0 ? (
@@ -319,35 +316,43 @@ function Dashboard(props) {
                       "No Customers in Dairy Account"
                     )}
                   </Col>
+                  <Col lg={12} className="mt-5 ">
+                    <h4>Revenue and Milk Supply Stats</h4>
+                    <MilkSupplyList onlyGraph={true} />
+                  </Col>
+                  <Col lg={12} className="mt-5 ">
+                    <h4>Milk Production Records</h4>
+
+                    {record ? (
+                      <div>
+                        {" "}
+                        <LineChart {...record} />
+                      </div>
+                    ) : (
+                      <div
+                        class="container"
+                        style={{
+                          display: "flex",
+                          width: "100%",
+                          justifyContent: "center",
+                          paddingTop: "10%",
+                        }}
+                      >
+                        <SunspotLoader
+                          gradientColors={["#28A745", "#E0E7FF"]}
+                          shadowColor={"#3730A3"}
+                          desktopSize={"128px"}
+                          mobileSize={"100px"}
+                        />
+                      </div>
+                    )}
+                  </Col>
                 </Row>
               </div>
             </Col>
           </Row>
         </Container>
       </div>
-      {/* {record ? (
-        <div style={{ width: "720px" }}>
-          {" "}
-          <LineChart {...record} />
-        </div>
-      ) : (
-        <div
-          class="container"
-          style={{
-            display: "flex",
-            width: "100%",
-            justifyContent: "center",
-            paddingTop: "10%",
-          }}
-        >
-          <SunspotLoader
-            gradientColors={["#28A745", "#E0E7FF"]}
-            shadowColor={"#3730A3"}
-            desktopSize={"128px"}
-            mobileSize={"100px"}
-          />
-        </div>
-      )} */}
     </>
   );
 }
