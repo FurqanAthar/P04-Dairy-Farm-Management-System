@@ -4,45 +4,51 @@ This is a dairy management system developed as a final year project using the ME
 
 ## Key Features
 
-### Multi-Tenant:
+**Multi-Tenant:** The system allows for multiple tenants to register and use the system, each with their own isolated data.
 
-The system allows for multiple tenants to register and use the system, each with their own isolated data.
+**User-Friendly Interface:** The system has a user-friendly interface that allows users to add details of their animals, track milk production, manage daily expenses and incomes, and inventory in their farm.
 
-### User-Friendly Interface:
+**Trend Analysis:** The system allows for displaying trends according to expenses, incomes, and animals' milk production.
 
-The system has a user-friendly interface that allows users to add details of their animals, track milk production, manage daily expenses and incomes, and inventory in their farm.
+**Employee Management:** The system allows users to add other employees to manage farm details.
 
-### Trend Analysis:
-
-The system allows for displaying trends according to expenses, incomes, and animals' milk production.
-
-### Employee Management:
-
-The system allows users to add other employees to manage farm details.
-
-### Data Isolation:
-
-The system ensures data isolation between tenants, meaning that each tenant has completely isolated data from other tenants.
+**Data Isolation:** The system ensures data isolation between tenants, meaning that each tenant has completely isolated data from other tenants.
 
 ## Development Process
 
-### Requirements Gathering:
+**Requirements Gathering:** Before starting the development, a thorough analysis was done, a whole application architecture, class diagrams, and use cases were made. The Requirements and Architecture folders have the documents related to this process.
 
-Before starting the development, a thorough analysis was done, a whole application architecture, class diagrams, and use cases were made. The Requirements and Architecture folders have the documents related to this process.
+**Sprint Model:** Using a sprint model, new features were added in each sprint. The Management folder contains the biweekly meetings we had with our instructors and the details regarding the next feature we will be implementing.
 
-### Sprint Model:
+**Development:** The Development folder has the code related to each sprint. The Prototype folder used to have the latest development code and the new features we kept on adding with time. It has both the frontend and the backend. The whole development was linked to this folder and the code related to each sprint was pushed into respective sprint folders for marking.
 
-Using a sprint model, new features were added in each sprint. The Management folder contains the biweekly meetings we had with our instructors and the details regarding the next feature we will be implementing.
+**Testing:** The Testing folder has the document related to the tests we carried out on our application for any potential bugs. We tested our application by giving inputs, recording them in the document, and then marked their status as if the test case has been passed or not. A thorough testing was done.
 
-### Development:
+## Usage
+### Env Variables
+Create a .env file in the root and add the following:
+```
+APP_URL = localhost:3000/
+NODE_ENV = development
+PORT = 6000
+MONGO_URI = your mongodb uri
+JWT_SECRET = zAJUHUQWHBnjanjsaQWBQ1281738
+```
+### Install Dependencies (frontend & backend)
+```
+npm install
+cd frontend
+npm install
+```
+### Run
+Use this command to run frontend and backend concurrently
+```
+npm run dev
+```
 
-The Development folder has the code related to each sprint. The Prototype folder used to have the latest development code and the new features we kept on adding with time. It has both the frontend and the backend. The whole development was linked to this folder and the code related to each sprint was pushed into respective sprint folders for marking.
-
-### Testing:
-
-The Testing folder has the document related to the tests we carried out on our application for any potential bugs. We tested our application by giving inputs, recording them in the document, and then marked their status as if the test case has been passed or not. A thorough testing was done.
-
-## Other details
-
-Stack: MERN
+### Other details
+Stack: MERN,
 Hosted link: NA
+
+# Show your support
+Give ⭐️ if you like this project!
